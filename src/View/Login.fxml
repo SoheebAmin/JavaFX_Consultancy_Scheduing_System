@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+
+<GridPane alignment="center" hgap="10" prefHeight="290.0" prefWidth="420.0" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="Control.LoginController">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <AnchorPane prefHeight="194.0" prefWidth="420.0" GridPane.rowIndex="1">
+         <children>
+            <Label layoutX="85.0" layoutY="35.0" text="Username" />
+            <Label layoutX="85.0" layoutY="83.0" text="Password" />
+            <Button layoutX="328.0" layoutY="149.0" mnemonicParsing="false" onAction="#loginButtonClicked" text="Log In" />
+            <Button layoutX="270.0" layoutY="149.0" mnemonicParsing="false" onAction="#exitButtonClicked" text="Exit" />
+            <TextField layoutX="149.0" layoutY="31.0" />
+            <TextField layoutX="149.0" layoutY="79.0" />
+            <Label layoutX="28.0" layoutY="125.0" text="Country:" />
+            <Label layoutX="23.0" layoutY="153.0" text="Timezone:" />
+            <Label fx:id="countryLabel" layoutX="85.0" layoutY="125.0" prefHeight="18.0" prefWidth="130.0" text="Label" />
+            <Label fx:id="timezoneLabel" layoutX="85.0" layoutY="153.0" prefHeight="18.0" prefWidth="130.0" text="Label" />
+         </children>
+      </AnchorPane>
+      <Label alignment="CENTER" prefHeight="18.0" prefWidth="429.0" text="Welcome to The Application. Please log in below." />
+   </children>
+</GridPane>
