@@ -1,5 +1,6 @@
 package Control;
 
+import Model.Customer;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,28 +20,31 @@ import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
 
-    // Variables for the Parts Table tableview and columns.
+    // Variables for the Customer Table tableview and columns.
+    @FXML private TableView<Customer> customersTableView;
+    @FXML private TableColumn<Customer, Integer> cidCol;
+    @FXML private TableColumn<Customer, String> cNameCol;
+    @FXML private TableColumn<Customer, Integer> cPhoneCol;
+
+
+    /** This method allows the user to add a customer */
+    public void addButtonClicked(ActionEvent event) throws IOException {
+        Methods.changeScene(event, "../View/AddCustomer.fxml");
+    }
 
 
     /** This method exits the program via the Exit button */
-    public void logoutButtonClicked(){
-        System.exit(0);
+    public void logoutButtonClicked(ActionEvent event) throws IOException {
+        Methods.changeScene(event, "../View/Login.fxml");
     }
 
-    /** This method wraps the common code to change scenes. */
-    public void changeScene(ActionEvent event, String sceneName) throws IOException {
-        Parent MainScreenParent = FXMLLoader.load(getClass().getResource((sceneName)));
-        Scene MainScreenScene = new Scene(MainScreenParent);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(MainScreenScene);
-        window.show();
-    }
 
 
     /** Method to set initial conditions of the controller. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
+
+
 
 }
