@@ -19,7 +19,7 @@
         </Label>
         <VBox layoutX="71.0" layoutY="71.0" prefHeight="254.0" prefWidth="114.0" spacing="21.0">
             <children>
-                <Label text="Generated ID" />
+                <Label text="Customer ID" />
                 <Label text="Name" />
                 <Label text="Address" />
                 <Label text="Postal Code" />

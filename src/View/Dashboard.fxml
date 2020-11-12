@@ -18,8 +18,8 @@
       <Button layoutX="503.0" layoutY="344.0" mnemonicParsing="false" onAction="#logoutButtonClicked" text="Log Out" />
       <Button layoutX="485.0" layoutY="157.0" mnemonicParsing="false" text="Reports" />
       <Button layoutX="39.0" layoutY="279.0" mnemonicParsing="false" onAction="#addButtonClicked" text="Add" />
-      <Button layoutX="99.0" layoutY="279.0" mnemonicParsing="false" text="Modify" />
+      <Button layoutX="99.0" layoutY="279.0" mnemonicParsing="false" onAction="#modifyButtonClicked" text="Modify" />
       <Button layoutX="173.0" layoutY="279.0" mnemonicParsing="false" text="Delete" />
-      <Button layoutX="259.0" layoutY="279.0" mnemonicParsing="false" text="Manage Appointmens" />
+      <Button layoutX="254.0" layoutY="279.0" mnemonicParsing="false" onAction="#appointmentsButtonClicked" text="Manage Appointments" />
    </children>
 </AnchorPane>

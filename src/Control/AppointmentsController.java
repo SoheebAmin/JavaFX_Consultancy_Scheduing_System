@@ -1,24 +1,17 @@
 package Control;
 
 import Model.Customer;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class DashboardController implements Initializable {
+public class AppointmentsController implements Initializable {
 
     // Variables for the Customer Table tableview and columns.
     @FXML private TableView<Customer> customersTableView;
@@ -29,22 +22,18 @@ public class DashboardController implements Initializable {
 
     /** This method allows the user to add a customer */
     public void addButtonClicked(ActionEvent event) throws IOException {
-        Methods.changeScene(event, "../View/AddCustomer.fxml");
+        Methods.changeScene(event, "../View/AddAppointment.fxml");
     }
 
-    /** This method allows the user to modify a customer */
+    /** This method allows the user to add a customer */
     public void modifyButtonClicked(ActionEvent event) throws IOException {
-        Methods.changeScene(event, "../View/modifyCustomer.fxml");
+        Methods.changeScene(event, "../View/modifyAppointment.fxml");
     }
 
-    /** This method allows the user to modify a customer */
-    public void appointmentsButtonClicked(ActionEvent event) throws IOException {
-        Methods.changeScene(event, "../View/Appointments.fxml");
-    }
 
     /** This method exits the program via the Exit button */
-    public void logoutButtonClicked(ActionEvent event) throws IOException {
-        Methods.changeScene(event, "../View/Login.fxml");
+    public void cancelButtonClicked(ActionEvent event) throws IOException {
+        Methods.changeScene(event, "../View/Dashboard.fxml");
     }
 
 
