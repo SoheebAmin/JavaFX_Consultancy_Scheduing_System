@@ -39,7 +39,7 @@ public class DashboardController implements Initializable {
 
     /** This method allows the user to modify a customer */
     public void appointmentsButtonClicked(ActionEvent event) throws IOException {
-        Methods.changeScene(event, "../View/Appointments.fxml");
+        Methods.changeScene(event, "../View/AppointmentDashboard.fxml");
     }
 
     /** This method exits the program via the Exit button */

@@ -33,7 +33,7 @@ public class AppointmentsController implements Initializable {
 
     /** This method exits the program via the Exit button */
     public void cancelButtonClicked(ActionEvent event) throws IOException {
-        Methods.changeScene(event, "../View/Dashboard.fxml");
+        Methods.changeScene(event, "../View/CustomerDashboard.fxml");
     }
 
 

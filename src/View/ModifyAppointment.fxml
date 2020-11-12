@@ -20,32 +20,34 @@
         <VBox layoutX="71.0" layoutY="71.0" prefHeight="406.0" prefWidth="114.0" spacing="21.0">
             <children>
                 <Label text="Appointment ID" />
+                <Label text="Customer ID" />
                 <Label text="Title" />
-                <Label text="Type" />
                 <Label text="Description" />
                 <Label text="Location" />
+                <Label text="Type" />
                 <Label fx:id="finalLabel" prefHeight="18.0" prefWidth="106.0" text="Contact" />
-            <Label fx:id="finalLabel1" prefHeight="18.0" prefWidth="106.0" text="Date" />
-            <Label fx:id="finalLabel11" prefHeight="18.0" prefWidth="106.0" text="Start Time" />
-            <Label fx:id="finalLabel111" prefHeight="18.0" prefWidth="106.0" text="End Time" />
+                <Label fx:id="finalLabel1" prefHeight="18.0" prefWidth="106.0" text="Date" />
+                <Label fx:id="finalLabel11" prefHeight="18.0" prefWidth="106.0" text="Start Time" />
+                <Label fx:id="finalLabel111" prefHeight="18.0" prefWidth="106.0" text="End Time" />
             </children>
         </VBox>
         <VBox layoutX="172.0" layoutY="71.0" prefHeight="406.0" prefWidth="224.0" spacing="12.0">
             <children>
                 <TextField fx:id="idText" disable="true" editable="false" promptText="Auto Generated" />
-                <TextField fx:id="nameText" />
-                <TextField fx:id="inventoryText" />
+                <ComboBox prefHeight="26.0" prefWidth="223.0" />
                 <TextField fx:id="priceText" />
                 <TextField fx:id="maxText" />
-            <ComboBox prefWidth="150.0" />
-            <ComboBox prefWidth="150.0" />
-            <ComboBox prefWidth="150.0" />
-            <ComboBox prefWidth="150.0" />
+                <ComboBox prefHeight="26.0" prefWidth="225.0" />
+                <ComboBox prefHeight="26.0" prefWidth="225.0" />
+                <ComboBox prefHeight="26.0" prefWidth="225.0" />
+                <ComboBox prefHeight="26.0" prefWidth="225.0" />
+                <ComboBox prefHeight="26.0" prefWidth="225.0" />
+                <ComboBox prefHeight="26.0" prefWidth="225.0" />
             </children>
         </VBox>
         <Button fx:id="saveButton" layoutX="453.0" layoutY="446.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />
-      <Label layoutX="424.0" layoutY="15.0" text="For Customer 001 John Doe" />
-      <Label layoutX="426.0" layoutY="41.0" text="Current User: Test" />
+        <Label layoutX="412.0" layoutY="24.0" text="Current User: " />
+        <Label layoutX="494.0" layoutY="24.0" prefHeight="18.0" prefWidth="73.0" text="Test" />
     </children>
 
 </AnchorPane>

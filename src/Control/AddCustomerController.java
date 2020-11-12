@@ -22,13 +22,13 @@ public class AddCustomerController implements Initializable {
 
 
     public void saveButtonClicked(ActionEvent event) throws IOException {
-        Methods.changeScene(event, "../View/Dashboard.fxml");
+        Methods.changeScene(event, "../View/CustomerDashboard.fxml");
     }
 
 
     /** This method returns to the MainScreenController without making any changes to the Inventory class. */
     public void cancelButtonClicked(ActionEvent event) throws IOException {
-        Methods.changeScene(event, "../View/Dashboard.fxml");
+        Methods.changeScene(event, "../View/CustomerDashboard.fxml");
     }
 
 
