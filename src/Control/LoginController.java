@@ -1,5 +1,6 @@
 package Control;
 
+import Utils.ControllerMethods;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -16,7 +17,7 @@ public class LoginController implements Initializable {
     /** This method that checks the validity of the login attempt */
     public void loginButtonClicked(){
         // TO DO
-        Methods.errorDialogueBox("Log in attempt failed.");
+        ControllerMethods.errorDialogueBox("Log in attempt failed.");
     }
 
     /** This method exits the program via the Exit button */

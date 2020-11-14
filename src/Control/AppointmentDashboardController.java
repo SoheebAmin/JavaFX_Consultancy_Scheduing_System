@@ -1,6 +1,7 @@
 package Control;
 
 import Model.Customer;
+import Utils.ControllerMethods;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,18 +23,18 @@ public class AppointmentDashboardController implements Initializable {
 
     /** This method allows the user to add a customer */
     public void addButtonClicked(ActionEvent event) throws IOException {
-        Methods.changeScene(event, "../View/AddAppointment.fxml");
+        ControllerMethods.changeScene(event, "../View/AddAppointment.fxml");
     }
 
     /** This method allows the user to add a customer */
     public void modifyButtonClicked(ActionEvent event) throws IOException {
-        Methods.changeScene(event, "../View/modifyAppointment.fxml");
+        ControllerMethods.changeScene(event, "../View/modifyAppointment.fxml");
     }
 
 
     /** This method exits the program via the Exit button */
     public void cancelButtonClicked(ActionEvent event) throws IOException {
-        Methods.changeScene(event, "../View/CustomerDashboard.fxml");
+        ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
     }
 
 
