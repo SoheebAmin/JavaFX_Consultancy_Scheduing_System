@@ -10,12 +10,12 @@ public class DBQuery {
     private static Statement statement;
 
     // create a statement object
-    public static void setStatement(Connection conn) throws SQLException {
-        statement = conn.createStatement();
+    public static void setPreparedStatement(Connection conn, String SQLStatement) throws SQLException {
+        statement = conn.prepareStatement(SQLStatement);
     }
 
     // Return statement object
-    public static Statement getStatement() {
+    public static Statement getPreparedStatement() {
         return statement;
     }
 }
