@@ -31,10 +31,15 @@ public class Main extends Application {
         DBQuery.setStatement(conn);
         Statement statement = DBQuery.getStatement();
 
-        String insertStatement = "INSERT INTO countries(Country, Create_Date, Created_By, Last_Updated_By) VALUES('Test_Country','2020-02-02 00:00:10', 'admin', 'admin');";
+        String insertStatement = "INSERT INTO countries(Country, Create_Date, Created_By, Last_Updated_By) VALUES('Test_Country','2020-20-02 00:00:10', 'admin', 'admin');";
 
-        // Execute SQL statement
-        statement.execute(insertStatement);
+        // Try to execute SQL statement, and gets the error if there is data incorrectly entered.
+        try {
+            statement.execute(insertStatement);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
 
         // Confirm number of rows affected
         int rows = statement.getUpdateCount();
@@ -50,9 +55,10 @@ public class Main extends Application {
 
         while(resultSet.next()) // a boolean function that remains true until we scroll through each record
         {
-            String country = resultSet.getString("country"); // Go to Vid 2, 28:03, to see all types.
+            String country = resultSet.getString("country");
             System.out.println(country);
         }
+        // Go to Vid 2, 28:03, to see all types, including conversions to local datetime.
 
 
         // launches JavaFX App
@@ -62,3 +68,4 @@ public class Main extends Application {
         DBConnection.closeConnection();
     }
 }
+

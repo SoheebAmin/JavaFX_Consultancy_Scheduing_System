@@ -13,7 +13,6 @@ public class ModifyCustomerController implements Initializable {
     // Variables for the fields to be filled in.
 
 
-
     public void saveButtonClicked(ActionEvent event) throws IOException {
         ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
     }
