@@ -1,5 +1,12 @@
+/** This is just what the main class used to be when practicing SQL statements.
+ This class just serves as a record and reference and can be safely deleted. */
+
+/*
+
 package Utils;
 
+import Utils.DBConnection;
+import Utils.DBQuery;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,11 +17,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/** This is just what the main class used to be when practicing SQL statements.
-    This class just serves as a record and reference and can be safely deleted. */
+
 public class OldMain {
 
-    //@Override
+    @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("View/CustomerDashboard.fxml"));
         primaryStage.setTitle("Login");
@@ -22,7 +28,7 @@ public class OldMain {
         primaryStage.show();
     }
 
-    /** Starts the DB connection, launches the application, and then closes the DB when the application is closed. */
+    // Starts the DB connection, launches the application, and then closes the DB when the application is closed.
     public static void main(String[] args) throws SQLException {
 
         // Starts DB connection
@@ -63,10 +69,12 @@ public class OldMain {
 
 
         // launches JavaFX App
-        //launch(args);
+        launch(args);
 
         // Closes DB connection
         DBConnection.closeConnection();
     }
 }
+
+*/
 
