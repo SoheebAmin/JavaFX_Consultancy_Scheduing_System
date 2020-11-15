@@ -31,35 +31,27 @@ public class Main extends Application {
         DBQuery.setStatement(conn);
         Statement statement = DBQuery.getStatement();
 
-        String insertStatement = "INSERT INTO countries(Country, Create_Date, Created_By, Last_Updated_By) VALUES('Test_Country','2020-20-02 00:00:10', 'admin', 'admin');";
+        // Variables for any data to be entered into the country table
+        String Country, Created_Date, Created_By, Last_Updated_By;
+
+
+
+        String insertStatement = "INSERT INTO countries(Country, Create_Date, Created_By, Last_Updated_By) VALUES('Test_Country','2020-01-02 00:00:10', 'admin', 'admin');";
 
         // Try to execute SQL statement, and gets the error if there is data incorrectly entered.
         try {
             statement.execute(insertStatement);
+
+            // Confirm number of rows affected
+            int rows = statement.getUpdateCount();
+            if (rows > 0)
+                System.out.println(rows + " row(s) affected");
+            else
+                System.out.println("Nothing changed");
         }
         catch(Exception e){
             System.out.println(e.getMessage());
         }
-
-        // Confirm number of rows affected
-        int rows = statement.getUpdateCount();
-        if (rows > 0)
-            System.out.println(rows + " row(s) affected");
-        else
-            System.out.println("Nothing changed");
-
-        // Print all countries in the countries table
-        String selectStatement = "SELECT * FROM countries;";
-        statement.execute(selectStatement);
-        ResultSet resultSet = statement.getResultSet();
-
-        while(resultSet.next()) // a boolean function that remains true until we scroll through each record
-        {
-            String country = resultSet.getString("country");
-            System.out.println(country);
-        }
-        // Go to Vid 2, 28:03, to see all types, including conversions to local datetime.
-
 
         // launches JavaFX App
         launch(args);
