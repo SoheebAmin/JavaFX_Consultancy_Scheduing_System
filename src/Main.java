@@ -24,7 +24,7 @@ public class Main extends Application {
         // Starts DB connection
         Connection conn = DBConnection.startConnection();
 
-        // Prepared Insert Statement for countries table
+        // Prepared Insert Statement for selecting all the data needed to populate the
         String insertStatement = "INSERT INTO countries(Country, Create_Date, Created_By, Last_Updated_By) VALUES(?,?,?,?);";
 
         // Create the prepared Statement Object
