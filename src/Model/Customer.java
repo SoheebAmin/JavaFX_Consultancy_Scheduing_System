@@ -6,7 +6,10 @@ import javafx.collections.ObservableList;
 /** This is class for customer objects, based on the data required to add a customer record to the database. */
 public abstract class Customer {
 
+    // list of appointments to keep track of each customer's appointments.
     private ObservableList<?> allAppointments = FXCollections.observableArrayList();
+
+    // the fields that define the data within every customer object.
     private int cID;
     private String name;
     private String address;
