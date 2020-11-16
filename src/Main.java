@@ -1,3 +1,5 @@
+import Model.Customer;
+import Model.ProgramData;
 import Utils.DBConnection;
 import Utils.DBQuery;
 import javafx.application.Application;
@@ -59,9 +61,13 @@ public class Main extends Application {
         catch(Exception e){
             System.out.println(e.getMessage());
         }
+        // Test customer
+        Customer testCustomer = new Customer(12, "Ted", "Ted Street", 12345, "212-212-2122", "US","New York");
+        ProgramData.addCustomer(testCustomer);
 
-        // launches JavaFX App
-        launch(args);
+
+                // launches JavaFX App
+                launch(args);
 
         // Closes DB connection
         DBConnection.closeConnection();

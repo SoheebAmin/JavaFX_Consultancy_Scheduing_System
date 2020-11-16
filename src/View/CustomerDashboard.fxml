@@ -9,13 +9,13 @@
    <children>
       <TableView fx:id="customersTableView" layoutX="39.0" layoutY="64.0" prefHeight="266.0" prefWidth="833.0">
         <columns>
-          <TableColumn fx:id="cidCol" prefWidth="75.0" text="C. ID" />
-          <TableColumn fx:id="cNameCol" prefWidth="146.39998626708984" text="Customer Name" />
-            <TableColumn fx:id="cNameCol2" prefWidth="152.0" text="Address" />
-            <TableColumn fx:id="cPhoneCol" prefWidth="120.00003051757812" text="Phone Number" />
-            <TableColumn fx:id="cNameCol1" prefWidth="92.00006103515625" text="Postal Code" />
-            <TableColumn fx:id="cNameCol11" prefWidth="118.4000244140625" text="FLD" />
-            <TableColumn fx:id="cNameCol111" prefWidth="127.199951171875" text="Country" />
+            <TableColumn fx:id="cIDCol" prefWidth="66.4000244140625" text="C. ID" />
+          <TableColumn fx:id="nameCol" prefWidth="172.7999496459961" text="Customer Name" />
+            <TableColumn fx:id="addressCol" prefWidth="152.0" text="Address" />
+            <TableColumn fx:id="phoneCol" prefWidth="120.00003051757812" text="Phone Number" />
+            <TableColumn fx:id="postalCol" prefWidth="92.00006103515625" text="Postal Code" />
+            <TableColumn fx:id="divisionCol" prefWidth="118.4000244140625" text="Division" />
+            <TableColumn fx:id="countryCol" prefWidth="127.199951171875" text="Country" />
         </columns>
       </TableView>
       <Button layoutX="813.0" layoutY="356.0" mnemonicParsing="false" onAction="#logoutButtonClicked" text="Log Out" />
