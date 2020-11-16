@@ -2,6 +2,7 @@ import Model.Customer;
 import Model.ProgramData;
 import Utils.DBConnection;
 import Utils.DBQuery;
+import Utils.SQLCommand;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -61,13 +62,18 @@ public class Main extends Application {
         catch(Exception e){
             System.out.println(e.getMessage());
         }
+
         // Test customer
-        Customer testCustomer = new Customer(12, "Ted", "Ted Street", 12345, "212-212-2122", "US","New York");
-        ProgramData.addCustomer(testCustomer);
+        //Customer testCustomer = new Customer(12, "Ted", "Ted Street", 12345, "212-212-2122", "US","New York");
+        //ProgramData.addCustomer(testCustomer);
 
+        // Add all the customers in the database to the customers tableview
+        SQLCommand.populateCustomersTable(conn);
 
-                // launches JavaFX App
-                launch(args);
+        // Add all the appointments in the database to the appointments tableview
+
+        // launches JavaFX App
+        launch(args);
 
         // Closes DB connection
         DBConnection.closeConnection();
