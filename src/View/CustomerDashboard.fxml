@@ -5,20 +5,24 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.CustomerDashboardController">
+<AnchorPane prefHeight="400.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.CustomerDashboardController">
    <children>
-      <TableView fx:id="customersTableView" layoutX="39.0" layoutY="64.0" prefHeight="266.0" prefWidth="526.0">
+      <TableView fx:id="customersTableView" layoutX="39.0" layoutY="64.0" prefHeight="266.0" prefWidth="833.0">
         <columns>
           <TableColumn fx:id="cidCol" prefWidth="75.0" text="C. ID" />
-          <TableColumn fx:id="cNameCol" prefWidth="146.4000244140625" text="Customer Name" />
-            <TableColumn fx:id="cPhoneCol" prefWidth="146.4000244140625" text="Phone Number" />
+          <TableColumn fx:id="cNameCol" prefWidth="146.39998626708984" text="Customer Name" />
+            <TableColumn fx:id="cNameCol2" prefWidth="152.0" text="Address" />
+            <TableColumn fx:id="cPhoneCol" prefWidth="120.00003051757812" text="Phone Number" />
+            <TableColumn fx:id="cNameCol1" prefWidth="92.00006103515625" text="Postal Code" />
+            <TableColumn fx:id="cNameCol11" prefWidth="118.4000244140625" text="FLD" />
+            <TableColumn fx:id="cNameCol111" prefWidth="127.199951171875" text="Country" />
         </columns>
       </TableView>
-      <Button layoutX="517.0" layoutY="350.0" mnemonicParsing="false" onAction="#logoutButtonClicked" text="Log Out" />
-      <Button layoutX="40.0" layoutY="23.0" mnemonicParsing="false" text="Reports" />
+      <Button layoutX="813.0" layoutY="356.0" mnemonicParsing="false" onAction="#logoutButtonClicked" text="Log Out" />
+      <Button layoutX="650.0" layoutY="23.0" mnemonicParsing="false" text="Reports" />
       <Button layoutX="39.0" layoutY="343.0" mnemonicParsing="false" onAction="#addButtonClicked" text="Add" />
       <Button layoutX="89.0" layoutY="343.0" mnemonicParsing="false" onAction="#modifyButtonClicked" text="Modify" />
       <Button layoutX="178.0" layoutY="343.0" mnemonicParsing="false" text="Delete" />
-      <Button layoutX="417.0" layoutY="23.0" mnemonicParsing="false" onAction="#appointmentsButtonClicked" text="Appointment Dashboard" />
+      <Button layoutX="724.0" layoutY="23.0" mnemonicParsing="false" onAction="#appointmentsButtonClicked" text="Appointment Dashboard" />
    </children>
 </AnchorPane>
