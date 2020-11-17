@@ -13,12 +13,12 @@ public class Customer {
     private int id;
     private String name;
     private String address;
-    private int postal;
+    private String postal;
     private String phone;
     private String country;
     private String division;
 
-    public Customer(int id, String name, String address, int postal, String phone, String country, String division) {
+    public Customer(int id, String name, String address, String postal, String phone, String country, String division) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -60,11 +60,11 @@ public class Customer {
         this.address = address;
     }
 
-    public int getPostal() {
+    public String getPostal() {
         return postal;
     }
 
-    public void setPostal(int postal) {
+    public void setPostal(String postal) {
         this.postal = postal;
     }
 
