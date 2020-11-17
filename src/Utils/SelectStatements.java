@@ -2,7 +2,10 @@ package Utils;
 
 import Model.Appointment;
 import Model.Customer;
-import Model.RuntimeObservableLists;
+import Model.ObjectLists;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +17,7 @@ public class SelectStatements {
 
     public static boolean populateCustomersTable(Connection conn){
 
-         // Prepared Insert Statement for countries table
+         // Prepared select statement for customers table
          String selectStatement = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division, Country FROM customers AS Cs, first_level_divisions AS F, countries Ct\n" +
                                   "WHERE Cs.Division_ID = F.Division_ID AND F.COUNTRY_ID = Ct.Country_ID;";
 
@@ -48,7 +51,7 @@ public class SelectStatements {
                  Country = resultSet.getString("Country");
 
                  Customer customer = new Customer(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Country, Division);
-                 RuntimeObservableLists.addCustomer(customer);
+                 ObjectLists.addCustomer(customer);
              }
              // return true if the SQL statement executed successfully.
              return true;
@@ -61,7 +64,7 @@ public class SelectStatements {
 
     public static boolean populateAppointmentsTable(Connection conn){
 
-        // Prepared Insert Statement for countries table
+        // Prepared select statement for appointments table
         String selectStatement = "SELECT * FROM appointments;";
 
         try {
@@ -96,7 +99,7 @@ public class SelectStatements {
                 User_ID = resultSet.getInt("User_ID");
 
                 Appointment appointment= new Appointment(Appointment_ID, Title, Location, Description, Type, Start, End, Customer_ID, Contact_ID, User_ID);
-                RuntimeObservableLists.addAppointment(appointment);
+                ObjectLists.addAppointment(appointment);
             }
             // return true if the SQL statement executed successfully.
             return true;
@@ -104,6 +107,41 @@ public class SelectStatements {
         catch (SQLException e) {
             System.out.println(e.getMessage());
             return false;
+        }
+    }
+
+    public static ObservableList<String> getComboBoxList(Connection conn, String table, String column){
+        // list to populate
+        ObservableList<String> CBItems = FXCollections.observableArrayList();
+
+        // Prepared select statement for countries
+        String selectStatement = "SELECT " + column + " FROM " + table + ";";
+
+        try {
+            // Create the prepared Statement Object
+            DBQuery.setPreparedStatement(conn, selectStatement);
+
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+
+            // variable to populate
+            String comboItem;
+
+            // execute command to get desired data for the combo boxes
+            preparedStatement.execute(selectStatement);
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+
+            while(resultSet.next()) // a boolean function that remains true until we scroll through each record
+            {
+                comboItem = resultSet.getString(column);
+                CBItems.add(comboItem);
+            }
+            // return true if the SQL statement executed successfully.
+            return CBItems;
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 
