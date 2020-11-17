@@ -38,22 +38,6 @@ public class AddCustomerController implements Initializable {
     private static String selectedCountry = "";
 
 
-    public boolean saveButtonClicked(ActionEvent event) throws IOException {
-
-        if(AddCustomerController.selectedCountry == "")
-        {
-            ControllerMethods.errorDialogueBox("You must select country and then a first level division!");
-            return false;
-        }
-
-        // clear the current customers observable list, and fetch them again from the database BUT NEED TO ACTUALLY ADD TO DB JUST ABOVE THIS
-        ObjectLists.clearAllCustomers();
-        Connection conn = DBConnection.getConn();
-        SelectStatements.populateCustomersTable(conn);
-
-        ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
-        return true;
-    }
 
     public void countryCBSelected() {
         // selects all countries currently in the database
@@ -65,7 +49,6 @@ public class AddCustomerController implements Initializable {
     public void countryCBSet() {
         AddCustomerController.selectedCountry = countryCB.getSelectionModel().getSelectedItem().toString();
     }
-
 
     public void divisionCBSelected() {
         if(AddCustomerController.selectedCountry == "")
@@ -81,9 +64,27 @@ public class AddCustomerController implements Initializable {
         divisionCB.setItems(divisionCBItems);
     }
 
+    public boolean saveButtonClicked(ActionEvent event) throws IOException {
+
+        if(AddCustomerController.selectedCountry == "")
+        {
+            ControllerMethods.errorDialogueBox("You must select country and then a first level division!");
+            return false;
+        }
+
+        // clear the current customers observable list, and fetch them again from the database BUT NEED TO ACTUALLY ADD TO DB JUST ABOVE THIS
+        ObjectLists.clearAllCustomers();
+        Connection conn = DBConnection.getConn();
+        SelectStatements.populateCustomersTable(conn);
+
+        AddCustomerController.selectedCountry = ""; // cleared for next use.
+        ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
+        return true;
+    }
+
     /** This method returns to the MainScreenController without making any changes to the Inventory class. */
     public void cancelButtonClicked(ActionEvent event) throws IOException {
-        AddCustomerController.selectedCountry = "";
+        AddCustomerController.selectedCountry = ""; // cleared for next use.
         ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
     }
 
