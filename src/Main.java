@@ -1,3 +1,5 @@
+import Model.RuntimeObjects;
+import Model.User;
 import Utils.DBConnection;
 import Utils.DBQuery;
 import Utils.SelectStatements;
@@ -68,11 +70,13 @@ public class Main extends Application {
 
         // Test customer
         //Customer testCustomer = new Customer(12, "Ted", "Ted Street", 12345, "212-212-2122", "US","New York");
-        //ProgramData.addCustomer(testCustomer);
 
         // Test Appointment
         //Appointment testAppointment = new Appointment(15, "Test", "Test Land", "Cool", "Okay", null, null, 31, 32, 33);
-        //ProgramData.addAppointment(testAppointment);
+
+        // Test User
+        User user = new User(1, "test", "test");
+        RuntimeObjects.setCurrentUser(user);
 
         // Add all the customers in the database to the customers and appointments tableview
         SelectStatements.populateCustomersTable(conn);

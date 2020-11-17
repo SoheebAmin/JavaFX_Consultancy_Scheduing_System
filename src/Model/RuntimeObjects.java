@@ -3,7 +3,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**This class grabs the customers and appointments in the database at program run time, and also is updated as changes are made during the life of the application. */
-public class ObjectLists {
+public class RuntimeObjects {
+
+    private static User currentUser;
 
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -20,11 +22,11 @@ public class ObjectLists {
     }
 
     public static void deleteCustomer(Customer customer) {
-        ObjectLists.getAllCustomers().remove(customer);
+        RuntimeObjects.getAllCustomers().remove(customer);
     }
 
     public static void deleteAppointment(Appointment appointment) {
-        ObjectLists.getAllAppointments().remove(appointment);
+        RuntimeObjects.getAllAppointments().remove(appointment);
     }
 
     public static void clearAllCustomers() {
@@ -36,14 +38,23 @@ public class ObjectLists {
     }
 
 
-    // The getters
+    // The getters for customers and appointments
+
     public static ObservableList<Customer> getAllCustomers() {
         return allCustomers;
     }
-
 
     public static ObservableList<Appointment> getAllAppointments() {
         return allAppointments;
     }
 
+    // the getters and setters for the current users
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(User currentUser) {
+        RuntimeObjects.currentUser = currentUser;
+    }
 }

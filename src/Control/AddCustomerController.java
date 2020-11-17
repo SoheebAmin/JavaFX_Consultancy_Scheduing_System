@@ -1,7 +1,6 @@
 package Control;
 
-import Model.Customer;
-import Model.ObjectLists;
+import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
 import Utils.SelectStatements;
@@ -38,34 +37,46 @@ public class AddCustomerController implements Initializable {
     private static String selectedCountry = "";
 
 
-
+    /** This method populates the country combo box. */
     public void countryCBSelected() {
-        // selects all countries currently in the database
+        // calls methods to generate list of countries from the DB with an SQL select
         countryCBItems = SelectStatements.getComboBoxList(DBConnection.getConn(), "SELECT Country FROM countries;", "Country");
+
+        // sets the list in the combo box
         countryCB.setItems(countryCBItems);
     }
 
-    /** This method is to set which country has been selected, so that it can be checked by the division combo box before selecting the appropriate divisions from the database. */
+    /** This method sets which country is selected to a field in the class, to be referenced by other methods that need it. */
     public void countryCBSet() {
         AddCustomerController.selectedCountry = countryCB.getSelectionModel().getSelectedItem().toString();
     }
 
+    /** This method populates the division combo box with the correct divisions on the selected country. */
     public void divisionCBSelected() {
+
+        // checks to see if a country has been selected already.
         if(AddCustomerController.selectedCountry == "")
         {
             ControllerMethods.errorDialogueBox("You must select country before you can select a division!");
         }
-        // checks to see which country is currently selected in the country combo box.
+
+        // adds the current country to the SQL statement to select the first division combo box items
         String SQLStatement = "SELECT Division\n" +
                 "FROM first_level_divisions F, countries C\n" +
                 "WHERE F.COUNTRY_ID = C.Country_ID\n" +
                 "AND Country = \"" + AddCustomerController.selectedCountry + "\";";
+
+        // calls method to generate list of items for combo box pulled from the DB with an SQL select
         divisionCBItems = SelectStatements.getComboBoxList(DBConnection.getConn(), SQLStatement, "Division");
+
+        // sets the list in the combo box
         divisionCB.setItems(divisionCBItems);
     }
 
+    /** After validating the entries, this methods adds a new record into the database and refreshes it. */
     public boolean saveButtonClicked(ActionEvent event) throws IOException {
 
+        // check if country is empty
         if(AddCustomerController.selectedCountry == "")
         {
             ControllerMethods.errorDialogueBox("You must select country and then a first level division!");
@@ -73,7 +84,7 @@ public class AddCustomerController implements Initializable {
         }
 
         // clear the current customers observable list, and fetch them again from the database BUT NEED TO ACTUALLY ADD TO DB JUST ABOVE THIS
-        ObjectLists.clearAllCustomers();
+        RuntimeObjects.clearAllCustomers();
         Connection conn = DBConnection.getConn();
         SelectStatements.populateCustomersTable(conn);
 

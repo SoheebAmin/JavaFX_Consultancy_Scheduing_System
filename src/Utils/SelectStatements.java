@@ -2,10 +2,9 @@ package Utils;
 
 import Model.Appointment;
 import Model.Customer;
-import Model.ObjectLists;
+import Model.RuntimeObjects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,7 +50,7 @@ public class SelectStatements {
                  Country = resultSet.getString("Country");
 
                  Customer customer = new Customer(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Country, Division);
-                 ObjectLists.addCustomer(customer);
+                 RuntimeObjects.addCustomer(customer);
              }
              // return true if the SQL statement executed successfully.
              return true;
@@ -99,7 +98,7 @@ public class SelectStatements {
                 User_ID = resultSet.getInt("User_ID");
 
                 Appointment appointment= new Appointment(Appointment_ID, Title, Location, Description, Type, Start, End, Customer_ID, Contact_ID, User_ID);
-                ObjectLists.addAppointment(appointment);
+                RuntimeObjects.addAppointment(appointment);
             }
             // return true if the SQL statement executed successfully.
             return true;
