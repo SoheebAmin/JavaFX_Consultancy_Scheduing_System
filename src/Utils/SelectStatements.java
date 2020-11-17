@@ -109,7 +109,7 @@ public class SelectStatements {
         }
     }
 
-    public static ObservableList<String> getComboBoxList(Connection conn, String SQLStatement, String comboBoxColumn) {
+    public static ObservableList<String> getComboBoxList(Connection conn, String SQLStatement, String column) {
         // list to populate
         ObservableList<String> CBItems = FXCollections.observableArrayList();
 
@@ -132,7 +132,7 @@ public class SelectStatements {
 
             while(resultSet.next()) // a boolean function that remains true until we scroll through each record
             {
-                comboItem = resultSet.getString(comboBoxColumn);
+                comboItem = resultSet.getString(column);
                 CBItems.add(comboItem);
             }
             // return true if the SQL statement executed successfully.
@@ -141,6 +141,35 @@ public class SelectStatements {
         catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    public static int getId(Connection conn, String SQLStatement, String column) {
+
+        // Prepared select statement to grab the int
+        String selectStatement = SQLStatement;
+
+        try {
+            // Create the prepared Statement Object
+            DBQuery.setPreparedStatement(conn, selectStatement);
+
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+
+            // int to return
+            int id;
+
+            // execute command to get desired data for the combo boxes
+            preparedStatement.execute(selectStatement);
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+            id = resultSet.getInt(column);
+
+            // return if the SQL statement executed successfully.
+            return id;
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return 1;
         }
     }
 

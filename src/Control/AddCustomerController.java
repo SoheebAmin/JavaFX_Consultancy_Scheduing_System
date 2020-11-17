@@ -76,19 +76,41 @@ public class AddCustomerController implements Initializable {
     /** After validating the entries, this methods adds a new record into the database and refreshes it. */
     public boolean saveButtonClicked(ActionEvent event) throws IOException {
 
-        // check if country is empty
+        // grab the auto-Id by checking the max ID in the DB and adding 1 to it.
+        int id = SelectStatements.getId(DBConnection.getConn(), "SELECT max(Customer_ID)+1 AS Customer_ID FROM customers;", "Customer_ID");
+
+        // error check and then add customer name
+
+
+        // error check, and then add customer address
+
+        // error check, and then add postal code
+
+        // error check, and then add phone number
+
+        // check if country is empty. If not, add the country
         if(AddCustomerController.selectedCountry == "")
         {
             ControllerMethods.errorDialogueBox("You must select country and then a first level division!");
             return false;
         }
+        // CODE TO ADD SELECTED COUNTRY HERE
+
+
+        // check if country is first level division is empty. If not, add the first level division.
+        if("SOMETHING" != "SOMETHING")
+        {
+            ControllerMethods.errorDialogueBox("You must select select a first level division!");
+            return false;
+        }
+        // CODE TO ADD SELECTED FIRST LEVEL DIVISION HERE
 
         // clear the current customers observable list, and fetch them again from the database BUT NEED TO ACTUALLY ADD TO DB JUST ABOVE THIS
         RuntimeObjects.clearAllCustomers();
         Connection conn = DBConnection.getConn();
         SelectStatements.populateCustomersTable(conn);
 
-        AddCustomerController.selectedCountry = ""; // cleared for next use.
+        AddCustomerController.selectedCountry = ""; // clear the selected country for next use.
         ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
         return true;
     }
