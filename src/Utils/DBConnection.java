@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBConnection {
+public abstract class DBConnection {
 
     // JDBC URL Parts
     private static final String protocol = "jdbc";
@@ -49,6 +49,10 @@ public class DBConnection {
         catch(SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static Connection getConn() {
+        return conn;
     }
 
 }

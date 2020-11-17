@@ -2,7 +2,7 @@ package Utils;
 
 import Model.Appointment;
 import Model.Customer;
-import Model.ProgramData;
+import Model.RuntimeObservableLists;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-public class PopulateCommands {
+public class SelectStatements {
 
     public static boolean populateCustomersTable(Connection conn){
 
@@ -48,7 +48,7 @@ public class PopulateCommands {
                  Country = resultSet.getString("Country");
 
                  Customer customer = new Customer(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Country, Division);
-                 ProgramData.addCustomer(customer);
+                 RuntimeObservableLists.addCustomer(customer);
              }
              // return true if the SQL statement executed successfully.
              return true;
@@ -96,7 +96,7 @@ public class PopulateCommands {
                 User_ID = resultSet.getInt("User_ID");
 
                 Appointment appointment= new Appointment(Appointment_ID, Title, Location, Description, Type, Start, End, Customer_ID, Contact_ID, User_ID);
-                ProgramData.addAppointment(appointment);
+                RuntimeObservableLists.addAppointment(appointment);
             }
             // return true if the SQL statement executed successfully.
             return true;

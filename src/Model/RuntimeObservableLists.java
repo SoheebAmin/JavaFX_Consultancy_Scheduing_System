@@ -1,10 +1,9 @@
 package Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.FXCollections;
 
 /**This class grabs the customers and appointments in the database at program run time, and also is updated as changes are made during the life of the application. */
-public class ProgramData {
+public class RuntimeObservableLists {
 
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -21,12 +20,23 @@ public class ProgramData {
     }
 
     public static void deleteCustomer(Customer customer) {
-        ProgramData.getAllCustomers().remove(customer);
+        RuntimeObservableLists.getAllCustomers().remove(customer);
+    }
+
+    public static void deleteAppointment(Appointment appointment) {
+        RuntimeObservableLists.getAllAppointments().remove(appointment);
+    }
+
+    public static void clearAllCustomers() {
+        allCustomers.clear();
+    }
+
+    public static void clearAllAppointments() {
+        allAppointments.clear();
     }
 
 
     // The getters
-
     public static ObservableList<Customer> getAllCustomers() {
         return allCustomers;
     }

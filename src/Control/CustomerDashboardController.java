@@ -1,7 +1,7 @@
 package Control;
 
 import Model.Customer;
-import Model.ProgramData;
+import Model.RuntimeObservableLists;
 import Utils.ControllerMethods;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -53,7 +53,7 @@ public class CustomerDashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         // to populate the customer table
-        customersTableView.setItems(ProgramData.getAllCustomers());
+        customersTableView.setItems(RuntimeObservableLists.getAllCustomers());
 
         cIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));

@@ -1,8 +1,7 @@
 package Control;
 
 import Model.Appointment;
-import Model.Customer;
-import Model.ProgramData;
+import Model.RuntimeObservableLists;
 import Utils.ControllerMethods;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,7 +54,7 @@ public class AppointmentDashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         // to populate the customer table
-        appointmentTableView.setItems(ProgramData.getAllAppointments());
+        appointmentTableView.setItems(RuntimeObservableLists.getAllAppointments());
 
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));

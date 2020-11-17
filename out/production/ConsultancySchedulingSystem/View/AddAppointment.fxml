@@ -34,15 +34,15 @@
         <VBox layoutX="172.0" layoutY="71.0" prefHeight="406.0" prefWidth="224.0" spacing="12.0">
             <children>
                 <TextField fx:id="idText" disable="true" editable="false" promptText="Auto Generated" />
-            <ComboBox prefHeight="26.0" prefWidth="223.0" />
-                <TextField fx:id="priceText" />
-                <TextField fx:id="maxText" />
-            <ComboBox prefHeight="26.0" prefWidth="225.0" />
-            <ComboBox prefHeight="26.0" prefWidth="225.0" />
-            <ComboBox prefHeight="26.0" prefWidth="225.0" />
-            <ComboBox prefHeight="26.0" prefWidth="225.0" />
-            <ComboBox prefHeight="26.0" prefWidth="225.0" />
-            <ComboBox prefHeight="26.0" prefWidth="225.0" />
+            <ComboBox fx:id="customerCB" prefHeight="26.0" prefWidth="223.0" />
+                <TextField fx:id="titleText" />
+                <TextField fx:id="desciptionText" />
+            <ComboBox fx:id="locationCB" prefHeight="26.0" prefWidth="225.0" />
+            <ComboBox fx:id="typeCB" prefHeight="26.0" prefWidth="225.0" />
+            <ComboBox fx:id="contactCB" prefHeight="26.0" prefWidth="225.0" />
+            <ComboBox fx:id="dateCB" prefHeight="26.0" prefWidth="225.0" />
+            <ComboBox fx:id="startCB" prefHeight="26.0" prefWidth="225.0" />
+            <ComboBox fx:id="endCB" prefHeight="26.0" prefWidth="225.0" />
             </children>
         </VBox>
         <Button fx:id="saveButton" layoutX="453.0" layoutY="446.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />

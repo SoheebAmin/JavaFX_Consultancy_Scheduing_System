@@ -32,11 +32,11 @@
             <children>
                 <TextField fx:id="idText" disable="true" editable="false" promptText="Auto Generated" />
                 <TextField fx:id="nameText" />
-                <TextField fx:id="inventoryText" />
-                <TextField fx:id="priceText" />
-                <TextField fx:id="maxText" />
-            <ComboBox prefWidth="150.0" />
-            <ComboBox prefWidth="150.0" />
+                <TextField fx:id="addressText" />
+                <TextField fx:id="postalText" />
+                <TextField fx:id="phoneText" />
+            <ComboBox fx:id="countryCB" prefWidth="150.0" />
+            <ComboBox fx:id="divisionCB" prefWidth="150.0" />
             </children>
         </VBox>
         <Button fx:id="saveButton" layoutX="407.0" layoutY="330.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />

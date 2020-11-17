@@ -1,8 +1,6 @@
-import Model.Appointment;
-import Model.ProgramData;
 import Utils.DBConnection;
 import Utils.DBQuery;
-import Utils.PopulateCommands;
+import Utils.SelectStatements;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +10,8 @@ import javafx.stage.Stage;
 import java.sql.*;
 
 public class Main extends Application {
+
+    public static Connection conn;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -26,6 +26,9 @@ public class Main extends Application {
 
         // Starts DB connection
         Connection conn = DBConnection.startConnection();
+
+        // Sets connection a variable in main other classes can access.
+        Main.conn = conn;
 
         // Prepared Insert Statement for selecting all the data needed to populate the
         String insertStatement = "INSERT INTO countries(Country, Create_Date, Created_By, Last_Updated_By) VALUES(?,?,?,?);";
@@ -72,8 +75,8 @@ public class Main extends Application {
         //ProgramData.addAppointment(testAppointment);
 
         // Add all the customers in the database to the customers and appointments tableview
-        PopulateCommands.populateCustomersTable(conn);
-        PopulateCommands.populateAppointmentsTable(conn);
+        SelectStatements.populateCustomersTable(conn);
+        SelectStatements.populateAppointmentsTable(conn);
 
         // Add all the appointments in the database to the appointments tableview
 
