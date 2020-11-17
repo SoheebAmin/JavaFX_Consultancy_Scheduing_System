@@ -21,7 +21,7 @@ public class CustomerDashboardController implements Initializable {
     @FXML private TableColumn<Customer, String>  nameCol;
     @FXML private TableColumn<Customer, String> addressCol;
     @FXML private TableColumn<Customer, Integer> phoneCol;
-    @FXML private TableColumn<Customer, Integer> postalCol;
+    @FXML private TableColumn<Customer, String> postalCol;
     @FXML private TableColumn<Customer, String> divisionCol;
     @FXML private TableColumn<Customer, String> countryCol;
 

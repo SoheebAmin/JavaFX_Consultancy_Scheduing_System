@@ -1,5 +1,6 @@
 package Utils;
 
+import Model.Appointment;
 import Model.Customer;
 import Model.ProgramData;
 
@@ -7,8 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
-public class SQLCommand {
+public class PopulateCommands {
 
     public static boolean populateCustomersTable(Connection conn){
 
@@ -50,6 +52,54 @@ public class SQLCommand {
              }
              // return true if the SQL statement executed successfully.
              return true;
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean populateAppointmentsTable(Connection conn){
+
+        // Prepared Insert Statement for countries table
+        String selectStatement = "SELECT * FROM appointments;";
+
+        try {
+            // Create the prepared Statement Object
+            DBQuery.setPreparedStatement(conn, selectStatement);
+
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+
+            // Variables to be populated by the pulled data.
+            int Appointment_ID, Customer_ID, User_ID, Contact_ID;
+            String Title, Description, Location, Type;
+            LocalDateTime Start, End;
+
+            // execute command to get all data from the customers table;
+            preparedStatement.execute(selectStatement);
+
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+
+
+            while(resultSet.next()) // a boolean function that remains true until we scroll through each record
+            {
+                Appointment_ID = resultSet.getInt("Appointment_ID");
+                Title = resultSet.getString("Title");
+                Location = resultSet.getString("Location");
+                Description = resultSet.getString("Description");
+                Type = resultSet.getString("Type");
+                Start = resultSet.getTimestamp("Start").toLocalDateTime();
+                End = resultSet.getTimestamp("End").toLocalDateTime();
+                Customer_ID = resultSet.getInt("Customer_ID");
+                Contact_ID = resultSet.getInt("Contact_ID");
+                User_ID = resultSet.getInt("User_ID");
+
+                Appointment appointment= new Appointment(Appointment_ID, Title, Location, Description, Type, Start, End, Customer_ID, Contact_ID, User_ID);
+                ProgramData.addAppointment(appointment);
+            }
+            // return true if the SQL statement executed successfully.
+            return true;
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());

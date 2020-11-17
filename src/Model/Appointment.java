@@ -1,42 +1,41 @@
 package Model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import java.time.LocalDateTime;
 
 public class Appointment {
 
     // the fields that define the data within every customer object.
-    private int aID;
+    private int id;
     private String title;
-    private String location;;
+    private String location;
     private String description;
     private String type;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private int cID;
-    private int ctID;
+    private int customerId;
+    private int contactId;
+    private int userId;
 
 
-    public Appointment(int aID, String title, String location, String description, String type, LocalDateTime startTime, LocalDateTime endTime, int cID, int ctID) {
-        this.aID = aID;
+    public Appointment(int id, String title, String location, String description, String type, LocalDateTime startTime, LocalDateTime endTime, int customerId, int contactId, int userId) {
+        this.id = id;
         this.title = title;
         this.location = location;
         this.description = description;
         this.type = type;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.cID = cID;
-        this.ctID = ctID;
+        this.customerId = customerId;
+        this.contactId = contactId;
+        this.userId = userId;
     }
 
-    public int getaID() {
-        return aID;
+    public int getId() {
+        return id;
     }
 
-    public void setaID(int aID) {
-        this.aID = aID;
+    public void setId(int aID) {
+        this.id = aID;
     }
 
     public String getTitle() {
@@ -87,19 +86,27 @@ public class Appointment {
         this.endTime = endTime;
     }
 
-    public int getcID() {
-        return cID;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setcID(int cID) {
-        this.cID = cID;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
-    public int getCtID() {
-        return ctID;
+    public int getContactId() {
+        return contactId;
     }
 
-    public void setCtID(int ctID) {
-        this.ctID = ctID;
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

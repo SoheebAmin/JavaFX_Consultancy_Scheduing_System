@@ -1,8 +1,8 @@
-import Model.Customer;
+import Model.Appointment;
 import Model.ProgramData;
 import Utils.DBConnection;
 import Utils.DBQuery;
-import Utils.SQLCommand;
+import Utils.PopulateCommands;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -67,8 +67,13 @@ public class Main extends Application {
         //Customer testCustomer = new Customer(12, "Ted", "Ted Street", 12345, "212-212-2122", "US","New York");
         //ProgramData.addCustomer(testCustomer);
 
-        // Add all the customers in the database to the customers tableview
-        SQLCommand.populateCustomersTable(conn);
+        // Test Appointment
+        //Appointment testAppointment = new Appointment(15, "Test", "Test Land", "Cool", "Okay", null, null, 31, 32, 33);
+        //ProgramData.addAppointment(testAppointment);
+
+        // Add all the customers in the database to the customers and appointments tableview
+        PopulateCommands.populateCustomersTable(conn);
+        PopulateCommands.populateAppointmentsTable(conn);
 
         // Add all the appointments in the database to the appointments tableview
 

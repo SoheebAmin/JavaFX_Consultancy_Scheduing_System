@@ -8,18 +8,18 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.AppointmentDashboardController">
    <children>
-      <TableView fx:id="customersTableView" layoutX="8.0" layoutY="79.0" prefHeight="266.0" prefWidth="886.0">
+      <TableView fx:id="appointmentTableView" layoutX="8.0" layoutY="79.0" prefHeight="266.0" prefWidth="886.0">
         <columns>
-          <TableColumn fx:id="cidCol" prefWidth="32.80002021789551" text="A. ID" />
-          <TableColumn fx:id="cNameCol" prefWidth="148.79998016357422" text="Title" />
-            <TableColumn fx:id="cNameCol1" prefWidth="100.79998779296875" text="Description" />
-            <TableColumn fx:id="cNameCol11" prefWidth="93.60003662109375" text="Location" />
-            <TableColumn fx:id="cPhoneCol11" minWidth="0.0" prefWidth="105.5999755859375" text="Type" />
-            <TableColumn fx:id="cPhoneCol111" minWidth="0.0" prefWidth="40.800018310546875" text="C. ID" />
-            <TableColumn fx:id="cPhoneCol1111" minWidth="0.0" prefWidth="99.20001220703125" text="C. Name" />
-            <TableColumn fx:id="cPhoneCol11111" minWidth="0.0" prefWidth="74.4000244140625" text="User" />
-            <TableColumn fx:id="cPhoneCol" minWidth="0.0" prefWidth="89.59991455078125" text="Start Time" />
-            <TableColumn fx:id="cPhoneCol1" minWidth="0.0" prefWidth="100.800048828125" text="End Time" />
+          <TableColumn fx:id="idCol" prefWidth="32.80002021789551" text="A. ID" />
+          <TableColumn fx:id="titleCol" prefWidth="148.79998016357422" text="Title" />
+            <TableColumn fx:id="descriptionCol" prefWidth="100.79998779296875" text="Description" />
+            <TableColumn fx:id="locationCol" prefWidth="93.60003662109375" text="Location" />
+            <TableColumn fx:id="typeCol" minWidth="0.0" prefWidth="123.99993896484375" text="Type" />
+            <TableColumn fx:id="customerIdCol" minWidth="0.0" prefWidth="56.000030517578125" text="Cus. ID" />
+            <TableColumn fx:id="contactIdCol" minWidth="0.0" prefWidth="64.0" text="Con. ID" />
+            <TableColumn fx:id="userIdCol" minWidth="0.0" prefWidth="54.4000244140625" text="User ID" />
+            <TableColumn fx:id="startTimeCol" minWidth="0.0" prefWidth="108.0" text="Start Time" />
+            <TableColumn fx:id="endTimeCol" minWidth="0.0" prefWidth="113.5999755859375" text="End Time" />
         </columns>
       </TableView>
       <Button layoutX="815.0" layoutY="350.0" mnemonicParsing="false" onAction="#cancelButtonClicked" prefHeight="26.0" prefWidth="58.0" text="Cancel" />
