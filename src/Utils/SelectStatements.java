@@ -110,12 +110,12 @@ public class SelectStatements {
         }
     }
 
-    public static ObservableList<String> getComboBoxList(Connection conn, String table, String column){
+    public static ObservableList<String> getComboBoxList(Connection conn, String SQLStatement, String comboBoxColumn) {
         // list to populate
         ObservableList<String> CBItems = FXCollections.observableArrayList();
 
         // Prepared select statement for countries
-        String selectStatement = "SELECT " + column + " FROM " + table + ";";
+        String selectStatement = SQLStatement;
 
         try {
             // Create the prepared Statement Object
@@ -133,7 +133,7 @@ public class SelectStatements {
 
             while(resultSet.next()) // a boolean function that remains true until we scroll through each record
             {
-                comboItem = resultSet.getString(column);
+                comboItem = resultSet.getString(comboBoxColumn);
                 CBItems.add(comboItem);
             }
             // return true if the SQL statement executed successfully.

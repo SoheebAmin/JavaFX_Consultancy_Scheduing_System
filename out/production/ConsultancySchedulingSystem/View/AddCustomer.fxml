@@ -35,8 +35,8 @@
                 <TextField fx:id="addressText" />
                 <TextField fx:id="postalText" />
                 <TextField fx:id="phoneText" />
-            <ComboBox fx:id="countryCB" onAction="#countryCBSelected" onShowing="#countryCBSelected" prefWidth="150.0" />
-            <ComboBox fx:id="divisionCB" prefWidth="150.0" />
+            <ComboBox fx:id="countryCB" onAction="#countryCBSet" onShowing="#countryCBSelected" prefWidth="150.0" />
+            <ComboBox fx:id="divisionCB" onShowing="#divisionCBSelected" prefWidth="150.0" />
             </children>
         </VBox>
         <Button fx:id="saveButton" layoutX="407.0" layoutY="330.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />

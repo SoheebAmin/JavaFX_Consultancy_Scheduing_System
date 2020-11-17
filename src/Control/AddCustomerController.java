@@ -34,17 +34,18 @@ public class AddCustomerController implements Initializable {
     private static ObservableList<String> divisionCBItems = FXCollections.observableArrayList();
     @FXML private ComboBox divisionCB;
 
+    // currently selected country
+    private static String selectedCountry = "";
+
 
     public boolean saveButtonClicked(ActionEvent event) throws IOException {
 
-        try {
-            String country = countryCB.getSelectionModel().getSelectedItem().toString();
-            System.out.println(country);
-        }
-        catch (NullPointerException e) {
-            ControllerMethods.errorDialogueBox("You must select an option!");
+        if(AddCustomerController.selectedCountry == "")
+        {
+            ControllerMethods.errorDialogueBox("You must select country and then a first level division!");
             return false;
         }
+
         // clear the current customers observable list, and fetch them again from the database BUT NEED TO ACTUALLY ADD TO DB JUST ABOVE THIS
         ObjectLists.clearAllCustomers();
         Connection conn = DBConnection.getConn();
@@ -55,16 +56,34 @@ public class AddCustomerController implements Initializable {
     }
 
     public void countryCBSelected() {
-        // clears data from any previous use.
-        countryCBItems = SelectStatements.getComboBoxList(DBConnection.getConn(), "countries", "Country");
-        // get all the countries in the database
-
+        // selects all countries currently in the database
+        countryCBItems = SelectStatements.getComboBoxList(DBConnection.getConn(), "SELECT Country FROM countries;", "Country");
         countryCB.setItems(countryCBItems);
     }
 
+    /** This method is to set which country has been selected, so that it can be checked by the division combo box before selecting the appropriate divisions from the database. */
+    public void countryCBSet() {
+        AddCustomerController.selectedCountry = countryCB.getSelectionModel().getSelectedItem().toString();
+    }
+
+
+    public void divisionCBSelected() {
+        if(AddCustomerController.selectedCountry == "")
+        {
+            ControllerMethods.errorDialogueBox("You must select country before you can select a division!");
+        }
+        // checks to see which country is currently selected in the country combo box.
+        String SQLStatement = "SELECT Division\n" +
+                "FROM first_level_divisions F, countries C\n" +
+                "WHERE F.COUNTRY_ID = C.Country_ID\n" +
+                "AND Country = \"" + AddCustomerController.selectedCountry + "\";";
+        divisionCBItems = SelectStatements.getComboBoxList(DBConnection.getConn(), SQLStatement, "Division");
+        divisionCB.setItems(divisionCBItems);
+    }
 
     /** This method returns to the MainScreenController without making any changes to the Inventory class. */
     public void cancelButtonClicked(ActionEvent event) throws IOException {
+        AddCustomerController.selectedCountry = "";
         ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
     }
 
