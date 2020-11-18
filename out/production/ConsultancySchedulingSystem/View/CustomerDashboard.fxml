@@ -22,7 +22,7 @@
       <Button layoutX="650.0" layoutY="23.0" mnemonicParsing="false" text="Reports" />
       <Button layoutX="39.0" layoutY="343.0" mnemonicParsing="false" onAction="#addButtonClicked" text="Add" />
       <Button layoutX="89.0" layoutY="343.0" mnemonicParsing="false" onAction="#modifyButtonClicked" text="Modify" />
-      <Button layoutX="178.0" layoutY="343.0" mnemonicParsing="false" text="Delete" />
+      <Button layoutX="178.0" layoutY="343.0" mnemonicParsing="false" onAction="#deleteButtonClicked" text="Delete" />
       <Button layoutX="724.0" layoutY="23.0" mnemonicParsing="false" onAction="#appointmentsButtonClicked" text="Appointment Dashboard" />
    </children>
 </AnchorPane>
