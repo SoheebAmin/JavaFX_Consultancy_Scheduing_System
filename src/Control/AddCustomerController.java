@@ -74,12 +74,25 @@ public class AddCustomerController implements Initializable {
 
     /** This method sets which country is selected to a field in the class, to be referenced by other methods that need it. */
     public void countryCBSet() {
-        AddCustomerController.selectedCountry = countryCB.getSelectionModel().getSelectedItem().toString();
+        // try-catch deals with scenario in which nothing is selected.
+        try {
+            AddCustomerController.selectedCountry = countryCB.getSelectionModel().getSelectedItem().toString();
+        }
+        catch (NullPointerException e)
+        {
+            return;
+        }
     }
 
     /** This method sets which division is chosen. */
     public void divisionCBSet() {
-        AddCustomerController.selectedDivision = divisionCB.getSelectionModel().getSelectedItem().toString();
+        // try-catch deals with scenario in which nothing is selected.
+        try {
+            AddCustomerController.selectedDivision = divisionCB.getSelectionModel().getSelectedItem().toString();
+        }
+        catch (NullPointerException e) {
+            return;
+        }
     }
 
 
