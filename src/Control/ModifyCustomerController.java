@@ -30,10 +30,10 @@ public class ModifyCustomerController implements Initializable {
     @FXML private TextField phoneText;
 
     private static ObservableList<String> countryCBItems = FXCollections.observableArrayList();
-    @FXML private ComboBox countryCB;
+    @FXML private ComboBox<String> countryCB;
 
     private static ObservableList<String> divisionCBItems = FXCollections.observableArrayList();
-    @FXML private ComboBox divisionCB;
+    @FXML private ComboBox<String> divisionCB;
 
     // Temporary variables to save combo box selection
     private static String selectedCountry = "";
@@ -47,7 +47,12 @@ public class ModifyCustomerController implements Initializable {
         addressText.setText(customer.getAddress());
         postalText.setText(customer.getPostal());
         phoneText.setText(customer.getPhone());
-        //countryCB.getSelectionModel().select(3);
+
+        countryCB.setValue(customer.getCountry());
+        selectedCountry = customer.getCountry();
+
+        divisionCB.setValue(customer.getDivision());
+        selectedDivision = customer.getDivision();
     }
 
 
