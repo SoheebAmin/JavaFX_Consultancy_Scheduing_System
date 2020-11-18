@@ -161,10 +161,14 @@ public class SelectStatements {
             // execute command to get desired data for the combo boxes
             preparedStatement.execute(selectStatement);
 
-            id = preparedStatement.getResultSet().getInt(column);
-
-            // return if the SQL statement executed successfully.
-            return id;
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while(resultSet.next()) // a boolean function that remains true until we scroll through each record
+            {
+                id = resultSet.getInt(column);
+                return id;
+            }
+            // return -1 if failed
+            return -1;
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());

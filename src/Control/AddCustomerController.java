@@ -3,6 +3,7 @@ package Control;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
+import Utils.InsertStatements;
 import Utils.SelectStatements;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +16,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /** The Controller to add customer objects to the customers list stored in the ObservableLists class */
@@ -82,7 +84,7 @@ public class AddCustomerController implements Initializable {
 
 
     /** After validating the entries, this methods adds a new record into the database and refreshes it. */
-    public boolean saveButtonClicked(ActionEvent event) throws IOException {
+    public boolean saveButtonClicked(ActionEvent event) throws IOException, SQLException {
 
         boolean errorDetected = false; // boolean to mark if we will abort after
 
@@ -118,24 +120,27 @@ public class AddCustomerController implements Initializable {
         }
 
         // check if country is empty. If not, add the country
-        if(AddCustomerController.selectedCountry.equals(""))
+        String country = AddCustomerController.selectedCountry;
+        if(country.equals(""))
         {
-            ControllerMethods.errorDialogueBox("You must select country and then a first level division!");
+            ControllerMethods.errorDialogueBox("You must select country!");
             errorDetected = true;
         }
-        // CODE TO ADD SELECTED COUNTRY HERE
 
 
         // check if country is first level division is empty. If not, add the first level division.
-        if(AddCustomerController.selectedDivision.equals(""))
+        String division = AddCustomerController.selectedDivision;
+        if(division.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select select a first level division!");
             errorDetected = true;
         }
-        // CODE TO ADD SELECTED FIRST LEVEL DIVISION HERE
 
         if(errorDetected == true)
             return false;
+
+        //Calls the insert statement to add the new customer to the database.
+        InsertStatements.insertCustomer(DBConnection.getConn(), id, name, address, postal, phone, RuntimeObjects.getCurrentUser().getUsername(), 3);
 
         // clear the current customers observable list, and fetch them again from the database BUT NEED TO ACTUALLY ADD TO DB JUST ABOVE THIS
         RuntimeObjects.clearAllCustomers();
@@ -147,7 +152,6 @@ public class AddCustomerController implements Initializable {
         AddCustomerController.selectedDivision = "";
 
         ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
-        System.out.println("Saved!");
         return true;
     }
 
