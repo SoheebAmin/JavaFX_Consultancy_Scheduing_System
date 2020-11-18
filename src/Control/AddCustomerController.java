@@ -112,9 +112,9 @@ public class AddCustomerController implements Initializable {
             errorDetected = true;
         }
 
-        // error check, and then add phone number NOTE: ADD REGEX FOR PHONE HERE!!!
+        // error check, and then add phone number using a regex ensuring digits, with optional dashes.
         String phone = phoneText.getText();
-        if (phone.equals("")) {
+        if (!phone.matches("^[0-9-]*$")) {
             ControllerMethods.errorDialogueBox("Please enter a valid phone using digits & dashes");
             errorDetected = true;
         }
