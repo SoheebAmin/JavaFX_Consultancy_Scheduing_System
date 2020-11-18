@@ -139,8 +139,12 @@ public class AddCustomerController implements Initializable {
         if(errorDetected == true)
             return false;
 
+        //use selected division to grab division ID
+        String SQLStatement = "SELECT Division_ID FROM first_level_divisions WHERE Division = \"" + division + "\"";
+        int division_id = SelectStatements.getId(DBConnection.getConn(), SQLStatement, "Division_ID");
+
         //Calls the insert statement to add the new customer to the database.
-        InsertStatements.insertCustomer(DBConnection.getConn(), id, name, address, postal, phone, RuntimeObjects.getCurrentUser().getUsername(), 3);
+        InsertStatements.insertCustomer(DBConnection.getConn(), id, name, address, postal, phone, RuntimeObjects.getCurrentUser().getUsername(), division_id);
 
         // clear the current customers observable list, and fetch them again from the database BUT NEED TO ACTUALLY ADD TO DB JUST ABOVE THIS
         RuntimeObjects.clearAllCustomers();
