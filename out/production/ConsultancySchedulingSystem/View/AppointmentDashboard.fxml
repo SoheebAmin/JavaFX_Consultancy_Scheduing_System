@@ -25,7 +25,7 @@
       <Button layoutX="815.0" layoutY="350.0" mnemonicParsing="false" onAction="#cancelButtonClicked" prefHeight="26.0" prefWidth="58.0" text="Cancel" />
       <Button layoutX="28.0" layoutY="351.0" mnemonicParsing="false" onAction="#addButtonClicked" text="Add" />
       <Button layoutX="90.0" layoutY="351.0" mnemonicParsing="false" onAction="#modifyButtonClicked" text="Modify" />
-      <Button layoutX="208.0" layoutY="351.0" mnemonicParsing="false" text="Delete" />
+      <Button layoutX="208.0" layoutY="351.0" mnemonicParsing="false" onAction="#deleteButtonClicked" text="Delete" />
       <RadioButton layoutX="10.0" layoutY="52.0" mnemonicParsing="false" text="All" />
       <RadioButton layoutX="66.0" layoutY="52.0" mnemonicParsing="false" text="This Week" />
       <RadioButton layoutX="151.0" layoutY="52.0" mnemonicParsing="false" text="This Month" />

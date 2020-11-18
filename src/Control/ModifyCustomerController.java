@@ -47,11 +47,11 @@ public class ModifyCustomerController implements Initializable {
         addressText.setText(customer.getAddress());
         postalText.setText(customer.getPostal());
         phoneText.setText(customer.getPhone());
-
         countryCB.setValue(customer.getCountry());
-        selectedCountry = customer.getCountry();
-
         divisionCB.setValue(customer.getDivision());
+
+        // sets the customer object values in temp vars to be used by the combo boxes.
+        selectedCountry = customer.getCountry();
         selectedDivision = customer.getDivision();
     }
 

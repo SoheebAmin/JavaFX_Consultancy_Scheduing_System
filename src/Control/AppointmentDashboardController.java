@@ -3,9 +3,13 @@ package Control;
 import Model.Appointment;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
+import Utils.DBConnection;
+import Utils.DeleteStatements;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -13,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AppointmentDashboardController implements Initializable {
@@ -40,6 +45,39 @@ public class AppointmentDashboardController implements Initializable {
     public void modifyButtonClicked(ActionEvent event) throws IOException {
         ControllerMethods.changeScene(event, "../View/modifyAppointment.fxml");
     }
+
+    public void deleteButtonClicked() {
+        // grabs selected appointment
+        Appointment selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
+
+        // abort function if null
+        if(selectedAppointment == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("You need to select an appointment to delete!");
+            alert.showAndWait();
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this appointment?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+
+            // prepares the SQL Delete statement
+            int appointmentId = selectedAppointment.getId();
+            String SQLStament = "DELETE FROM appointments WHERE Customer_ID =" + appointmentId + ";";
+
+            // deletes the record from the database itself
+            DeleteStatements.delete(DBConnection.getConn(), SQLStament);
+
+            // then deletes it from table view, and refreshes it.
+            RuntimeObjects.deleteAppointment(selectedAppointment);
+            appointmentTableView.setItems(RuntimeObjects.getAllAppointments());
+        }
+    }
+
 
 
     /** This method exits the program via the Exit button */
