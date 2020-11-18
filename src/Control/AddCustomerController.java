@@ -33,8 +33,9 @@ public class AddCustomerController implements Initializable {
     private static ObservableList<String> divisionCBItems = FXCollections.observableArrayList();
     @FXML private ComboBox divisionCB;
 
-    // currently selected country
+    // Temporary variables to save combo box selection
     private static String selectedCountry = "";
+    private static String selectedDivision = "";
 
 
     /** This method populates the country combo box. */
@@ -44,11 +45,6 @@ public class AddCustomerController implements Initializable {
 
         // sets the list in the combo box
         countryCB.setItems(countryCBItems);
-    }
-
-    /** This method sets which country is selected to a field in the class, to be referenced by other methods that need it. */
-    public void countryCBSet() {
-        AddCustomerController.selectedCountry = countryCB.getSelectionModel().getSelectedItem().toString();
     }
 
     /** This method populates the division combo box with the correct divisions on the selected country. */
@@ -73,61 +69,100 @@ public class AddCustomerController implements Initializable {
         divisionCB.setItems(divisionCBItems);
     }
 
+
+    /** This method sets which country is selected to a field in the class, to be referenced by other methods that need it. */
+    public void countryCBSet() {
+        AddCustomerController.selectedCountry = countryCB.getSelectionModel().getSelectedItem().toString();
+    }
+
+    /** This method sets which division is chosen. */
+    public void divisionCBSet() {
+        AddCustomerController.selectedDivision = divisionCB.getSelectionModel().getSelectedItem().toString();
+    }
+
+
     /** After validating the entries, this methods adds a new record into the database and refreshes it. */
     public boolean saveButtonClicked(ActionEvent event) throws IOException {
+
+        boolean errorDetected = false; // boolean to mark if we will abort after
 
         // grab the auto-Id by checking the max ID in the DB and adding 1 to it.
         int id = SelectStatements.getId(DBConnection.getConn(), "SELECT max(Customer_ID)+1 AS Customer_ID FROM customers;", "Customer_ID");
 
         // error check and then add customer name
-
+        String name = nameText.getText();
+        if (name.equals("")) {
+            ControllerMethods.errorDialogueBox("Name Error: Please enter a name");
+            errorDetected = true;
+        }
 
         // error check, and then add customer address
+        String address = addressText.getText();
+        if (address.equals("")) {
+            ControllerMethods.errorDialogueBox("Address Error: Please enter an address");
+            errorDetected = true;
+        }
 
         // error check, and then add postal code
+        String postal = postalText.getText();
+        if (postal.equals("")) {
+            ControllerMethods.errorDialogueBox("Postal Code Error: Please enter a postal code");
+            errorDetected = true;
+        }
 
-        // error check, and then add phone number
+        // error check, and then add phone number NOTE: ADD REGEX FOR PHONE HERE!!!
+        String phone = phoneText.getText();
+        if (phone.equals("")) {
+            ControllerMethods.errorDialogueBox("Please enter a valid phone using digits & dashes");
+            errorDetected = true;
+        }
 
         // check if country is empty. If not, add the country
-        if(AddCustomerController.selectedCountry == "")
+        if(AddCustomerController.selectedCountry.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select country and then a first level division!");
-            return false;
+            errorDetected = true;
         }
         // CODE TO ADD SELECTED COUNTRY HERE
 
 
         // check if country is first level division is empty. If not, add the first level division.
-        if("SOMETHING" != "SOMETHING")
+        if(AddCustomerController.selectedDivision.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select select a first level division!");
-            return false;
+            errorDetected = true;
         }
         // CODE TO ADD SELECTED FIRST LEVEL DIVISION HERE
+
+        if(errorDetected == true)
+            return false;
 
         // clear the current customers observable list, and fetch them again from the database BUT NEED TO ACTUALLY ADD TO DB JUST ABOVE THIS
         RuntimeObjects.clearAllCustomers();
         Connection conn = DBConnection.getConn();
         SelectStatements.populateCustomersTable(conn);
 
-        AddCustomerController.selectedCountry = ""; // clear the selected country for next use.
+        // clears combo box temp data variables for future use
+        AddCustomerController.selectedCountry = "";
+        AddCustomerController.selectedDivision = "";
+
         ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
+        System.out.println("Saved!");
         return true;
     }
 
     /** This method returns to the MainScreenController without making any changes to the Inventory class. */
     public void cancelButtonClicked(ActionEvent event) throws IOException {
-        AddCustomerController.selectedCountry = ""; // cleared for next use.
+        // clears combo box temp data variables for future use
+        AddCustomerController.selectedCountry = "";
+        AddCustomerController.selectedDivision = "";
+
         ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
     }
 
     /** Method to set initial conditions of the controller. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
-
-        //get all the first level divisions for the selected country
 
     }
 }
