@@ -1,8 +1,9 @@
-package Utils;
+package Databse;
 
 import Model.Appointment;
 import Model.Customer;
 import Model.RuntimeObjects;
+import Utils.DBQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

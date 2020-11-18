@@ -4,7 +4,7 @@ import Model.Appointment;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
-import Utils.DeleteStatements;
+import Databse.DeleteStatements;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

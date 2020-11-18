@@ -1,4 +1,6 @@
-package Utils;
+package Databse;
+
+import Utils.DBQuery;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

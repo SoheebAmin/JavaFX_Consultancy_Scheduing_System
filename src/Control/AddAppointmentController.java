@@ -1,21 +1,14 @@
 package Control;
 
-import Model.Appointment;
-import Model.RuntimeObjects;
 import Utils.ControllerMethods;
-import Utils.DBConnection;
-import Utils.DeleteStatements;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 /** The Controller to add customer objects to the customers list stored in the ObservableLists class */

@@ -1,8 +1,7 @@
 import Model.RuntimeObjects;
 import Model.User;
 import Utils.DBConnection;
-import Utils.DBQuery;
-import Utils.SelectStatements;
+import Databse.SelectStatements;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
