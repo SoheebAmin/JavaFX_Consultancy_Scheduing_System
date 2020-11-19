@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Main extends Application {
 
@@ -60,6 +62,10 @@ public class Main extends Application {
         // populates list of days to be selectable for appointments from today onward, up to the specified number of days.
         ObservableList<LocalDate> generatedAppointmentDateList = DateTimeMethods.listOfFutureDates(60);
         RuntimeObjects.setAllAppointmentDates(generatedAppointmentDateList);
+
+        // populates the hours to be selectable for appointments
+        ObservableList<LocalTime> generatedAppointmentHoursList = DateTimeMethods.listOfTimes(15);
+        RuntimeObjects.setAllAppointmentHours(generatedAppointmentHoursList);
 
         // launches JavaFX App
         launch(args);
