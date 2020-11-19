@@ -51,7 +51,7 @@ public class Main extends Application {
         // populate the contact names from the database into a an observable list
         SelectStatements.populateContacts(conn);
 
-        // Appointment types are defined here (they do not exist in the database)
+        // Appointment types are defined here (as they do not exist in the database)
         ObservableList<String> appointmentTypes = FXCollections.observableArrayList();
         appointmentTypes.add("Meet and Greet");
         appointmentTypes.add("Planning Session");
@@ -64,7 +64,7 @@ public class Main extends Application {
         RuntimeObjects.setAllAppointmentDates(generatedAppointmentDateList);
 
         // populates the hours to be selectable for appointments, given the specified intervals in minutes
-        ObservableList<LocalTime> generatedAppointmentHoursList = DateTimeMethods.listOfTimes(60);
+        ObservableList<LocalTime> generatedAppointmentHoursList = DateTimeMethods.listOfTimes(30);
         RuntimeObjects.setAllAppointmentHours(generatedAppointmentHoursList);
 
         // launches JavaFX App

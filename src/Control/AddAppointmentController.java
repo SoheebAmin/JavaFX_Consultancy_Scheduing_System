@@ -1,5 +1,6 @@
 package Control;
 
+import Databse.InsertStatements;
 import Databse.SelectStatements;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
@@ -14,8 +15,10 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
@@ -46,9 +49,10 @@ public class AddAppointmentController implements Initializable {
     private static String selectedCustomer = "";
     private static String selectedType = "";
     private static String selectedContact = "";
-    private static LocalDate selectedDate;
-    private static LocalTime selectedStart;
-    private static LocalTime selectedEnd;
+    private static String selectedDate = "";
+    private static String selectedStart = "";
+    private static String selectedEnd = "";
+
 
 
     /** This method populates the customer ID combo box. */
@@ -131,6 +135,39 @@ public class AddAppointmentController implements Initializable {
         }
     }
 
+    /** This method sets which customer is chosen. */
+    public void dateCBSet() {
+        // try-catch deals with scenario in which nothing is selected.
+        try {
+            AddAppointmentController.selectedDate = dateCB.getSelectionModel().getSelectedItem().toString();
+        }
+        catch (NullPointerException e) {
+            return;
+        }
+    }
+
+    /** This method sets which customer is chosen. */
+    public void startCBSet() {
+        // try-catch deals with scenario in which nothing is selected.
+        try {
+            AddAppointmentController.selectedStart = startCB.getSelectionModel().getSelectedItem().toString();
+        }
+        catch (NullPointerException e) {
+            return;
+        }
+    }
+
+    /** This method sets which customer is chosen. */
+    public void endCBSet() {
+        // try-catch deals with scenario in which nothing is selected.
+        try {
+            AddAppointmentController.selectedEnd = endCB.getSelectionModel().getSelectedItem().toString();
+        }
+        catch (NullPointerException e) {
+            return;
+        }
+    }
+
     /** After validating the entries, this methods adds a new record into the database and refreshes it. */
     public boolean saveButtonClicked(ActionEvent event) throws IOException, SQLException {
 
@@ -160,13 +197,14 @@ public class AddAppointmentController implements Initializable {
             errorDetected = true;
         }
 
-        // check if customer is empty. If not, add the country
-        String customer = AddAppointmentController.selectedCustomer;
-        if(customer.equals(""))
+        // check if customer ID is empty. If not, convert to int add the customer
+        String customerString = AddAppointmentController.selectedCustomer;
+        if(customerString.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select a customer!");
             errorDetected = true;
         }
+
 
         // check if appointment type is empty. If not, add the type
         String type = AddAppointmentController.selectedType;
@@ -176,7 +214,7 @@ public class AddAppointmentController implements Initializable {
             errorDetected = true;
         }
 
-        // check if contact is empty. If not, add the contact
+        // check if contact is empty. If not, add contact
         String contact = AddAppointmentController.selectedContact;
         if(contact.equals(""))
         {
@@ -184,33 +222,79 @@ public class AddAppointmentController implements Initializable {
             errorDetected = true;
         }
 
+        // check if date is empty. If not, convert to local date and add the date
+        String dateString = AddAppointmentController.selectedDate;
+        if(dateString.equals(""))
+        {
+            ControllerMethods.errorDialogueBox("You must select a contact!");
+            errorDetected = true;
+        }
+
+
+
+        // check if start time is empty. If not, convert to local time and add start time contact
+        String startString = AddAppointmentController.selectedStart;
+        if(startString.equals(""))
+        {
+            ControllerMethods.errorDialogueBox("You must select a contact!");
+            errorDetected = true;
+        }
+
+
+        // check if start end time is empty. If not, convert to local time and add start time contact
+        String endString = AddAppointmentController.selectedEnd;
+        if(endString.equals(""))
+        {
+            ControllerMethods.errorDialogueBox("You must select a contact!");
+            errorDetected = true;
+        }
+
+
+        // return the function if any errors were detected.
         if(errorDetected == true)
             return false;
 
-        /*
-        //use selected division to grab division ID
-        /String SQLStatement = "SELECT Division_ID FROM first_level_divisions WHERE Division = \"" + division + "\"";
-        int division_id = SelectStatements.getId(DBConnection.getConn(), SQLStatement, "Division_ID");
+        // Conversions to needed data types done once all validation passed
+        int customer = Integer.parseInt(customerString);
+        LocalDate date = LocalDate.parse(dateString);
+        LocalTime start = LocalTime.parse(startString);
+        LocalTime end = LocalTime.parse(endString);
 
-        //Calls the insert statement to add the new customer to the database.
-        InsertStatements.insertCustomer(DBConnection.getConn(), id, name, address, postal, phone, RuntimeObjects.getCurrentUser().getUsername(), division_id);
+        // Create the LocalDateTime objects for the appointment start and end time.
+        LocalDateTime appointmentStart = LocalDateTime.of(date, start);
+        LocalDateTime appointmentEnd = LocalDateTime.of(date, end);
 
-        // clear the current customers observable list, and fetch them again from the database BUT NEED TO ACTUALLY ADD TO DB JUST ABOVE THIS
-        RuntimeObjects.clearAllCustomers();
+
+        //Calls the insert statement to add the new appointment to the database.
+
+        //InsertStatements.insertCustomer(DBConnection.getConn(), id, name, address, postal, phone, RuntimeObjects.getCurrentUser().getUsername(), division_id);
+
+        // clear the current customers observable list, and fetch them again from the database.
+        RuntimeObjects.clearAllAppointments();;
         Connection conn = DBConnection.getConn();
-        SelectStatements.populateCustomersTable(conn);
+        SelectStatements.populateAppointmentsTable(conn);
 
         // clears combo box temp data variables for future use
-        AddCustomerController.selectedCountry = "";
-        AddCustomerController.selectedDivision = "";
-         */
+        clearComboBoxTempVars();
+
         ControllerMethods.changeScene(event, "../View/AppointmentDashboard.fxml");
         return true;
     }
 
     /** This method returns to the MainScreenController without making any changes to the Inventory class. */
     public void cancelButtonClicked(ActionEvent event) throws IOException {
+        clearComboBoxTempVars();
         ControllerMethods.changeScene(event, "../View/AppointmentDashboard.fxml");
+    }
+
+    /** Resets all the temporary variables that hold selected combo box values. */
+    public void clearComboBoxTempVars() {
+        AddAppointmentController.selectedCustomer = "";
+        AddAppointmentController.selectedType = "";
+        AddAppointmentController.selectedContact = "";
+        AddAppointmentController.selectedDate = "";
+        AddAppointmentController.selectedStart = "";
+        AddAppointmentController.selectedEnd = "";
     }
 
     /** Method to set initial conditions of the controller. */

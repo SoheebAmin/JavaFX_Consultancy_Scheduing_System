@@ -159,7 +159,7 @@ public class AddCustomerController implements Initializable {
         //Calls the insert statement to add the new customer to the database.
         InsertStatements.insertCustomer(DBConnection.getConn(), id, name, address, postal, phone, RuntimeObjects.getCurrentUser().getUsername(), division_id);
 
-        // clear the current customers observable list, and fetch them again from the database BUT NEED TO ACTUALLY ADD TO DB JUST ABOVE THIS
+        // clear the current customers observable list, and fetch them again from the database.
         RuntimeObjects.clearAllCustomers();
         Connection conn = DBConnection.getConn();
         SelectStatements.populateCustomersTable(conn);

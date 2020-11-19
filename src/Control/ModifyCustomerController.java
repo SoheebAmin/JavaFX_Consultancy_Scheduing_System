@@ -1,5 +1,6 @@
 package Control;
 
+import Databse.DeleteStatements;
 import Model.Customer;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
@@ -40,9 +41,16 @@ public class ModifyCustomerController implements Initializable {
     private static String selectedCountry = "";
     private static String selectedDivision = "";
 
+    // ID of current customer being modified
+    private static int currentCustomer;
+
     
     /** This method allows the Customer Dashboard to send the data of the selected customer to the created controller object. */
     public void setCustomerInfo(Customer customer) {
+        // sets the current id being worked on
+        ModifyCustomerController.currentCustomer = customer.getId();
+
+        // sends all the data to the text fields.
         idText.setText((String.valueOf((customer.getId()))));
         nameText.setText(customer.getName());
         addressText.setText(customer.getAddress());
@@ -113,8 +121,8 @@ public class ModifyCustomerController implements Initializable {
 
         boolean errorDetected = false; // boolean to mark if we will abort after
 
-        // grab the auto-Id by checking the max ID in the DB and adding 1 to it.
-        int id = SelectStatements.getId(DBConnection.getConn(), "SELECT max(Customer_ID)+1 AS Customer_ID FROM customers;", "Customer_ID");
+        // Grabs ID from current customer static variable
+        int id = ModifyCustomerController.currentCustomer;
 
         // error check and then add customer name
         String name = nameText.getText();
@@ -165,13 +173,17 @@ public class ModifyCustomerController implements Initializable {
             return false;
 
         //use selected division to grab division ID
-        String SQLStatement = "SELECT Division_ID FROM first_level_divisions WHERE Division = \"" + division + "\"";
-        int division_id = SelectStatements.getId(DBConnection.getConn(), SQLStatement, "Division_ID");
+        String insertStatement = "SELECT Division_ID FROM first_level_divisions WHERE Division = \"" + division + "\"";
+        int division_id = SelectStatements.getId(DBConnection.getConn(), insertStatement, "Division_ID");
+
+        // Deletes the customer as they already are in the database.
+        String deleteStatement = "DELETE FROM customers WHERE Customer_ID =" + id + ";";
+        DeleteStatements.delete(DBConnection.getConn(), deleteStatement);
 
         //Calls the insert statement to add the new customer to the database.
         InsertStatements.insertCustomer(DBConnection.getConn(), id, name, address, postal, phone, RuntimeObjects.getCurrentUser().getUsername(), division_id);
 
-        // clear the current customers observable list, and fetch them again from the database BUT NEED TO ACTUALLY ADD TO DB JUST ABOVE THIS
+        // clear the current customers observable list, and fetch them again from the database.
         RuntimeObjects.clearAllCustomers();
         Connection conn = DBConnection.getConn();
         SelectStatements.populateCustomersTable(conn);
