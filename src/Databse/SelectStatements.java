@@ -110,7 +110,42 @@ public class SelectStatements {
         }
     }
 
-    public static ObservableList<String> getComboBoxList(Connection conn, String SQLStatement, String column) {
+    public static boolean populateContacts(Connection conn){
+
+        // Prepared select statement for appointments table
+        String selectStatement = "SELECT * FROM contacts;";
+
+        try {
+            // Create the prepared Statement Object
+            DBQuery.setPreparedStatement(conn, selectStatement);
+
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+
+            // Variable for names
+            String Contact_Name;
+
+            // execute command to get all data from the customers table;
+            preparedStatement.execute(selectStatement);
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+
+
+            while(resultSet.next()) // a boolean function that remains true until we scroll through each record
+            {
+                Contact_Name = resultSet.getString("Contact_Name");
+
+                RuntimeObjects.addContact(Contact_Name);
+            }
+            // return true if the SQL statement executed successfully.
+            return true;
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public static ObservableList<String> getComboBoxStringList(Connection conn, String SQLStatement, String column) {
         // list to populate
         ObservableList<String> CBItems = FXCollections.observableArrayList();
 
@@ -133,7 +168,7 @@ public class SelectStatements {
 
             while(resultSet.next()) // a boolean function that remains true until we scroll through each record
             {
-                comboItem = resultSet.getString(column);
+                comboItem = resultSet.getString(column).toString();
                 CBItems.add(comboItem);
             }
             // return true if the SQL statement executed successfully.
@@ -144,6 +179,42 @@ public class SelectStatements {
             return null;
         }
     }
+
+    public static ObservableList<Integer> getComboBoxIntList(Connection conn, String SQLStatement, String column) {
+        // list to populate
+        ObservableList<Integer> CBItems = FXCollections.observableArrayList();
+
+        // Prepared select statement for countries
+        String selectStatement = SQLStatement;
+
+        try {
+            // Create the prepared Statement Object
+            DBQuery.setPreparedStatement(conn, selectStatement);
+
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+
+            // variable to populate
+            int comboItem;
+
+            // execute command to get desired data for the combo boxes
+            preparedStatement.execute(selectStatement);
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+
+            while(resultSet.next()) // a boolean function that remains true until we scroll through each record
+            {
+                comboItem = resultSet.getInt(column);
+                CBItems.add(comboItem);
+            }
+            // return true if the SQL statement executed successfully.
+            return CBItems;
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
 
     public static int getId(Connection conn, String SQLStatement, String column) {
 

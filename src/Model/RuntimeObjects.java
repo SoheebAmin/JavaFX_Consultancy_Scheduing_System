@@ -5,11 +5,18 @@ import javafx.collections.ObservableList;
 /**This class grabs the customers and appointments in the database at program run time, and also is updated as changes are made during the life of the application. */
 public class RuntimeObjects {
 
+    // holds the current user logged in
     private static User currentUser;
 
+    // holds the customer and appointment objects for the runtime of the program
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
+    // holds the list of potential contacts
+    private static ObservableList<String> allContacts = FXCollections.observableArrayList();
+
+    // holds the list of appointment types utilized by the program
+    private static ObservableList<String> allAppointmentTypes = FXCollections.observableArrayList();
 
     // add, delete, and update customers and appointments.
 
@@ -48,7 +55,7 @@ public class RuntimeObjects {
         return allAppointments;
     }
 
-    // the getters and setters for the current users
+    // the getters and setters for the current users, appointments types, and contacts
 
     public static User getCurrentUser() {
         return currentUser;
@@ -56,5 +63,25 @@ public class RuntimeObjects {
 
     public static void setCurrentUser(User currentUser) {
         RuntimeObjects.currentUser = currentUser;
+    }
+
+    public static ObservableList<String> getAllContacts() {
+        return allContacts;
+    }
+
+    public static void addContact(String contactName) {
+        allContacts.add(contactName);
+    }
+
+    public static void setAllContacts(ObservableList<String> allContacts) {
+        RuntimeObjects.allContacts = allContacts;
+    }
+
+    public static ObservableList<String> getAllAppointmentTypes() {
+        return allAppointmentTypes;
+    }
+
+    public static void setAllAppointmentTypes(ObservableList<String> allAppointmentTypes) {
+        RuntimeObjects.allAppointmentTypes = allAppointmentTypes;
     }
 }

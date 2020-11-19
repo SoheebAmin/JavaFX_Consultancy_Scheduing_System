@@ -28,12 +28,13 @@ public class ModifyCustomerController implements Initializable {
     @FXML private TextField addressText;
     @FXML private TextField postalText;
     @FXML private TextField phoneText;
-
-    private static ObservableList<String> countryCBItems = FXCollections.observableArrayList();
     @FXML private ComboBox<String> countryCB;
-
-    private static ObservableList<String> divisionCBItems = FXCollections.observableArrayList();
     @FXML private ComboBox<String> divisionCB;
+
+    // Observable lists for the combo boxes
+    private static ObservableList<String> countryCBItems = FXCollections.observableArrayList();
+    private static ObservableList<String> divisionCBItems = FXCollections.observableArrayList();
+
 
     // Temporary variables to save combo box selection
     private static String selectedCountry = "";
@@ -59,7 +60,7 @@ public class ModifyCustomerController implements Initializable {
     /** This method populates the country combo box. */
     public void countryCBSelected() {
         // calls methods to generate list of countries from the DB with an SQL select
-        countryCBItems = SelectStatements.getComboBoxList(DBConnection.getConn(), "SELECT Country FROM countries;", "Country");
+        countryCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), "SELECT Country FROM countries;", "Country");
 
         // sets the list in the combo box
         countryCB.setItems(countryCBItems);
@@ -79,7 +80,7 @@ public class ModifyCustomerController implements Initializable {
                 "AND Country = \"" + ModifyCustomerController.selectedCountry + "\";";
 
         // calls method to generate list of items for combo box pulled from the DB with an SQL select
-        divisionCBItems = SelectStatements.getComboBoxList(DBConnection.getConn(), SQLStatement, "Division");
+        divisionCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), SQLStatement, "Division");
 
         // sets the list in the combo box
         divisionCB.setItems(divisionCBItems);

@@ -34,12 +34,12 @@
         <VBox layoutX="172.0" layoutY="71.0" prefHeight="406.0" prefWidth="224.0" spacing="12.0">
             <children>
                 <TextField fx:id="idText" disable="true" editable="false" promptText="Auto Generated" />
-            <ComboBox fx:id="customerCB" prefHeight="26.0" prefWidth="223.0" />
+            <ComboBox fx:id="customerCB" onHidden="#customerCBSet" onShowing="#customerCBSelected" prefHeight="26.0" prefWidth="223.0" />
                 <TextField fx:id="titleText" />
                 <TextField fx:id="desciptionText" />
-            <ComboBox fx:id="locationCB" prefHeight="26.0" prefWidth="225.0" />
-            <ComboBox fx:id="typeCB" prefHeight="26.0" prefWidth="225.0" />
-            <ComboBox fx:id="contactCB" prefHeight="26.0" prefWidth="225.0" />
+            <TextField fx:id="locationText" />
+            <ComboBox fx:id="typeCB" onHidden="#typeCBSet" onShowing="#typeCBSelected" prefHeight="26.0" prefWidth="225.0" />
+            <ComboBox fx:id="contactCB" onHidden="#contactCBSet" onShowing="#contactCBSelected" prefHeight="26.0" prefWidth="225.0" />
             <ComboBox fx:id="dateCB" prefHeight="26.0" prefWidth="225.0" />
             <ComboBox fx:id="startCB" prefHeight="26.0" prefWidth="225.0" />
             <ComboBox fx:id="endCB" prefHeight="26.0" prefWidth="225.0" />

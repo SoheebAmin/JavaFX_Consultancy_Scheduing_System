@@ -37,7 +37,7 @@
                 <ComboBox prefHeight="26.0" prefWidth="223.0" />
                 <TextField fx:id="priceText" />
                 <TextField fx:id="maxText" />
-                <ComboBox prefHeight="26.0" prefWidth="225.0" />
+            <TextField fx:id="locationText" />
                 <ComboBox prefHeight="26.0" prefWidth="225.0" />
                 <ComboBox prefHeight="26.0" prefWidth="225.0" />
                 <ComboBox prefHeight="26.0" prefWidth="225.0" />

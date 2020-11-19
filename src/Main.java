@@ -3,6 +3,8 @@ import Model.User;
 import Utils.DBConnection;
 import Databse.SelectStatements;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,15 +36,24 @@ public class Main extends Application {
         // Test Appointment
         //Appointment testAppointment = new Appointment(15, "Test", "Test Land", "Cool", "Okay", null, null, 31, 32, 33);
 
-        // Test User
+        // Test User. Do not comment out until log in screen built.
         User user = new User(1, "test", "test");
         RuntimeObjects.setCurrentUser(user);
 
-        // Add all the customers in the database to the customers and appointments tableview
+        // Add all the customers and appointments in the database to the customers and appointments tableview
         SelectStatements.populateCustomersTable(conn);
         SelectStatements.populateAppointmentsTable(conn);
 
-        // Add all the appointments in the database to the appointments tableview
+        // populate the contact names from the database into a an observable list
+        SelectStatements.populateContacts(conn);
+
+        // Appointment types are defined here (they do not exist in the database)
+        ObservableList<String> appointmentTypes = FXCollections.observableArrayList();
+        appointmentTypes.add("Meet and Greet");
+        appointmentTypes.add("Planning Session");
+        appointmentTypes.add("In-Depth Session");
+        appointmentTypes.add("Closing Operations");
+        RuntimeObjects.setAllAppointmentTypes(appointmentTypes);
 
         // launches JavaFX App
         launch(args);
