@@ -36,13 +36,13 @@
                 <TextField fx:id="idText" disable="true" editable="false" promptText="Auto Generated" />
             <ComboBox fx:id="customerCB" onHidden="#customerCBSet" onShowing="#customerCBSelected" prefHeight="26.0" prefWidth="223.0" />
                 <TextField fx:id="titleText" />
-                <TextField fx:id="desciptionText" />
+                <TextField fx:id="descriptionText" />
             <TextField fx:id="locationText" />
             <ComboBox fx:id="typeCB" onHidden="#typeCBSet" onShowing="#typeCBSelected" prefHeight="26.0" prefWidth="225.0" />
             <ComboBox fx:id="contactCB" onHidden="#contactCBSet" onShowing="#contactCBSelected" prefHeight="26.0" prefWidth="225.0" />
-            <ComboBox fx:id="dateCB" prefHeight="26.0" prefWidth="225.0" />
-            <ComboBox fx:id="startCB" prefHeight="26.0" prefWidth="225.0" />
-            <ComboBox fx:id="endCB" prefHeight="26.0" prefWidth="225.0" />
+            <ComboBox fx:id="dateCB" onShowing="#dateCBSelected" prefHeight="26.0" prefWidth="225.0" />
+            <ComboBox fx:id="startCB" onShowing="#timeCBSelected" prefHeight="26.0" prefWidth="225.0" />
+            <ComboBox fx:id="endCB" onShowing="#timeCBSelected" prefHeight="26.0" prefWidth="225.0" />
             </children>
         </VBox>
         <Button fx:id="saveButton" layoutX="453.0" layoutY="446.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />

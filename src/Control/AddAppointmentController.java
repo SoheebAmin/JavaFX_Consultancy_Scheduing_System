@@ -1,6 +1,5 @@
 package Control;
 
-import Databse.InsertStatements;
 import Databse.SelectStatements;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
@@ -15,8 +14,9 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 /** The Controller to add customer objects to the customers list stored in the ObservableLists class */
@@ -27,7 +27,7 @@ public class AddAppointmentController implements Initializable {
     private TextField idText;
     @FXML private ComboBox customerCB;
     @FXML private TextField titleText;
-    @FXML private TextField desciptionText;
+    @FXML private TextField descriptionText;
     @FXML private TextField locationText;
     @FXML private ComboBox typeCB;
     @FXML private ComboBox contactCB;
@@ -35,18 +35,20 @@ public class AddAppointmentController implements Initializable {
     @FXML private ComboBox startCB;
     @FXML private ComboBox endCB;
 
-    // Observable lists for the combo boxes
+    // Observable lists to populate the combo boxes
     private static ObservableList<Integer> customerCBItems = FXCollections.observableArrayList();
     private static ObservableList<String> typeCBItems = FXCollections.observableArrayList();
     private static ObservableList<String> contactCBItems = FXCollections.observableArrayList();
+    private static ObservableList<LocalDate> dateCBItems = FXCollections.observableArrayList();
+    private static ObservableList<LocalTime> timeCBItems = FXCollections.observableArrayList();
 
     // Temporary variables to save combo box selection
     private static String selectedCustomer = "";
     private static String selectedType = "";
     private static String selectedContact = "";
-    private static String selectedDate = "";
-    private static String selectedStart = "";
-    private static String selectedEnd = "";
+    private static LocalDate selectedDate;
+    private static LocalTime selectedStart;
+    private static LocalTime selectedEnd;
 
 
     /** This method populates the customer ID combo box. */
@@ -62,6 +64,7 @@ public class AddAppointmentController implements Initializable {
     public void typeCBSelected() {
         // grab types from runtime class where it is stored
          typeCBItems = RuntimeObjects.getAllAppointmentTypes();
+
         // sets the list in the combo box
         typeCB.setItems(typeCBItems);
     }
@@ -73,6 +76,26 @@ public class AddAppointmentController implements Initializable {
 
         // sets the list in the combo box
         contactCB.setItems(contactCBItems);
+    }
+
+    /** This method populates the date ID combo box. */
+    public void dateCBSelected() {
+        // grabs dates from runtime class where it is stored
+        dateCBItems = RuntimeObjects.getAllAppointmentDates();
+
+        // sets the list in the combo box
+        dateCB.setItems(dateCBItems);
+    }
+
+    /** This method populates the start and end time combo boxes. */
+    public void timeCBSelected() {
+        // grabs time time intervals from runtime class where it is stored
+
+        timeCBItems = RuntimeObjects.getAllAppointmentHours();
+
+        // sets the list in the start and end time combo boxes
+        startCB.setItems(timeCBItems);
+        endCB.setItems(timeCBItems);
     }
 
     /** This method sets which customer is chosen. */
@@ -124,7 +147,7 @@ public class AddAppointmentController implements Initializable {
         }
 
         // error check, and then add description
-        String address = desciptionText.getText();
+        String address = descriptionText.getText();
         if (address.equals("")) {
             ControllerMethods.errorDialogueBox("Description Error: Please enter a description");
             errorDetected = true;

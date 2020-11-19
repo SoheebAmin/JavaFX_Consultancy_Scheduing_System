@@ -63,8 +63,8 @@ public class Main extends Application {
         ObservableList<LocalDate> generatedAppointmentDateList = DateTimeMethods.listOfFutureDates(60);
         RuntimeObjects.setAllAppointmentDates(generatedAppointmentDateList);
 
-        // populates the hours to be selectable for appointments
-        ObservableList<LocalTime> generatedAppointmentHoursList = DateTimeMethods.listOfTimes(15);
+        // populates the hours to be selectable for appointments, given the specified intervals in minutes
+        ObservableList<LocalTime> generatedAppointmentHoursList = DateTimeMethods.listOfTimes(60);
         RuntimeObjects.setAllAppointmentHours(generatedAppointmentHoursList);
 
         // launches JavaFX App
