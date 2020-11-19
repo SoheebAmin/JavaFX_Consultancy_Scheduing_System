@@ -44,6 +44,10 @@ public class AddAppointmentController implements Initializable {
     private static String selectedCustomer = "";
     private static String selectedType = "";
     private static String selectedContact = "";
+    private static String selectedDate = "";
+    private static String selectedStart = "";
+    private static String selectedEnd = "";
+
 
     /** This method populates the customer ID combo box. */
     public void customerCBSelected() {
@@ -156,7 +160,6 @@ public class AddAppointmentController implements Initializable {
             ControllerMethods.errorDialogueBox("You must select a contact!");
             errorDetected = true;
         }
-
 
         if(errorDetected == true)
             return false;

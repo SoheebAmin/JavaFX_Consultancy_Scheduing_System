@@ -2,6 +2,7 @@ import Model.RuntimeObjects;
 import Model.User;
 import Utils.DBConnection;
 import Databse.SelectStatements;
+import Utils.DateTimeMethods;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class Main extends Application {
 
@@ -55,8 +57,13 @@ public class Main extends Application {
         appointmentTypes.add("Closing Operations");
         RuntimeObjects.setAllAppointmentTypes(appointmentTypes);
 
+        // populates list of days to be selectable for appointments from today onward, up to the specified number of days.
+        ObservableList<LocalDate> generatedAppointmentDateList = DateTimeMethods.listOfFutureDates(60);
+        RuntimeObjects.setAllAppointmentDates(generatedAppointmentDateList);
+
         // launches JavaFX App
         launch(args);
+
 
         // Closes DB connection
         DBConnection.closeConnection();

@@ -2,6 +2,8 @@ package Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDate;
+
 /**This class grabs the customers and appointments in the database at program run time, and also is updated as changes are made during the life of the application. */
 public class RuntimeObjects {
 
@@ -17,6 +19,11 @@ public class RuntimeObjects {
 
     // holds the list of appointment types utilized by the program
     private static ObservableList<String> allAppointmentTypes = FXCollections.observableArrayList();
+
+    // holds the list of days appointments will be allowed until.
+    private static ObservableList<LocalDate> allAppointmentDates = FXCollections.observableArrayList();
+
+
 
     // add, delete, and update customers and appointments.
 
@@ -55,7 +62,7 @@ public class RuntimeObjects {
         return allAppointments;
     }
 
-    // the getters and setters for the current users, appointments types, and contacts
+    // the getters and setters for the various lists and objects to be used in the life of the program.
 
     public static User getCurrentUser() {
         return currentUser;
@@ -83,5 +90,13 @@ public class RuntimeObjects {
 
     public static void setAllAppointmentTypes(ObservableList<String> allAppointmentTypes) {
         RuntimeObjects.allAppointmentTypes = allAppointmentTypes;
+    }
+
+    public static ObservableList<LocalDate> getAllAppointmentDates() {
+        return allAppointmentDates;
+    }
+
+    public static void setAllAppointmentDates(ObservableList<LocalDate> allAppointmentDates) {
+        RuntimeObjects.allAppointmentDates = allAppointmentDates;
     }
 }
