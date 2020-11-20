@@ -22,12 +22,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
-/** The Controller to add customer objects to the customers list stored in the ObservableLists class */
+/** The Controller to add appointment objects to the appoint list stored in the ObservableLists class */
 public class AddAppointmentController implements Initializable {
 
     // Variables for the fields to be filled in.
-    @FXML
-    private TextField idText;
     @FXML private ComboBox customerCB;
     @FXML private TextField titleText;
     @FXML private TextField descriptionText;

@@ -1,18 +1,24 @@
 package Control;
 
 import Model.Appointment;
+import Model.Customer;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
 import Databse.DeleteStatements;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,14 +42,36 @@ public class AppointmentDashboardController implements Initializable {
     @FXML private TableColumn<Appointment, Integer> userIdCol;
 
 
-    /** This method allows the user to add a customer */
+    /** This method allows the user to add an appointment */
     public void addButtonClicked(ActionEvent event) throws IOException {
         ControllerMethods.changeScene(event, "../View/AddAppointment.fxml");
     }
 
-    /** This method allows the user to add a customer */
+    /** This method allows the user to modify an appointment */
     public void modifyButtonClicked(ActionEvent event) throws IOException {
-        ControllerMethods.changeScene(event, "../View/modifyAppointment.fxml");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../View/modifyAppointment.fxml"));
+        loader.load();
+
+        // Send the data selected from the table view to the Modify Part Menu.
+        ModifyAppointmentController MAC = loader.getController();
+        try
+        {
+            Appointment selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
+            MAC.setAppointmentInfo(selectedAppointment);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("You need to select an appointment first!");
+            alert.showAndWait();
+            return;
+        }
+
+        // Creates new scene.
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Parent scene = loader.getRoot();
+        window.setScene(new Scene(scene));
+        window.show();
     }
 
     public void deleteButtonClicked() {
