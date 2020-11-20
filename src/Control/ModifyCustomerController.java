@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 /** The Controller to add customer objects to the customers list stored in the ObservableLists class */
@@ -174,14 +175,22 @@ public class ModifyCustomerController implements Initializable {
 
         //use selected division to grab division ID
         String insertStatement = "SELECT Division_ID FROM first_level_divisions WHERE Division = \"" + division + "\"";
-        int division_id = SelectStatements.getId(DBConnection.getConn(), insertStatement, "Division_ID");
+        int division_id = SelectStatements.getAnInt(DBConnection.getConn(), insertStatement, "Division_ID");
+
+        //grab the created datetime and user
+        String LDTSelectStatement = "SELECT Create_Date FROM customers WHERE Customer_ID =" + id + ";";
+        LocalDateTime Create_Date = SelectStatements.getALocalDateTime(DBConnection.getConn(), LDTSelectStatement, "Create_Date");
+
+        String stringSelectStatement = "SELECT Created_By FROM customers WHERE Customer_ID =" + id + ";";
+        String Created_By = SelectStatements.getAString(DBConnection.getConn(), stringSelectStatement, "Created_By");
 
         // Deletes the customer as they already are in the database.
         String deleteStatement = "DELETE FROM customers WHERE Customer_ID =" + id + ";";
         DeleteStatements.delete(DBConnection.getConn(), deleteStatement);
 
         //Calls the insert statement to add the new customer to the database.
-        InsertStatements.insertCustomer(DBConnection.getConn(), id, name, address, postal, phone, RuntimeObjects.getCurrentUser().getUsername(), division_id);
+        InsertStatements.modifyCustomer(DBConnection.getConn(), id, name, address, postal, phone, Create_Date,
+                                        Created_By, RuntimeObjects.getCurrentUser().getUsername(), division_id);
 
         // clear the current customers observable list, and fetch them again from the database.
         RuntimeObjects.clearAllCustomers();

@@ -1,6 +1,5 @@
 package Control;
 
-import Databse.InsertStatements;
 import Databse.SelectStatements;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
@@ -174,7 +173,7 @@ public class AddAppointmentController implements Initializable {
         boolean errorDetected = false; // boolean to mark if we will abort after all error messages are shown.
 
         // grab the auto-Id by checking the max ID in the DB and adding 1 to it.
-        int id = SelectStatements.getId(DBConnection.getConn(), "SELECT max(Appointment_ID)+1 AS Appointment_ID FROM appointments;", "Appointment_ID");
+        int id = SelectStatements.getAnInt(DBConnection.getConn(), "SELECT max(Appointment_ID)+1 AS Appointment_ID FROM appointments;", "Appointment_ID");
 
         // error check and then add title
         String name = titleText.getText();

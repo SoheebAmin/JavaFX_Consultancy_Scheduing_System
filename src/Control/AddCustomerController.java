@@ -102,7 +102,7 @@ public class AddCustomerController implements Initializable {
         boolean errorDetected = false; // boolean to mark if we will abort after
 
         // grab the auto-Id by checking the max ID in the DB and adding 1 to it.
-        int id = SelectStatements.getId(DBConnection.getConn(), "SELECT max(Customer_ID)+1 AS Customer_ID FROM customers;", "Customer_ID");
+        int id = SelectStatements.getAnInt(DBConnection.getConn(), "SELECT max(Customer_ID)+1 AS Customer_ID FROM customers;", "Customer_ID");
 
         // error check and then add customer name
         String name = nameText.getText();
@@ -154,7 +154,7 @@ public class AddCustomerController implements Initializable {
 
         //use selected division to grab division ID
         String SQLStatement = "SELECT Division_ID FROM first_level_divisions WHERE Division = \"" + division + "\"";
-        int division_id = SelectStatements.getId(DBConnection.getConn(), SQLStatement, "Division_ID");
+        int division_id = SelectStatements.getAnInt(DBConnection.getConn(), SQLStatement, "Division_ID");
 
         //Calls the insert statement to add the new customer to the database.
         InsertStatements.insertCustomer(DBConnection.getConn(), id, name, address, postal, phone, RuntimeObjects.getCurrentUser().getUsername(), division_id);

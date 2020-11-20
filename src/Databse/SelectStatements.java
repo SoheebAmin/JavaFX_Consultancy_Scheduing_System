@@ -216,7 +216,7 @@ public class SelectStatements {
     }
 
 
-    public static int getId(Connection conn, String SQLStatement, String column) {
+    public static int getAnInt(Connection conn, String SQLStatement, String column) {
 
         // Prepared select statement to grab the int
         String selectStatement = SQLStatement;
@@ -228,7 +228,7 @@ public class SelectStatements {
             PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
 
             // int to return
-            int id;
+            int intVar;
 
             // execute command to get desired data for the combo boxes
             preparedStatement.execute(selectStatement);
@@ -236,16 +236,82 @@ public class SelectStatements {
             ResultSet resultSet = preparedStatement.getResultSet();
             while(resultSet.next()) // a boolean function that remains true until we scroll through each record
             {
-                id = resultSet.getInt(column);
-                return id;
+                intVar = resultSet.getInt(column);
+                return intVar;
             }
             // return -1 if failed
             return -1;
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
-            System.out.println("getId failed");
-            return 1;
+            System.out.println("get Int failed");
+            return -1;
+        }
+    }
+
+    public static LocalDateTime getALocalDateTime(Connection conn, String SQLStatement, String column) {
+
+        // Prepared select statement to grab the int
+        String selectStatement = SQLStatement;
+
+        try {
+            // Create the prepared Statement Object
+            DBQuery.setPreparedStatement(conn, selectStatement);
+
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+
+            // int to return
+            LocalDateTime localDateTimeVar;
+
+            // execute command to get desired data for the combo boxes
+            preparedStatement.execute(selectStatement);
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while(resultSet.next()) // a boolean function that remains true until we scroll through each record
+            {
+                localDateTimeVar = resultSet.getTimestamp(column).toLocalDateTime();
+                return localDateTimeVar;
+            }
+            // return null if failed
+            return null;
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("get LocalDateTime failed");
+            return null;
+        }
+    }
+
+    public static String getAString(Connection conn, String SQLStatement, String column) {
+
+        // Prepared select statement to grab the int
+        String selectStatement = SQLStatement;
+
+        try {
+            // Create the prepared Statement Object
+            DBQuery.setPreparedStatement(conn, selectStatement);
+
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+
+            // int to return
+            String stringVar;
+
+            // execute command to get desired data for the combo boxes
+            preparedStatement.execute(selectStatement);
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while(resultSet.next()) // a boolean function that remains true until we scroll through each record
+            {
+                stringVar = resultSet.getString(column);
+                return stringVar;
+            }
+            // return null if failed
+            return "";
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("get String failed");
+            return "";
         }
     }
 
