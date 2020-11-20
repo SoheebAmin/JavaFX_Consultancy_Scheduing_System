@@ -1,7 +1,6 @@
 package Control;
 
 import Model.Appointment;
-import Model.Customer;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;

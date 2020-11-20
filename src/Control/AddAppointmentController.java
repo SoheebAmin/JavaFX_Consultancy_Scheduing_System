@@ -5,7 +5,6 @@ import Databse.SelectStatements;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,22 +25,15 @@ import java.util.ResourceBundle;
 public class AddAppointmentController implements Initializable {
 
     // Variables for the fields to be filled in.
-    @FXML private ComboBox customerCB;
+    @FXML private ComboBox<Integer> customerCB;
     @FXML private TextField titleText;
     @FXML private TextField descriptionText;
     @FXML private TextField locationText;
-    @FXML private ComboBox typeCB;
-    @FXML private ComboBox contactCB;
-    @FXML private ComboBox dateCB;
-    @FXML private ComboBox startCB;
-    @FXML private ComboBox endCB;
-
-    // Observable lists to populate the combo boxes
-    private static ObservableList<Integer> customerCBItems = FXCollections.observableArrayList();
-    private static ObservableList<String> typeCBItems = FXCollections.observableArrayList();
-    private static ObservableList<String> contactCBItems = FXCollections.observableArrayList();
-    private static ObservableList<LocalDate> dateCBItems = FXCollections.observableArrayList();
-    private static ObservableList<LocalTime> timeCBItems = FXCollections.observableArrayList();
+    @FXML private ComboBox<String> typeCB;
+    @FXML private ComboBox<String> contactCB;
+    @FXML private ComboBox<LocalDate> dateCB;
+    @FXML private ComboBox<LocalTime> startCB;
+    @FXML private ComboBox<LocalTime> endCB;
 
     // Temporary variables to save combo box selection
     private static String selectedCustomer = "";
@@ -56,7 +48,8 @@ public class AddAppointmentController implements Initializable {
     /** This method populates the customer ID combo box. */
     public void customerCBSelected() {
         // calls methods to generate list of countries from the DB with an SQL select
-        customerCBItems = SelectStatements.getComboBoxIntList(DBConnection.getConn(), "SELECT Customer_ID FROM customers;", "Customer_ID");
+        // Observable lists to populate the combo boxes
+        ObservableList<Integer> customerCBItems = SelectStatements.getComboBoxIntList(DBConnection.getConn(), "SELECT Customer_ID FROM customers;", "Customer_ID");
 
         // sets the list in the combo box
         customerCB.setItems(customerCBItems);
@@ -65,7 +58,7 @@ public class AddAppointmentController implements Initializable {
     /** This method populates the type combo box. */
     public void typeCBSelected() {
         // grab types from runtime class where it is stored
-         typeCBItems = RuntimeObjects.getAllAppointmentTypes();
+        ObservableList<String> typeCBItems = RuntimeObjects.getAllAppointmentTypes();
 
         // sets the list in the combo box
         typeCB.setItems(typeCBItems);
@@ -74,7 +67,7 @@ public class AddAppointmentController implements Initializable {
     /** This method populates the contact combo box. */
     public void contactCBSelected() {
         // grab contacts from runtime class where it is stored
-        contactCBItems = RuntimeObjects.getAllContacts();
+        ObservableList<String> contactCBItems = RuntimeObjects.getAllContacts();
 
         // sets the list in the combo box
         contactCB.setItems(contactCBItems);
@@ -83,7 +76,7 @@ public class AddAppointmentController implements Initializable {
     /** This method populates the date ID combo box. */
     public void dateCBSelected() {
         // grabs dates from runtime class where it is stored
-        dateCBItems = RuntimeObjects.getAllAppointmentDates();
+        ObservableList<LocalDate> dateCBItems = RuntimeObjects.getAllAppointmentDates();
 
         // sets the list in the combo box
         dateCB.setItems(dateCBItems);
@@ -93,13 +86,15 @@ public class AddAppointmentController implements Initializable {
     public void timeCBSelected() {
         // grabs time time intervals from runtime class where it is stored
 
-        timeCBItems = RuntimeObjects.getAllAppointmentHours();
+        ObservableList<LocalTime> timeCBItems = RuntimeObjects.getAllAppointmentHours();
 
         // sets the list in the start and end time combo boxes
         startCB.setItems(timeCBItems);
         endCB.setItems(timeCBItems);
     }
 
+
+    
     /** This method sets which customer is chosen. */
     public void customerCBSet() {
         // try-catch deals with scenario in which nothing is selected.
@@ -115,7 +110,7 @@ public class AddAppointmentController implements Initializable {
     public void typeCBSet() {
         // try-catch deals with scenario in which nothing is selected.
         try {
-            AddAppointmentController.selectedType = typeCB.getSelectionModel().getSelectedItem().toString();
+            AddAppointmentController.selectedType = typeCB.getSelectionModel().getSelectedItem();
         }
         catch (NullPointerException e) {
             return;
@@ -126,7 +121,7 @@ public class AddAppointmentController implements Initializable {
     public void contactCBSet() {
         // try-catch deals with scenario in which nothing is selected.
         try {
-            AddAppointmentController.selectedContact = contactCB.getSelectionModel().getSelectedItem().toString();
+            AddAppointmentController.selectedContact = contactCB.getSelectionModel().getSelectedItem();
         }
         catch (NullPointerException e) {
             return;
@@ -247,7 +242,7 @@ public class AddAppointmentController implements Initializable {
         }
 
         // return the function if any errors were detected.
-        if(errorDetected == true)
+        if(errorDetected)
             return false;
 
         // Conversions to needed data types done once all validation passed

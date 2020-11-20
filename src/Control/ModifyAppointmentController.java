@@ -3,7 +3,6 @@ package Control;
 import Databse.InsertStatements;
 import Databse.SelectStatements;
 import Model.Appointment;
-import Model.Customer;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
@@ -29,15 +28,15 @@ public class ModifyAppointmentController implements Initializable {
 
     // Variables for the fields to be filled in.
     @FXML private TextField idText;
-    @FXML private ComboBox customerCB;
+    @FXML private ComboBox<Integer> customerCB;
     @FXML private TextField titleText;
     @FXML private TextField descriptionText;
     @FXML private TextField locationText;
-    @FXML private ComboBox typeCB;
-    @FXML private ComboBox contactCB;
-    @FXML private ComboBox dateCB;
-    @FXML private ComboBox startCB;
-    @FXML private ComboBox endCB;
+    @FXML private ComboBox<String> typeCB;
+    @FXML private ComboBox<String> contactCB;
+    @FXML private ComboBox<LocalDate> dateCB;
+    @FXML private ComboBox<LocalTime> startCB;
+    @FXML private ComboBox<LocalTime> endCB;
 
     // Observable lists to populate the combo boxes
     private static ObservableList<Integer> customerCBItems = FXCollections.observableArrayList();
@@ -64,19 +63,32 @@ public class ModifyAppointmentController implements Initializable {
         // sets the current id being worked on
         ModifyAppointmentController.currentAppointment = appointment.getId();
 
-        // sends all the data to the text fields.
+        // sends all the data to the text fields and combo boxes.
         idText.setText((String.valueOf((appointment.getId()))));
+        customerCB.setValue(appointment.getCustomerId());
         titleText.setText(appointment.getTitle());
         descriptionText.setText(appointment.getDescription());
         locationText.setText(appointment.getLocation());
+        typeCB.setValue(appointment.getType());
 
+        //Get the contact name using the stored contact ID.
+        int contactId = appointment.getContactId();
+        String selectString = "SELECT Contact_Name FROM contacts WHERE Contact_ID = " + contactId +";";
+        String contactName = SelectStatements.getAString(DBConnection.getConn(), selectString, "Contact_Name");
+        contactCB.setValue(contactName);
+
+
+        //dateCB.setValue();
+        //startCB.setValue(appointment.getStartTime()); // need to grab only time without date
+        //endCB.setValue(appointment.getEndTime()); // need to grab time without date.
+
+
+        // NOTE: All the below have to be strings. Don't worry, the save button will convert them to whatever they need to be.
         // sets the customer object values in temp vars to be used by the combo boxes.
 
         //NEED TO CONVERT TO STRING.
         //selectedCustomer = appointment.getCustomerId();
 
-        selectedType = appointment.getType();
-        System.out.println(selectedType);
 
         // Need to grab contact name using contact ID. SQL here probably.
         //selectedContact = appointment.getContactId();
@@ -84,10 +96,11 @@ public class ModifyAppointmentController implements Initializable {
         // Need to split up either start or end and grab date from it.
         //selectedDate = ...
 
+        // sets the stored selection for the combo boxes as string versions of the just-retrieved values.
+        selectedType = appointment.getType();
+        selectedContact = contactName;
         selectedStart = appointment.getStartTime().toString();
-        System.out.println(selectedStart);
         selectedEnd = appointment.getEndTime().toString();
-        System.out.println(selectedEnd);
     }
 
 
