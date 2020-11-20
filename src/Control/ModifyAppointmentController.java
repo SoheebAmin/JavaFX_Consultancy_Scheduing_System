@@ -28,7 +28,7 @@ public class ModifyAppointmentController implements Initializable {
 
     // Variables for the fields to be filled in.
     @FXML private TextField idText;
-    @FXML private ComboBox<Integer> customerCB;
+    @FXML private ComboBox<String> customerCB;
     @FXML private TextField titleText;
     @FXML private TextField descriptionText;
     @FXML private TextField locationText;
@@ -39,7 +39,7 @@ public class ModifyAppointmentController implements Initializable {
     @FXML private ComboBox<LocalTime> endCB;
 
     // Observable lists to populate the combo boxes
-    private static ObservableList<Integer> customerCBItems = FXCollections.observableArrayList();
+    private static ObservableList<String> customerCBItems = FXCollections.observableArrayList();
     private static ObservableList<String> typeCBItems = FXCollections.observableArrayList();
     private static ObservableList<String> contactCBItems = FXCollections.observableArrayList();
     private static ObservableList<LocalDate> dateCBItems = FXCollections.observableArrayList();
@@ -65,16 +65,21 @@ public class ModifyAppointmentController implements Initializable {
 
         // sends all the data to the text fields and combo boxes.
         idText.setText((String.valueOf((appointment.getId()))));
-        customerCB.setValue(appointment.getCustomerId());
         titleText.setText(appointment.getTitle());
         descriptionText.setText(appointment.getDescription());
         locationText.setText(appointment.getLocation());
         typeCB.setValue(appointment.getType());
 
+        //Get the customer name using the stored contact ID.
+        int customerId = appointment.getCustomerId();
+        String selectCustomerString = "SELECT Customer_Name FROM customers WHERE Customer_ID = " + customerId +";";
+        String customerName = SelectStatements.getAString(DBConnection.getConn(), selectCustomerString, "Customer_Name");
+        customerCB.setValue(customerName);
+
         //Get the contact name using the stored contact ID.
         int contactId = appointment.getContactId();
-        String selectString = "SELECT Contact_Name FROM contacts WHERE Contact_ID = " + contactId +";";
-        String contactName = SelectStatements.getAString(DBConnection.getConn(), selectString, "Contact_Name");
+        String selectContactString = "SELECT Contact_Name FROM contacts WHERE Contact_ID = " + contactId +";";
+        String contactName = SelectStatements.getAString(DBConnection.getConn(), selectContactString, "Contact_Name");
         contactCB.setValue(contactName);
 
         // grab the date in LocalDate and the start time in LocalTime using the stored start time LocalDateTime.
@@ -111,8 +116,8 @@ public class ModifyAppointmentController implements Initializable {
 
     /** This method populates the customer ID combo box. */
     public void customerCBSelected() {
-        // calls methods to generate list of countries from the DB with an SQL select
-        customerCBItems = SelectStatements.getComboBoxIntList(DBConnection.getConn(), "SELECT Customer_ID FROM customers;", "Customer_ID");
+        // calls methods to generate list of customers from the DB with an SQL select
+        customerCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), "SELECT Customer_Name FROM customers;", "Customer_Name");
 
         // sets the list in the combo box
         customerCB.setItems(customerCBItems);
@@ -160,7 +165,7 @@ public class ModifyAppointmentController implements Initializable {
     public void customerCBSet() {
         // try-catch deals with scenario in which nothing is selected.
         try {
-            ModifyAppointmentController.selectedCustomer = customerCB.getSelectionModel().getSelectedItem().toString();
+            ModifyAppointmentController.selectedCustomer = customerCB.getSelectionModel().getSelectedItem();
         }
         catch (NullPointerException e) {
             return;
@@ -171,7 +176,7 @@ public class ModifyAppointmentController implements Initializable {
     public void typeCBSet() {
         // try-catch deals with scenario in which nothing is selected.
         try {
-            ModifyAppointmentController.selectedType = typeCB.getSelectionModel().getSelectedItem().toString();
+            ModifyAppointmentController.selectedType = typeCB.getSelectionModel().getSelectedItem();
         }
         catch (NullPointerException e) {
             return;
@@ -251,9 +256,9 @@ public class ModifyAppointmentController implements Initializable {
             errorDetected = true;
         }
 
-        // check if customer ID is empty. If not, convert to int add the customer
-        String customerString = ModifyAppointmentController.selectedCustomer;
-        if(customerString.equals(""))
+        // check if customer is empty. If not, add the customer
+        String customer = ModifyAppointmentController.selectedCustomer;
+        if(customer.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select a customer!");
             errorDetected = true;
@@ -283,8 +288,6 @@ public class ModifyAppointmentController implements Initializable {
             errorDetected = true;
         }
 
-
-
         // check if start time is empty. If not, convert to local time and add start time
         String startString = ModifyAppointmentController.selectedStart;
         if(startString.equals(""))
@@ -292,7 +295,6 @@ public class ModifyAppointmentController implements Initializable {
             ControllerMethods.errorDialogueBox("You must select a start time!");
             errorDetected = true;
         }
-
 
         // check if end time is empty. If not, convert to local time and add end time.
         String endString = ModifyAppointmentController.selectedEnd;
@@ -307,7 +309,6 @@ public class ModifyAppointmentController implements Initializable {
             return false;
 
         // Conversions to needed data types done once all validation passed
-        int customer = Integer.parseInt(customerString);
         LocalDate date = LocalDate.parse(dateString);
         LocalTime start = LocalTime.parse(startString);
         LocalTime end = LocalTime.parse(endString);
@@ -316,13 +317,17 @@ public class ModifyAppointmentController implements Initializable {
         LocalDateTime appointmentStart = LocalDateTime.of(date, start);
         LocalDateTime appointmentEnd = LocalDateTime.of(date, end);
 
+        // gets the customer ID
+        String selectCustomerID = "SELECT Customer_ID FROM customers WHERE Customer_Name = \"" + customer + "\"";
+        int customerID = SelectStatements.getAnInt(DBConnection.getConn(), selectCustomerID, "Customer_ID");
+
         // gets the Contact ID
         String selectContactID = "SELECT Contact_ID FROM contacts WHERE Contact_Name = \"" + contact + "\"";
         int contactID = SelectStatements.getAnInt(DBConnection.getConn(), selectContactID, "Contact_ID");
 
         //Calls the insert statement to add the new appointment to the database.
         InsertStatements.insertAppointment(DBConnection.getConn(), id, title, description, location, type, appointmentStart, appointmentEnd,
-                RuntimeObjects.getCurrentUser().getUsername(), customer, RuntimeObjects.getCurrentUser().getId(), contactID);
+                RuntimeObjects.getCurrentUser().getUsername(), customerID, RuntimeObjects.getCurrentUser().getId(), contactID);
 
         // clear the current customers observable list, and fetch them again from the database.
         RuntimeObjects.clearAllAppointments();;

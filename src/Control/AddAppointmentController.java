@@ -190,7 +190,7 @@ public class AddAppointmentController implements Initializable {
             errorDetected = true;
         }
 
-        // check if customer ID is empty. If not, convert to int add the customer
+        // check if customer is empty. If not, add the customer
         String customer = AddAppointmentController.selectedCustomer;
         if(customer.equals(""))
         {
