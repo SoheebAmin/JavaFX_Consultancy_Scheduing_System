@@ -248,7 +248,6 @@ public class AddAppointmentController implements Initializable {
             errorDetected = true;
         }
 
-
         // return the function if any errors were detected.
         if(errorDetected == true)
             return false;
