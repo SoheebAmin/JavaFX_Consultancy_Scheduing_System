@@ -52,8 +52,8 @@ public class ModifyAppointmentController implements Initializable {
     private static String selectedDate = "";
     private static String selectedStart = "";
     private static String selectedEnd = "";
-    // ID of current customer being modified
 
+    // ID of current customer being modified
     private static int currentAppointment;
 
 
@@ -77,6 +77,9 @@ public class ModifyAppointmentController implements Initializable {
         String contactName = SelectStatements.getAString(DBConnection.getConn(), selectString, "Contact_Name");
         contactCB.setValue(contactName);
 
+        // grab the date in LocalDate and the start time in LocalTime using the stored start time LocalDateTime.
+
+        // grab the end time LocalTime using the stored end time LocalDateTime.
 
         //dateCB.setValue();
         //startCB.setValue(appointment.getStartTime()); // need to grab only time without date
@@ -224,8 +227,8 @@ public class ModifyAppointmentController implements Initializable {
 
         boolean errorDetected = false; // boolean to mark if we will abort after all error messages are shown.
 
-        // grab the auto-Id by checking the max ID in the DB and adding 1 to it.
-        int id = SelectStatements.getAnInt(DBConnection.getConn(), "SELECT max(Appointment_ID)+1 AS Appointment_ID FROM appointments;", "Appointment_ID");
+        // grab the id stored in the controller for the current appointment.
+        int id = ModifyAppointmentController.currentAppointment*10; // Times 10 so no ID error for now.
 
         // error check and then add title
         String title = titleText.getText();
@@ -276,31 +279,31 @@ public class ModifyAppointmentController implements Initializable {
         String dateString = ModifyAppointmentController.selectedDate;
         if(dateString.equals(""))
         {
-            ControllerMethods.errorDialogueBox("You must select a contact!");
+            ControllerMethods.errorDialogueBox("You must select a date!");
             errorDetected = true;
         }
 
 
 
-        // check if start time is empty. If not, convert to local time and add start time contact
+        // check if start time is empty. If not, convert to local time and add start time
         String startString = ModifyAppointmentController.selectedStart;
         if(startString.equals(""))
         {
-            ControllerMethods.errorDialogueBox("You must select a contact!");
+            ControllerMethods.errorDialogueBox("You must select a start time!");
             errorDetected = true;
         }
 
 
-        // check if start end time is empty. If not, convert to local time and add start time contact
+        // check if end time is empty. If not, convert to local time and add end time.
         String endString = ModifyAppointmentController.selectedEnd;
         if(endString.equals(""))
         {
-            ControllerMethods.errorDialogueBox("You must select a contact!");
+            ControllerMethods.errorDialogueBox("You must select an end time!");
             errorDetected = true;
         }
 
         // return the function if any errors were detected.
-        if(errorDetected == true)
+        if(errorDetected)
             return false;
 
         // Conversions to needed data types done once all validation passed

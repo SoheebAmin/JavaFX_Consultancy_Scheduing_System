@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 public class AddAppointmentController implements Initializable {
 
     // Variables for the fields to be filled in.
-    @FXML private ComboBox<Integer> customerCB;
+    @FXML private ComboBox<String> customerCB;
     @FXML private TextField titleText;
     @FXML private TextField descriptionText;
     @FXML private TextField locationText;
@@ -49,7 +49,7 @@ public class AddAppointmentController implements Initializable {
     public void customerCBSelected() {
         // calls methods to generate list of countries from the DB with an SQL select
         // Observable lists to populate the combo boxes
-        ObservableList<Integer> customerCBItems = SelectStatements.getComboBoxIntList(DBConnection.getConn(), "SELECT Customer_ID FROM customers;", "Customer_ID");
+        ObservableList<String> customerCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), "SELECT Customer_Name FROM customers;", "Customer_Name");
 
         // sets the list in the combo box
         customerCB.setItems(customerCBItems);
@@ -99,7 +99,7 @@ public class AddAppointmentController implements Initializable {
     public void customerCBSet() {
         // try-catch deals with scenario in which nothing is selected.
         try {
-            AddAppointmentController.selectedCustomer = customerCB.getSelectionModel().getSelectedItem().toString();
+            AddAppointmentController.selectedCustomer = customerCB.getSelectionModel().getSelectedItem();
         }
         catch (NullPointerException e) {
             return;
@@ -191,8 +191,8 @@ public class AddAppointmentController implements Initializable {
         }
 
         // check if customer ID is empty. If not, convert to int add the customer
-        String customerString = AddAppointmentController.selectedCustomer;
-        if(customerString.equals(""))
+        String customer = AddAppointmentController.selectedCustomer;
+        if(customer.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select a customer!");
             errorDetected = true;
@@ -218,26 +218,24 @@ public class AddAppointmentController implements Initializable {
         String dateString = AddAppointmentController.selectedDate;
         if(dateString.equals(""))
         {
-            ControllerMethods.errorDialogueBox("You must select a contact!");
+            ControllerMethods.errorDialogueBox("You must select a date!");
             errorDetected = true;
         }
 
 
-
-        // check if start time is empty. If not, convert to local time and add start time contact
+        // check if start time is empty. If not, convert to local time and add start time
         String startString = AddAppointmentController.selectedStart;
         if(startString.equals(""))
         {
-            ControllerMethods.errorDialogueBox("You must select a contact!");
+            ControllerMethods.errorDialogueBox("You must select a start time!");
             errorDetected = true;
         }
 
-
-        // check if start end time is empty. If not, convert to local time and add start time contact
+        // check if end time is empty. If not, convert to local time and add end time
         String endString = AddAppointmentController.selectedEnd;
         if(endString.equals(""))
         {
-            ControllerMethods.errorDialogueBox("You must select a contact!");
+            ControllerMethods.errorDialogueBox("You must select an end time!");
             errorDetected = true;
         }
 
@@ -246,7 +244,6 @@ public class AddAppointmentController implements Initializable {
             return false;
 
         // Conversions to needed data types done once all validation passed
-        int customer = Integer.parseInt(customerString);
         LocalDate date = LocalDate.parse(dateString);
         LocalTime start = LocalTime.parse(startString);
         LocalTime end = LocalTime.parse(endString);
@@ -255,13 +252,17 @@ public class AddAppointmentController implements Initializable {
         LocalDateTime appointmentStart = LocalDateTime.of(date, start);
         LocalDateTime appointmentEnd = LocalDateTime.of(date, end);
 
+        // gets the customer ID
+        String selectCustomerID = "SELECT Customer_ID FROM customers WHERE Customer_Name = \"" + customer + "\"";
+        int customerID = SelectStatements.getAnInt(DBConnection.getConn(), selectCustomerID, "Customer_ID");
+
         // gets the Contact ID
         String selectContactID = "SELECT Contact_ID FROM contacts WHERE Contact_Name = \"" + contact + "\"";
         int contactID = SelectStatements.getAnInt(DBConnection.getConn(), selectContactID, "Contact_ID");
 
         //Calls the insert statement to add the new appointment to the database.
         InsertStatements.insertAppointment(DBConnection.getConn(), id, title, description, location, type, appointmentStart, appointmentEnd,
-                RuntimeObjects.getCurrentUser().getUsername(), customer, RuntimeObjects.getCurrentUser().getId(), contactID);
+                RuntimeObjects.getCurrentUser().getUsername(), customerID, RuntimeObjects.getCurrentUser().getId(), contactID);
 
         // clear the current customers observable list, and fetch them again from the database.
         RuntimeObjects.clearAllAppointments();;

@@ -94,7 +94,7 @@ public class AppointmentDashboardController implements Initializable {
 
             // prepares the SQL Delete statement
             int appointmentId = selectedAppointment.getId();
-            String SQLStatement = "DELETE FROM appointments WHERE Customer_ID =" + appointmentId + ";";
+            String SQLStatement = "DELETE FROM appointments WHERE Appointment_ID =" + appointmentId + ";";
 
             // deletes the record from the database itself
             DeleteStatements.delete(DBConnection.getConn(), SQLStatement);

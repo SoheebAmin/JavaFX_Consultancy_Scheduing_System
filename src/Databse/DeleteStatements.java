@@ -21,6 +21,13 @@ public class DeleteStatements {
 
             // execute delete command
             preparedStatement.execute(deleteStatement);
+
+            // Confirm number of rows affected
+            int rows = preparedStatement.getUpdateCount();
+            if (rows > 0)
+                System.out.println(rows + " row(s) affected");
+            else
+                System.out.println("Nothing changed");
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
