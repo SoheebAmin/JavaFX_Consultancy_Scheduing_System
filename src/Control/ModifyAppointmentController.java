@@ -1,12 +1,12 @@
 package Control;
 
+import Databse.DeleteStatements;
 import Databse.InsertStatements;
 import Databse.SelectStatements;
 import Model.Appointment;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,13 +37,6 @@ public class ModifyAppointmentController implements Initializable {
     @FXML private ComboBox<LocalDate> dateCB;
     @FXML private ComboBox<LocalTime> startCB;
     @FXML private ComboBox<LocalTime> endCB;
-
-    // Observable lists to populate the combo boxes
-    private static ObservableList<String> customerCBItems = FXCollections.observableArrayList();
-    private static ObservableList<String> typeCBItems = FXCollections.observableArrayList();
-    private static ObservableList<String> contactCBItems = FXCollections.observableArrayList();
-    private static ObservableList<LocalDate> dateCBItems = FXCollections.observableArrayList();
-    private static ObservableList<LocalTime> timeCBItems = FXCollections.observableArrayList();
 
     // Temporary variables to save combo box selection
     private static String selectedCustomer = "";
@@ -109,7 +102,8 @@ public class ModifyAppointmentController implements Initializable {
     /** This method populates the customer ID combo box. */
     public void customerCBSelected() {
         // calls methods to generate list of customers from the DB with an SQL select
-        customerCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), "SELECT Customer_Name FROM customers;", "Customer_Name");
+        // Observable lists to populate the combo boxes
+        ObservableList<String> customerCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), "SELECT Customer_Name FROM customers;", "Customer_Name");
 
         // sets the list in the combo box
         customerCB.setItems(customerCBItems);
@@ -118,7 +112,7 @@ public class ModifyAppointmentController implements Initializable {
     /** This method populates the type combo box. */
     public void typeCBSelected() {
         // grab types from runtime class where it is stored
-        typeCBItems = RuntimeObjects.getAllAppointmentTypes();
+        ObservableList<String> typeCBItems = RuntimeObjects.getAllAppointmentTypes();
 
         // sets the list in the combo box
         typeCB.setItems(typeCBItems);
@@ -127,7 +121,7 @@ public class ModifyAppointmentController implements Initializable {
     /** This method populates the contact combo box. */
     public void contactCBSelected() {
         // grab contacts from runtime class where it is stored
-        contactCBItems = RuntimeObjects.getAllContacts();
+        ObservableList<String> contactCBItems = RuntimeObjects.getAllContacts();
 
         // sets the list in the combo box
         contactCB.setItems(contactCBItems);
@@ -136,7 +130,7 @@ public class ModifyAppointmentController implements Initializable {
     /** This method populates the date ID combo box. */
     public void dateCBSelected() {
         // grabs dates from runtime class where it is stored
-        dateCBItems = RuntimeObjects.getAllAppointmentDates();
+        ObservableList<LocalDate> dateCBItems = RuntimeObjects.getAllAppointmentDates();
 
         // sets the list in the combo box
         dateCB.setItems(dateCBItems);
@@ -146,7 +140,7 @@ public class ModifyAppointmentController implements Initializable {
     public void timeCBSelected() {
         // grabs time time intervals from runtime class where it is stored
 
-        timeCBItems = RuntimeObjects.getAllAppointmentHours();
+        ObservableList<LocalTime> timeCBItems = RuntimeObjects.getAllAppointmentHours();
 
         // sets the list in the start and end time combo boxes
         startCB.setItems(timeCBItems);
@@ -179,7 +173,7 @@ public class ModifyAppointmentController implements Initializable {
     public void contactCBSet() {
         // try-catch deals with scenario in which nothing is selected.
         try {
-            ModifyAppointmentController.selectedContact = contactCB.getSelectionModel().getSelectedItem().toString();
+            ModifyAppointmentController.selectedContact = contactCB.getSelectionModel().getSelectedItem();
         }
         catch (NullPointerException e) {
             return;
@@ -225,7 +219,7 @@ public class ModifyAppointmentController implements Initializable {
         boolean errorDetected = false; // boolean to mark if we will abort after all error messages are shown.
 
         // grab the id stored in the controller for the current appointment.
-        int id = ModifyAppointmentController.currentAppointment*10; // Times 10 so no ID error for now.
+        int id = ModifyAppointmentController.currentAppointment;
 
         // error check and then add title
         String title = titleText.getText();
@@ -317,12 +311,23 @@ public class ModifyAppointmentController implements Initializable {
         String selectContactID = "SELECT Contact_ID FROM contacts WHERE Contact_Name = \"" + contact + "\"";
         int contactID = SelectStatements.getAnInt(DBConnection.getConn(), selectContactID, "Contact_ID");
 
+        //grab the created datetime and user
+        String LDTSelectStatement = "SELECT Create_Date FROM appointments WHERE Appointment_ID =" + id + ";";
+        LocalDateTime Create_Date = SelectStatements.getALocalDateTime(DBConnection.getConn(), LDTSelectStatement, "Create_Date");
+
+        String stringSelectStatement = "SELECT Created_By FROM appointments WHERE Appointment_ID =" + id + ";";
+        String Created_By = SelectStatements.getAString(DBConnection.getConn(), stringSelectStatement, "Created_By");
+
+        // Deletes the appointment as it already is in the database.
+        String deleteStatement = "DELETE FROM appointments WHERE Appointment_ID =" + id + ";";
+        DeleteStatements.delete(DBConnection.getConn(), deleteStatement);
+
         //Calls the insert statement to add the new appointment to the database.
-        InsertStatements.insertAppointment(DBConnection.getConn(), id, title, description, location, type, appointmentStart, appointmentEnd,
-                RuntimeObjects.getCurrentUser().getUsername(), customerID, RuntimeObjects.getCurrentUser().getId(), contactID);
+        InsertStatements.modifyAppointment(DBConnection.getConn(), id, title, description, location, type, appointmentStart, appointmentEnd,
+                Create_Date, Created_By, RuntimeObjects.getCurrentUser().getUsername(), customerID, RuntimeObjects.getCurrentUser().getId(), contactID);
 
         // clear the current customers observable list, and fetch them again from the database.
-        RuntimeObjects.clearAllAppointments();;
+        RuntimeObjects.clearAllAppointments();
         Connection conn = DBConnection.getConn();
         SelectStatements.populateAppointmentsTable(conn);
 

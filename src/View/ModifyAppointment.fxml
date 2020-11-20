@@ -20,7 +20,7 @@
         <VBox layoutX="71.0" layoutY="71.0" prefHeight="406.0" prefWidth="114.0" spacing="21.0">
             <children>
                 <Label text="Appointment ID" />
-                <Label text="Customer ID" />
+                <Label text="Customer" />
                 <Label text="Title" />
                 <Label text="Description" />
                 <Label text="Location" />

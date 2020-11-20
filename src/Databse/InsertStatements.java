@@ -39,7 +39,7 @@ public class InsertStatements {
                 // Confirm number of rows affected
                 int rows = preparedStatement.getUpdateCount();
                 if (rows > 0)
-                    System.out.println(rows + " row(s) affected");
+                    System.out.println(rows + " row(s) added");
                 else
                     System.out.println("Nothing changed");
             }
@@ -52,7 +52,7 @@ public class InsertStatements {
         }
     }
 
-    /** SQL code to add customer to the database*/
+    /** SQL code to modify a customer to the database*/
     public static void modifyCustomer(Connection conn, int Customer_ID, String Customer_Name, String Address, String Postal_Code,
                                       String Phone, LocalDateTime Create_Date, String Created_By, String Last_Updated_By, int Division_ID
     ) {
@@ -84,7 +84,7 @@ public class InsertStatements {
                 // Confirm number of rows affected
                 int rows = preparedStatement.getUpdateCount();
                 if (rows > 0)
-                    System.out.println(rows + " row(s) affected");
+                    System.out.println(rows + " row(s) added");
                 else
                     System.out.println("Nothing changed");
             }
@@ -133,7 +133,57 @@ public class InsertStatements {
                 // Confirm number of rows affected
                 int rows = preparedStatement.getUpdateCount();
                 if (rows > 0)
-                    System.out.println(rows + " row(s) affected");
+                    System.out.println(rows + " row(s) added");
+                else
+                    System.out.println("Nothing changed");
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+        catch(SQLException e) {
+            e.getMessage();
+        }
+    }
+
+    /** SQL code to modify an appointment to the database*/
+    public static void modifyAppointment(Connection conn, int Appointment_ID, String Title, String Description, String Location, String Type,
+                                         LocalDateTime Start, LocalDateTime End, LocalDateTime Create_Date, String Created_By,
+                                         String Last_Updated_By, int Customer_ID, int User_ID, int Contact_ID
+    ) {
+        try {
+            // Prepared Insert Statement for countries table
+            String insertStatement = "INSERT INTO appointments(Appointment_ID, Title, Description, Location, Type, Start, End, " +
+                    "Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES(?,?,?,?,?,?,?,?,?,Now(),?,?,?,?)";
+
+            // Create the prepared Statement Object
+            DBQuery.setPreparedStatement(conn, insertStatement);
+
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+
+            // Key-value mapping of ? to variables
+            preparedStatement.setInt(1, Appointment_ID);
+            preparedStatement.setString(2, Title);
+            preparedStatement.setString(3, Description);
+            preparedStatement.setString(4, Location);
+            preparedStatement.setString(5, Type);
+            preparedStatement.setTimestamp(6, Timestamp.valueOf(Start));
+            preparedStatement.setTimestamp(7, Timestamp.valueOf(End));
+            preparedStatement.setTimestamp(8, Timestamp.valueOf(Create_Date));
+            preparedStatement.setString(9, Created_By);
+            preparedStatement.setString(10, Last_Updated_By);
+            preparedStatement.setInt(11, Customer_ID);
+            preparedStatement.setInt(12, User_ID);
+            preparedStatement.setInt(13, Contact_ID);
+
+            // Try to execute SQL statement, and gets the error if there is data incorrectly entered.
+            try {
+                preparedStatement.execute();
+
+                // Confirm number of rows affected
+                int rows = preparedStatement.getUpdateCount();
+                if (rows > 0)
+                    System.out.println(rows + " row(s) added");
                 else
                     System.out.println("Nothing changed");
             }
