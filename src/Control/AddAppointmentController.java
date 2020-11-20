@@ -1,5 +1,6 @@
 package Control;
 
+import Databse.InsertStatements;
 import Databse.SelectStatements;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
@@ -176,22 +177,22 @@ public class AddAppointmentController implements Initializable {
         int id = SelectStatements.getAnInt(DBConnection.getConn(), "SELECT max(Appointment_ID)+1 AS Appointment_ID FROM appointments;", "Appointment_ID");
 
         // error check and then add title
-        String name = titleText.getText();
-        if (name.equals("")) {
+        String title = titleText.getText();
+        if (title.equals("")) {
             ControllerMethods.errorDialogueBox("Title Error: Please enter a title");
             errorDetected = true;
         }
 
         // error check, and then add description
-        String address = descriptionText.getText();
-        if (address.equals("")) {
+        String description = descriptionText.getText();
+        if (description.equals("")) {
             ControllerMethods.errorDialogueBox("Description Error: Please enter a description");
             errorDetected = true;
         }
 
         // error check, and then add location
-        String postal = locationText.getText();
-        if (postal.equals("")) {
+        String location = locationText.getText();
+        if (location.equals("")) {
             ControllerMethods.errorDialogueBox("Postal Code Error: Please enter a location");
             errorDetected = true;
         }
@@ -203,7 +204,6 @@ public class AddAppointmentController implements Initializable {
             ControllerMethods.errorDialogueBox("You must select a customer!");
             errorDetected = true;
         }
-
 
         // check if appointment type is empty. If not, add the type
         String type = AddAppointmentController.selectedType;
@@ -263,10 +263,13 @@ public class AddAppointmentController implements Initializable {
         LocalDateTime appointmentStart = LocalDateTime.of(date, start);
         LocalDateTime appointmentEnd = LocalDateTime.of(date, end);
 
+        // gets the Contact ID
+        String selectContactID = "SELECT Contact_ID FROM contacts WHERE Contact_Name = \"" + contact + "\"";
+        int contactID = SelectStatements.getAnInt(DBConnection.getConn(), selectContactID, "Contact_ID");
 
         //Calls the insert statement to add the new appointment to the database.
-
-        //InsertStatements.insertCustomer(DBConnection.getConn(), id, name, address, postal, phone, RuntimeObjects.getCurrentUser().getUsername(), division_id);
+        InsertStatements.insertAppointment(DBConnection.getConn(), id, title, description, location, type, appointmentStart, appointmentEnd,
+                RuntimeObjects.getCurrentUser().getUsername(), customer, RuntimeObjects.getCurrentUser().getId(), contactID);
 
         // clear the current customers observable list, and fetch them again from the database.
         RuntimeObjects.clearAllAppointments();;
