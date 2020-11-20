@@ -83,32 +83,24 @@ public class ModifyAppointmentController implements Initializable {
         contactCB.setValue(contactName);
 
         // grab the date in LocalDate and the start time in LocalTime using the stored start time LocalDateTime.
+        LocalDateTime startDateTime = appointment.getStartDateTime();
+        LocalDate date = startDateTime.toLocalDate();
+        LocalTime start = startDateTime.toLocalTime();
+        dateCB.setValue(date);
+        startCB.setValue(start);
 
         // grab the end time LocalTime using the stored end time LocalDateTime.
-
-        //dateCB.setValue();
-        //startCB.setValue(appointment.getStartTime()); // need to grab only time without date
-        //endCB.setValue(appointment.getEndTime()); // need to grab time without date.
-
-
-        // NOTE: All the below have to be strings. Don't worry, the save button will convert them to whatever they need to be.
-        // sets the customer object values in temp vars to be used by the combo boxes.
-
-        //NEED TO CONVERT TO STRING.
-        //selectedCustomer = appointment.getCustomerId();
-
-
-        // Need to grab contact name using contact ID. SQL here probably.
-        //selectedContact = appointment.getContactId();
-
-        // Need to split up either start or end and grab date from it.
-        //selectedDate = ...
+        LocalDateTime endDateTime = appointment.getEndDateTime();
+        LocalTime end = endDateTime.toLocalTime();
+        endCB.setValue(end);
 
         // sets the stored selection for the combo boxes as string versions of the just-retrieved values.
         selectedType = appointment.getType();
+        selectedCustomer = customerName;
         selectedContact = contactName;
-        selectedStart = appointment.getStartTime().toString();
-        selectedEnd = appointment.getEndTime().toString();
+        selectedDate = date.toString();
+        selectedStart = start.toString();
+        selectedEnd = end.toString();
     }
 
 

@@ -126,8 +126,8 @@ public class AppointmentDashboardController implements Initializable {
         locationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        startTimeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-        endTimeCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        startTimeCol.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
+        endTimeCol.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         contactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
