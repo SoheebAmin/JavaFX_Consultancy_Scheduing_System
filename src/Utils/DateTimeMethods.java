@@ -10,11 +10,11 @@ public class DateTimeMethods {
 
     private static final int MINUTES_IN_DAY = 1440;
 
-    public static ObservableList<LocalDate> listOfFutureDates(int daysToAdd){
+    public static ObservableList<LocalDate> listOfFutureDates(int days){
         ObservableList<LocalDate> listOfDays = FXCollections.observableArrayList();
         LocalDate date = LocalDate.now();
         int i = 1;
-        while(i < daysToAdd) {
+        while(i < days) {
             listOfDays.add(date);
             date = date.plusDays(1);
             i++;

@@ -1,10 +1,14 @@
 package Control;
 
+import Databse.SelectStatements;
 import Model.Appointment;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
 import Databse.DeleteStatements;
+import Utils.DateTimeMethods;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,15 +16,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -39,6 +41,7 @@ public class AppointmentDashboardController implements Initializable {
     @FXML private TableColumn<Appointment, Integer> customerIdCol;
     @FXML private TableColumn<Appointment, Integer> contactIdCol;
     @FXML private TableColumn<Appointment, Integer> userIdCol;
+    @FXML private RadioButton allRadioButton;
 
 
     /** This method allows the user to add an appointment */
@@ -105,18 +108,69 @@ public class AppointmentDashboardController implements Initializable {
         }
     }
 
+    public void allRadioButtonSelected(){
+        appointmentTableView.setItems(RuntimeObjects.getAllAppointments());
+    }
 
+    /** This method is triggered when "week" radio button is selected. It shows the appointments for the next 7 days.*/
+    public void weekRadioButtonSelected() {
+
+        // grabs all appointments on record
+        ObservableList<Appointment> allAppointments = RuntimeObjects.getAllAppointments();
+
+        // gets a list of future dates
+        ObservableList<LocalDate> datesToCheck = DateTimeMethods.listOfFutureDates(7);
+
+        // a list to hold any matching dates
+        ObservableList<Appointment> weekAppointments = FXCollections.observableArrayList();
+
+        // loops through, and checks date of each appointment against the current date.
+        for (Appointment a : allAppointments) {
+            LocalDateTime datetime = a.getStartDateTime();
+            LocalDate appointmentDate = datetime.toLocalDate();
+            if(datesToCheck.contains(appointmentDate))
+                weekAppointments.add(a);
+        }
+        appointmentTableView.setItems(weekAppointments);
+    }
+
+    /** This method is triggered when "month" radio button is selected. It shows the appointments for the next 30 days.*/
+    public void monthRadioButtonSelected() {
+        // grabs all appointments on record
+        ObservableList<Appointment> allAppointments = RuntimeObjects.getAllAppointments();
+
+        // gets a list of future dates
+        ObservableList<LocalDate> datesToCheck = DateTimeMethods.listOfFutureDates(30);
+
+        // a list to hold any matching dates
+        ObservableList<Appointment> monthAppointments = FXCollections.observableArrayList();
+
+        // loops through, and checks date of each appointment against the current date.
+        for (Appointment a : allAppointments) {
+            LocalDateTime datetime = a.getStartDateTime();
+            LocalDate appointmentDate = datetime.toLocalDate();
+            if(datesToCheck.contains(appointmentDate))
+                monthAppointments.add(a);
+        }
+        appointmentTableView.setItems(monthAppointments);
+    }
 
     /** This method exits the program via the Exit button */
     public void cancelButtonClicked(ActionEvent event) throws IOException {
         ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
     }
 
+    /** This method is triggered when "all" radio button is selected. It shows all appointments.*/
+
+
 
 
     /** Method to set initial conditions of the controller. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        // sets a default radio button selection
+        allRadioButton.setSelected(true);
 
         // to populate the customer table
         appointmentTableView.setItems(RuntimeObjects.getAllAppointments());

@@ -62,9 +62,9 @@ public class SelectStatements {
         }
     }
 
-    public static boolean populateAppointmentsTable(Connection conn){
+    public static ObservableList<Appointment> populateAppointmentsTable(Connection conn){
 
-        // Prepared select statement for appointments table
+       // Prepared select statement for appointments table
         String selectStatement = "SELECT * FROM appointments;";
 
         try {
@@ -102,11 +102,11 @@ public class SelectStatements {
                 RuntimeObjects.addAppointment(appointment);
             }
             // return true if the SQL statement executed successfully.
-            return true;
+            return RuntimeObjects.getAllAppointments();
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
