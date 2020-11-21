@@ -1,6 +1,7 @@
 package Control;
 
 import Databse.DeleteStatements;
+import Databse.UpdateStatements;
 import Model.Customer;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
@@ -177,20 +178,10 @@ public class ModifyCustomerController implements Initializable {
         String insertStatement = "SELECT Division_ID FROM first_level_divisions WHERE Division = \"" + division + "\"";
         int division_id = SelectStatements.getAnInt(DBConnection.getConn(), insertStatement, "Division_ID");
 
-        //grab the created datetime and user
-        String LDTSelectStatement = "SELECT Create_Date FROM customers WHERE Customer_ID =" + id + ";";
-        LocalDateTime Create_Date = SelectStatements.getALocalDateTime(DBConnection.getConn(), LDTSelectStatement, "Create_Date");
-
-        String stringSelectStatement = "SELECT Created_By FROM customers WHERE Customer_ID =" + id + ";";
-        String Created_By = SelectStatements.getAString(DBConnection.getConn(), stringSelectStatement, "Created_By");
-
-        // Deletes the customer as they already are in the database.
-        String deleteStatement = "DELETE FROM customers WHERE Customer_ID =" + id + ";";
-        DeleteStatements.delete(DBConnection.getConn(), deleteStatement);
-
         //Calls the insert statement to add the new customer to the database.
-        InsertStatements.modifyCustomer(DBConnection.getConn(), id, name, address, postal, phone, Create_Date,
+        UpdateStatements.modifyCustomer(DBConnection.getConn(), id, name, address, postal, phone, Create_Date,
                                         Created_By, RuntimeObjects.getCurrentUser().getUsername(), division_id);
+
 
         // clear the current customers observable list, and fetch them again from the database.
         RuntimeObjects.clearAllCustomers();
