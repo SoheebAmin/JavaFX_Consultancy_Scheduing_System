@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -34,6 +35,9 @@ public class AddAppointmentController implements Initializable {
     @FXML private ComboBox<LocalDate> dateCB;
     @FXML private ComboBox<LocalTime> startCB;
     @FXML private ComboBox<LocalTime> endCB;
+
+    // To display current user
+    @FXML private Label currentUserLabel;
 
     // Temporary variables to save combo box selection
     private static String selectedCustomer = "";
@@ -295,6 +299,10 @@ public class AddAppointmentController implements Initializable {
     /** Method to set initial conditions of the controller. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        // grabs and sets the current user
+        currentUserLabel.setText(RuntimeObjects.getCurrentUser().getUsername());
+
 
     }
 }

@@ -47,7 +47,7 @@
         </VBox>
         <Button fx:id="saveButton" layoutX="453.0" layoutY="446.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />
       <Label layoutX="412.0" layoutY="24.0" text="Current User: " />
-      <Label layoutX="494.0" layoutY="24.0" prefHeight="18.0" prefWidth="73.0" text="Test" />
+      <Label fx:id="currentUserLabel" layoutX="494.0" layoutY="24.0" prefHeight="18.0" prefWidth="73.0" />
     </children>
 
 </AnchorPane>
