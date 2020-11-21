@@ -89,14 +89,15 @@ public class AppointmentDashboardController implements Initializable {
             alert.showAndWait();
             return;
         }
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this appointment?");
+        int appointmentId = selectedAppointment.getId();
+        String appointmentType = selectedAppointment.getType();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + appointmentType + " with A.ID " + appointmentId + "?");
 
         Optional<ButtonType> result = alert.showAndWait();
 
         if(result.isPresent() && result.get() == ButtonType.OK) {
 
             // prepares the SQL Delete statement
-            int appointmentId = selectedAppointment.getId();
             String SQLStatement = "DELETE FROM appointments WHERE Appointment_ID =" + appointmentId + ";";
 
             // deletes the record from the database itself

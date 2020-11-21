@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**This class grabs the customers and appointments in the database at program run time, and also is updated as changes are made during the life of the application. */
 public class RuntimeObjects {
@@ -29,6 +30,8 @@ public class RuntimeObjects {
     private static ObservableList<User> allUsers = FXCollections.observableArrayList();
     private static User currentUser;
 
+    // holds the Time zone of the user
+    private static TimeZone currentTimeZone;
 
     // Holds the current language
     private static Locale currentLocale;
@@ -123,6 +126,14 @@ public class RuntimeObjects {
 
     public static void setAllAppointmentHours(ObservableList<LocalTime> allAppointmentHours) {
         RuntimeObjects.allAppointmentHours = allAppointmentHours;
+    }
+
+    public static TimeZone getCurrentTimeZone() {
+        return currentTimeZone;
+    }
+
+    public static void setCurrentTimeZone(TimeZone currentTimeZone) {
+        RuntimeObjects.currentTimeZone = currentTimeZone;
     }
 
     public static Locale getCurrentLocale() {

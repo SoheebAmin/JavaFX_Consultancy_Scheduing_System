@@ -25,7 +25,7 @@
             <Button fx:id="loginButton" layoutX="328.0" layoutY="149.0" mnemonicParsing="false" onAction="#loginButtonClicked" text="Log In" />
             <Button fx:id="exitButton" layoutX="270.0" layoutY="149.0" mnemonicParsing="false" onAction="#exitButtonClicked" text="Exit" />
             <TextField fx:id="usernameField" layoutX="173.0" layoutY="31.0" />
-            <Label fx:id="countryTextLabel" layoutX="28.0" layoutY="125.0" text="Country:" />
+            <Label fx:id="countryTextLabel" layoutX="28.0" layoutY="125.0" text="Location:" />
             <Label fx:id="timezoneTextLabel" layoutX="23.0" layoutY="153.0" text="Timezone:" />
             <Label fx:id="countryLabel" layoutX="85.0" layoutY="125.0" prefHeight="18.0" prefWidth="130.0" />
             <Label fx:id="timezoneLabel" layoutX="85.0" layoutY="153.0" prefHeight="18.0" prefWidth="130.0" />

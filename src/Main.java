@@ -15,6 +15,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -75,9 +76,13 @@ public class Main extends Application {
         // Enable for testing French
         //Locale.setDefault(new Locale("fr"));
 
-        // Gets the current system defaults
+        // Get the default locale and store it.
         Locale currentLocale = Locale.getDefault();
         RuntimeObjects.setCurrentLocale(currentLocale);
+
+        // Get the timezone and store it
+        TimeZone currentTimezone = TimeZone.getDefault();
+        RuntimeObjects.setCurrentTimeZone(currentTimezone);
 
         // launches JavaFX App
         launch(args);

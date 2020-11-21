@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 public class LoginController implements Initializable {
 
@@ -126,5 +127,10 @@ public class LoginController implements Initializable {
             exitButton.setText("sortie");
             loginButton.setText("s'identifier");
         }
+
+        TimeZone currentTimeZone = RuntimeObjects.getCurrentTimeZone();
+
+        countryLabel.setText(currentTimeZone.getID());
+        timezoneLabel.setText(currentTimeZone.getDisplayName());
     }
 }
