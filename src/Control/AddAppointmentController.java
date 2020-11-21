@@ -243,14 +243,24 @@ public class AddAppointmentController implements Initializable {
             errorDetected = true;
         }
 
-        // return the function if any errors were detected.
-        if(errorDetected)
-            return false;
 
         // Conversions to needed data types done once all validation passed
         LocalDate date = LocalDate.parse(dateString);
         LocalTime start = LocalTime.parse(startString);
         LocalTime end = LocalTime.parse(endString);
+
+
+        // check if times are in order
+        if(start.isAfter(end))
+        {
+            ControllerMethods.errorDialogueBox("Your start time cannot be after your end time!");
+            errorDetected = true;
+        }
+
+        // return the function if any errors were detected.
+        if(errorDetected)
+            return false;
+
 
         // Create the LocalDateTime objects for the appointment start and end time.
         LocalDateTime appointmentStart = LocalDateTime.of(date, start);

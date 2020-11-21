@@ -81,17 +81,25 @@ public class CustomerDashboardController implements Initializable {
             alert.showAndWait();
             return;
         }
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this customer?");
+
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete this customer and their appointments?");
 
         Optional<ButtonType> result = alert.showAndWait();
 
         if(result.isPresent() && result.get() == ButtonType.OK) {
-            // prepares the SQL Delete statement
+
             int customerId = selectedCustomer.getId();
-            String SQLStament = "DELETE FROM customers WHERE Customer_ID =" + customerId + ";";
+
+            // delete any appointments for that customer
+            String deleteAppointmentStatement = "DELETE FROM appointments WHERE Customer_ID = " + customerId +";";
+            DeleteStatements.delete(DBConnection.getConn(), deleteAppointmentStatement);
+
+            // prepares the SQL Delete statement
+            String deleteCustomerStatement = "DELETE FROM customers WHERE Customer_ID =" + customerId + ";";
 
             // deletes the record from the database itself
-            DeleteStatements.delete(DBConnection.getConn(), SQLStament);
+            DeleteStatements.delete(DBConnection.getConn(), deleteCustomerStatement);
 
             // then deletes it from table view, and refreshes it.
             RuntimeObjects.deleteCustomer(selectedCustomer);
