@@ -9,33 +9,50 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
+    @FXML private Label usernameTextLabel;
+    @FXML private Label passwordTextLabel;
+    @FXML private Label welcomeLabel;
+    @FXML private Label countryTextLabel;
+    @FXML private Label timezoneTextLabel;
+    @FXML private Button exitButton;
+    @FXML private Button loginButton;
+
     @FXML private Label countryLabel;
     @FXML private Label timezoneLabel;
+
+    private static boolean frenchDetected = false;
 
 
 
     /** This method that checks the validity of the login attempt */
     public void loginButtonClicked(ActionEvent event) throws IOException {
-
         String usernameAttempted = usernameField.getText();
         String passwordAttempted = passwordField.getText();
 
         // checks to see if username and password were both provided.
-        if(usernameAttempted.equals("") || passwordAttempted.equals(""))
-        {
-            ControllerMethods.errorDialogueBox("You must provide a username and password!");
+        if(usernameAttempted.equals("") || passwordAttempted.equals("")) {
+            if(LoginController.frenchDetected)
+            {
+                ControllerMethods.errorDialogueBox("Vous devez fournir un nom d'utilisateur et un mot de passe!");
+            }
+            else
+            {
+                ControllerMethods.errorDialogueBox("You must provide a username and password!");
+            }
             return;
         }
         // loop through the users to check if user name in database
@@ -54,7 +71,14 @@ public class LoginController implements Initializable {
 
         // if not found,
         if(detectedUser == null){
-            ControllerMethods.errorDialogueBox("User name not found!");
+            if(LoginController.frenchDetected)
+            {
+                ControllerMethods.errorDialogueBox("Utilisateur non trouvé!");
+            }
+            else
+            {
+                ControllerMethods.errorDialogueBox("User not found!");
+            }
             return;
         }
 
@@ -67,7 +91,14 @@ public class LoginController implements Initializable {
         }
         else
         {
-            ControllerMethods.errorDialogueBox("Password incorrect!");
+            if(LoginController.frenchDetected)
+            {
+                ControllerMethods.errorDialogueBox("mot de passe incorrect!");
+            }
+            else
+            {
+                ControllerMethods.errorDialogueBox("Password incorrect!");
+            }
         }
     }
 
@@ -80,5 +111,20 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        // Locale to assume. Default is English. If FrenchDetected, French will be displayed instead.
+        if(RuntimeObjects.getCurrentLocale().equals(Locale.FRENCH))
+        {
+            LoginController.frenchDetected = true;
+        }
+
+        if(LoginController.frenchDetected) {
+            usernameTextLabel.setText("Nom d'utilisateur");
+            passwordTextLabel.setText("mot de passe");
+            welcomeLabel.setText("Bienvenue dans l'application. Veuillez vous connecter ci-dessous.");
+            countryTextLabel.setText("pays:");
+            timezoneTextLabel.setText("fuseau horaire:");
+            exitButton.setText("sortie");
+            loginButton.setText("s'identifier");
+        }
     }
 }

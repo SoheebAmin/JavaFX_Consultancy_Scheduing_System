@@ -4,11 +4,10 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Locale;
 
 /**This class grabs the customers and appointments in the database at program run time, and also is updated as changes are made during the life of the application. */
 public class RuntimeObjects {
-
-
 
     // holds the customer and appointment objects for the runtime of the program
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
@@ -29,6 +28,10 @@ public class RuntimeObjects {
     // holds the list of all user objects and a variable for the current user
     private static ObservableList<User> allUsers = FXCollections.observableArrayList();
     private static User currentUser;
+
+
+    // Holds the current language
+    private static Locale currentLocale;
 
     // add, delete, and update customers and appointments.
 
@@ -120,5 +123,13 @@ public class RuntimeObjects {
 
     public static void setAllAppointmentHours(ObservableList<LocalTime> allAppointmentHours) {
         RuntimeObjects.allAppointmentHours = allAppointmentHours;
+    }
+
+    public static Locale getCurrentLocale() {
+        return currentLocale;
+    }
+
+    public static void setCurrentLocale(Locale currentLocale) {
+        RuntimeObjects.currentLocale = currentLocale;
     }
 }

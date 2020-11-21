@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.Connection;
 import java.time.LocalDateTime;
@@ -175,13 +176,13 @@ public class ModifyCustomerController implements Initializable {
             return false;
 
         //use selected division to grab division ID
+
         String insertStatement = "SELECT Division_ID FROM first_level_divisions WHERE Division = \"" + division + "\"";
         int division_id = SelectStatements.getAnInt(DBConnection.getConn(), insertStatement, "Division_ID");
 
-        //Calls the insert statement to add the new customer to the database.
-        UpdateStatements.modifyCustomer(DBConnection.getConn(), id, name, address, postal, phone, Create_Date,
-                                        Created_By, RuntimeObjects.getCurrentUser().getUsername(), division_id);
 
+        //Calls the insert statement to add the new customer to the database.
+        UpdateStatements.modifyCustomer(DBConnection.getConn(), id, name, address, postal, phone, RuntimeObjects.getCurrentUser().getUsername(), division_id);
 
         // clear the current customers observable list, and fetch them again from the database.
         RuntimeObjects.clearAllCustomers();

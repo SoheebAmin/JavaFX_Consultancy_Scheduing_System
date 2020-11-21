@@ -20,18 +20,18 @@
    <children>
       <AnchorPane prefHeight="194.0" prefWidth="420.0" GridPane.rowIndex="1">
          <children>
-            <Label layoutX="85.0" layoutY="35.0" text="Username" />
-            <Label layoutX="85.0" layoutY="83.0" text="Password" />
-            <Button layoutX="328.0" layoutY="149.0" mnemonicParsing="false" onAction="#loginButtonClicked" text="Log In" />
-            <Button layoutX="270.0" layoutY="149.0" mnemonicParsing="false" onAction="#exitButtonClicked" text="Exit" />
-            <TextField fx:id="usernameField" layoutX="149.0" layoutY="31.0" />
-            <Label layoutX="28.0" layoutY="125.0" text="Country:" />
-            <Label layoutX="23.0" layoutY="153.0" text="Timezone:" />
+            <Label fx:id="usernameTextLabel" layoutX="78.0" layoutY="35.0" text="Username            " />
+            <Label fx:id="passwordTextLabel" layoutX="80.0" layoutY="83.0" text="Password              " />
+            <Button fx:id="loginButton" layoutX="328.0" layoutY="149.0" mnemonicParsing="false" onAction="#loginButtonClicked" text="Log In" />
+            <Button fx:id="exitButton" layoutX="270.0" layoutY="149.0" mnemonicParsing="false" onAction="#exitButtonClicked" text="Exit" />
+            <TextField fx:id="usernameField" layoutX="173.0" layoutY="31.0" />
+            <Label fx:id="countryTextLabel" layoutX="28.0" layoutY="125.0" text="Country:" />
+            <Label fx:id="timezoneTextLabel" layoutX="23.0" layoutY="153.0" text="Timezone:" />
             <Label fx:id="countryLabel" layoutX="85.0" layoutY="125.0" prefHeight="18.0" prefWidth="130.0" />
             <Label fx:id="timezoneLabel" layoutX="85.0" layoutY="153.0" prefHeight="18.0" prefWidth="130.0" />
-            <PasswordField fx:id="passwordField" layoutX="149.0" layoutY="79.0" />
+            <PasswordField fx:id="passwordField" layoutX="173.0" layoutY="79.0" />
          </children>
       </AnchorPane>
-      <Label alignment="CENTER" prefHeight="18.0" prefWidth="429.0" text="Welcome to The Application. Please log in below." />
+      <Label fx:id="welcomeLabel" alignment="CENTER" prefHeight="18.0" prefWidth="429.0" text="Welcome to The Application. Please log in below." />
    </children>
 </GridPane>

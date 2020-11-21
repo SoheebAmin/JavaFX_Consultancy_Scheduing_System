@@ -15,6 +15,8 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class Main extends Application {
 
@@ -22,6 +24,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+
         //Parent root = FXMLLoader.load(getClass().getResource("View/CustomerDashboard.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));
         primaryStage.setTitle("Appointment Application");
@@ -45,11 +49,12 @@ public class Main extends Application {
         SelectStatements.populateCustomersTable(conn);
         SelectStatements.populateAppointmentsTable(conn);
 
-        // Adds all the users from the databse into an observable list
+        // Adds all the users from the database into an observable list
         SelectStatements.populateUsers(conn);
 
         // populate the contact names from the database into a an observable list
         SelectStatements.populateContacts(conn);
+
 
         // Appointment types are defined here (as they do not exist in the database)
         ObservableList<String> appointmentTypes = FXCollections.observableArrayList();
@@ -67,9 +72,15 @@ public class Main extends Application {
         ObservableList<LocalTime> generatedAppointmentHoursList = DateTimeMethods.listOfTimes(30);
         RuntimeObjects.setAllAppointmentHours(generatedAppointmentHoursList);
 
+        // Enable for testing French
+        //Locale.setDefault(new Locale("fr"));
+
+        // Gets the current system defaults
+        Locale currentLocale = Locale.getDefault();
+        RuntimeObjects.setCurrentLocale(currentLocale);
+
         // launches JavaFX App
         launch(args);
-
 
         // Closes DB connection
         DBConnection.closeConnection();
