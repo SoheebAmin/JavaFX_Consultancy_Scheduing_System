@@ -22,8 +22,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("View/CustomerDashboard.fxml"));
-        primaryStage.setTitle("Login");
+        //Parent root = FXMLLoader.load(getClass().getResource("View/CustomerDashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));
+        primaryStage.setTitle("Appointment Application");
         primaryStage.setScene(new Scene(root, 900, 400));
         primaryStage.show();
     }
@@ -40,13 +41,12 @@ public class Main extends Application {
         // Test Appointment
         //Appointment testAppointment = new Appointment(15, "Test", "Test Land", "Cool", "Okay", null, null, 31, 32, 33);
 
-        // Test User. Do not comment out until log in screen built.
-        User user = new User(1, "test", "test");
-        RuntimeObjects.setCurrentUser(user);
-
         // Add all the customers and appointments in the database to the customers and appointments tableview
         SelectStatements.populateCustomersTable(conn);
         SelectStatements.populateAppointmentsTable(conn);
+
+        // Adds all the users from the databse into an observable list
+        SelectStatements.populateUsers(conn);
 
         // populate the contact names from the database into a an observable list
         SelectStatements.populateContacts(conn);

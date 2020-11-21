@@ -8,8 +8,7 @@ import java.time.LocalTime;
 /**This class grabs the customers and appointments in the database at program run time, and also is updated as changes are made during the life of the application. */
 public class RuntimeObjects {
 
-    // holds the current user logged in
-    private static User currentUser;
+
 
     // holds the customer and appointment objects for the runtime of the program
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
@@ -27,7 +26,9 @@ public class RuntimeObjects {
     // holds the list of hours allowed for appointments
     private static ObservableList<LocalTime> allAppointmentHours = FXCollections.observableArrayList();
 
-
+    // holds the list of all user objects and a variable for the current user
+    private static ObservableList<User> allUsers = FXCollections.observableArrayList();
+    private static User currentUser;
 
     // add, delete, and update customers and appointments.
 
@@ -68,12 +69,21 @@ public class RuntimeObjects {
 
     // the getters and setters for the various lists and objects to be used in the life of the program.
 
+
     public static User getCurrentUser() {
         return currentUser;
     }
 
     public static void setCurrentUser(User currentUser) {
         RuntimeObjects.currentUser = currentUser;
+    }
+
+    public static void addUser(User user) {
+        allUsers.add(user);
+    }
+
+    public static ObservableList<User> getAllUsers() {
+        return allUsers;
     }
 
     public static ObservableList<String> getAllContacts() {

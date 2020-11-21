@@ -3,6 +3,7 @@ package Databse;
 import Model.Appointment;
 import Model.Customer;
 import Model.RuntimeObjects;
+import Model.User;
 import Utils.DBQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 
 public class SelectStatements {
 
-    public static boolean populateCustomersTable(Connection conn){
+    public static ObservableList<Customer> populateCustomersTable(Connection conn){
 
          // Prepared select statement for customers table
          String selectStatement = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division, Country FROM customers AS Cs, first_level_divisions AS F, countries Ct\n" +
@@ -31,14 +32,10 @@ public class SelectStatements {
              int Customer_ID;
              String Customer_Name, Address, Phone, Postal_Code, Country, Division;
 
-
-
              // execute command to get all data from the customers table;
              preparedStatement.execute(selectStatement);
 
-
              ResultSet resultSet = preparedStatement.getResultSet();
-
 
              while(resultSet.next()) // a boolean function that remains true until we scroll through each record
              {
@@ -54,11 +51,11 @@ public class SelectStatements {
                  RuntimeObjects.addCustomer(customer);
              }
              // return true if the SQL statement executed successfully.
-             return true;
+             return RuntimeObjects.getAllCustomers();
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
@@ -142,6 +139,44 @@ public class SelectStatements {
         catch (SQLException e) {
             System.out.println(e.getMessage());
             return false;
+        }
+    }
+
+    public static ObservableList<User> populateUsers(Connection conn) {
+        // Prepared select statement for appointments table
+        String selectStatement = "SELECT * FROM users";
+
+        try {
+            // Create the prepared Statement Object
+            DBQuery.setPreparedStatement(conn, selectStatement);
+
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+
+            // Variables to be populated by the pulled data.
+            int User_ID;
+            String User_Name, Password;
+
+            // execute command to get all data from the customers table;
+            preparedStatement.execute(selectStatement);
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+
+
+            while(resultSet.next()) // a boolean function that remains true until we scroll through each record
+            {
+                User_ID = resultSet.getInt("User_ID");
+                User_Name = resultSet.getString("User_Name");
+                Password = resultSet.getString("Password");
+
+                User user= new User(User_ID, User_Name, Password);
+                RuntimeObjects.addUser(user);
+            }
+            // return true if the SQL statement executed successfully.
+            return RuntimeObjects.getAllUsers();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 
