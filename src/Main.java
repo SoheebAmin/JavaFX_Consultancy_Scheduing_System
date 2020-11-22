@@ -87,7 +87,7 @@ public class Main extends Application {
         RuntimeObjects.setAllAppointmentDates(generatedAppointmentDateList);
 
         // populates the hours to be selectable for appointments, given the specified intervals in minutes
-        ObservableList<LocalTime> generatedAppointmentHoursList = DateTimeMethods.listOfTimes(30);
+        ObservableList<LocalTime> generatedAppointmentHoursList = DateTimeMethods.listOfTimes(30, offset);
         RuntimeObjects.setAllAppointmentHours(generatedAppointmentHoursList);
 
 

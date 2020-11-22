@@ -23,12 +23,17 @@ public class DateTimeMethods {
     }
 
     /**This method gets the list of starting time for meetings as Local time objects, stored in a list, in the specified intervals (in minutes). */
-    public static ObservableList<LocalTime> listOfTimes(int meetingInterval) {
+    public static ObservableList<LocalTime> listOfTimes(int meetingInterval, int offset) {
         ObservableList<LocalTime> listOfTimes = FXCollections.observableArrayList();
 
         int intervalsDuringOfficeHours = MINUTES_OF_OFFICE_HOURS_IN_DAY/meetingInterval;
         int i = 0;
-        LocalTime time = LocalTime.MIDNIGHT.plusHours(8);
+
+        // 8 is added since we will use midnight plus 8 for 8am EST, plus offset of local time zone.
+        int startHourInLocalTime = offset + 8;
+
+        LocalTime time = LocalTime.MIDNIGHT.plusHours(startHourInLocalTime);
+
         while(i < intervalsDuringOfficeHours)
         {
             listOfTimes.add(time);
