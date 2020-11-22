@@ -66,19 +66,4 @@ public class DateTimeMethods {
 
         return offset;
     }
-
-    public void calculateOfficeHours(int offset) {
-
-    }
-
-    /*
-    Some testing stuff
-    LocalTime time = LocalTime.parse("23:44");
-        LocalDate date = LocalDate.now();
-
-        LocalDateTime test = LocalDateTime.of(date, time);
-        System.out.println(test);
-
-        System.out.println(time);
-     */
 }

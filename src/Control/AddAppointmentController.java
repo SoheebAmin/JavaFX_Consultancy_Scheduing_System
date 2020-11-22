@@ -172,6 +172,7 @@ public class AddAppointmentController implements Initializable {
     /** After validating the entries, this methods adds a new record into the database and refreshes it. */
     public boolean saveButtonClicked(ActionEvent event) throws IOException, SQLException {
 
+
         boolean errorDetected = false; // boolean to mark if we will abort after all error messages are shown.
 
         // grab the auto-Id by checking the max ID in the DB and adding 1 to it.
@@ -215,7 +216,8 @@ public class AddAppointmentController implements Initializable {
         }
 
         // check if contact is empty. If not, add contact
-        String contact = AddAppointmentController.selectedContact;
+        String contact = "";
+        contact = AddAppointmentController.selectedContact;
         if(contact.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select a contact!");
@@ -320,6 +322,7 @@ public class AddAppointmentController implements Initializable {
         // grab the offset
         int offset = RuntimeObjects.getOffset();
 
+        // based on offset, sets message on hours change for user.
         if(offset > 0)
         {
             String message = "Office hours are in EST, which your timezone is ahead of by " + offset + " hours.";
@@ -335,7 +338,6 @@ public class AddAppointmentController implements Initializable {
         {
             offsetMessageLabel.setText("Office hours are in EST, which is the same as your timezone.");
         }
-
 
     }
 }

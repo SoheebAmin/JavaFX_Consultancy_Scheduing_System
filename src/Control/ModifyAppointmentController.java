@@ -375,6 +375,26 @@ public class ModifyAppointmentController implements Initializable {
 
         // grabs and sets the current user
         currentUserLabel.setText(RuntimeObjects.getCurrentUser().getUsername());
+        
+        // grab the offset
+        int offset = RuntimeObjects.getOffset();
+
+        // based on offset, sets message on hours change for user.
+        if(offset > 0)
+        {
+            String message = "Office hours are in EST, which your timezone is ahead of by " + offset + " hours.";
+            offsetMessageLabel.setText(message);
+
+        }
+        if(offset < 0)
+        {
+            String message = "Office hours are in EST, which your timezone is behind by " + Math.abs(offset) + " hours.";
+            offsetMessageLabel.setText(message);
+        }
+        if(offset == 0)
+        {
+            offsetMessageLabel.setText("Office hours are in EST, which is the same as your timezone.");
+        }
 
     }
 }

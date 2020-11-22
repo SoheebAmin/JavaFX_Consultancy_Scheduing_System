@@ -46,24 +46,6 @@ public class Main extends Application {
         // Test Appointment
         //Appointment testAppointment = new Appointment(15, "Test", "Test Land", "Cool", "Okay", null, null, 31, 32, 33);
 
-        // Add all the customers and appointments in the database to the customers and appointments tableview
-        SelectStatements.populateCustomersTable(conn);
-        SelectStatements.populateAppointmentsTable(conn);
-
-        // Adds all the users from the database into an observable list
-        SelectStatements.populateUsers(conn);
-
-        // populate the contact names from the database into a an observable list
-        SelectStatements.populateContacts(conn);
-
-
-        // Appointment types are defined here (as they do not exist in the database)
-        ObservableList<String> appointmentTypes = FXCollections.observableArrayList();
-        appointmentTypes.add("Meet and Greet");
-        appointmentTypes.add("Planning Session");
-        appointmentTypes.add("In-Depth Session");
-        appointmentTypes.add("Closing Operations");
-        RuntimeObjects.setAllAppointmentTypes(appointmentTypes);
 
         // Enable for testing French
         //Locale.setDefault(new Locale("fr"));
@@ -91,6 +73,23 @@ public class Main extends Application {
         ObservableList<LocalTime> generatedAppointmentHoursList = DateTimeMethods.listOfTimes(30, offset);
         RuntimeObjects.setAllAppointmentHours(generatedAppointmentHoursList);
 
+        // Add all the customers and appointments in the database to the customers and appointments tableview
+        SelectStatements.populateCustomersTable(conn);
+        SelectStatements.populateAppointmentsTable(conn);
+
+        // Adds all the users from the database into an observable list
+        SelectStatements.populateUsers(conn);
+
+        // populate the contact names from the database into a an observable list
+        SelectStatements.populateContacts(conn);
+
+        // Appointment types are defined here (as they do not exist in the database)
+        ObservableList<String> appointmentTypes = FXCollections.observableArrayList();
+        appointmentTypes.add("Meet and Greet");
+        appointmentTypes.add("Planning Session");
+        appointmentTypes.add("In-Depth Session");
+        appointmentTypes.add("Closing Operations");
+        RuntimeObjects.setAllAppointmentTypes(appointmentTypes);
 
 
         // launches JavaFX App
