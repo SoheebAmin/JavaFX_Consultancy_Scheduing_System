@@ -228,14 +228,16 @@ public class ModifyAppointmentController implements Initializable {
         int id = ModifyAppointmentController.currentAppointment;
 
         // error check and then add title
-        String title = titleText.getText();
+        String title = "";
+        title = titleText.getText();
         if (title.equals("")) {
             ControllerMethods.errorDialogueBox("Title Error: Please enter a title");
             errorDetected = true;
         }
 
         // error check, and then add description
-        String description = descriptionText.getText();
+        String description = "";
+        description = descriptionText.getText();
         if (description.equals("")) {
             ControllerMethods.errorDialogueBox("Description Error: Please enter a description");
             errorDetected = true;
@@ -244,12 +246,13 @@ public class ModifyAppointmentController implements Initializable {
         // error check, and then add location
         String location = locationText.getText();
         if (location.equals("")) {
-            ControllerMethods.errorDialogueBox("Postal Code Error: Please enter a location");
+            ControllerMethods.errorDialogueBox("Location Error: Please enter a location");
             errorDetected = true;
         }
 
         // check if customer is empty. If not, add the customer
-        String customer = ModifyAppointmentController.selectedCustomer;
+        String customer = "";
+        customer = ModifyAppointmentController.selectedCustomer;
         if(customer.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select a customer!");
@@ -257,7 +260,8 @@ public class ModifyAppointmentController implements Initializable {
         }
 
         // check if appointment type is empty. If not, add the type
-        String type = ModifyAppointmentController.selectedType;
+        String type = "";
+        type = ModifyAppointmentController.selectedType;
         if(type.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select an appointment type!");
@@ -265,7 +269,8 @@ public class ModifyAppointmentController implements Initializable {
         }
 
         // check if contact is empty. If not, add contact
-        String contact = ModifyAppointmentController.selectedContact;
+        String contact = "";
+        contact = ModifyAppointmentController.selectedContact;
         if(contact.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select a contact!");
@@ -273,39 +278,30 @@ public class ModifyAppointmentController implements Initializable {
         }
 
         // check if date is empty. If not, convert to local date and add the date
-        String dateString = ModifyAppointmentController.selectedDate;
+        String dateString = "";
+        dateString = ModifyAppointmentController.selectedDate;
         if(dateString.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select a date!");
             errorDetected = true;
         }
 
+
         // check if start time is empty. If not, convert to local time and add start time
-        String startString = ModifyAppointmentController.selectedStart;
+        String startString = "";
+        startString = ModifyAppointmentController.selectedStart;
         if(startString.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select a start time!");
             errorDetected = true;
         }
 
-        // check if end time is empty. If not, convert to local time and add end time.
-        String endString = ModifyAppointmentController.selectedEnd;
+        // check if end time is empty. If not, convert to local time and add end time
+        String endString = "";
+        endString = ModifyAppointmentController.selectedEnd;
         if(endString.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select an end time!");
-            errorDetected = true;
-        }
-
-
-        // Conversions to needed data types done once all validation passed
-        LocalDate date = LocalDate.parse(dateString);
-        LocalTime start = LocalTime.parse(startString);
-        LocalTime end = LocalTime.parse(endString);
-
-        // check if times are in order
-        if(start.isAfter(end))
-        {
-            ControllerMethods.errorDialogueBox("Your start time cannot be after your end time!");
             errorDetected = true;
         }
 
@@ -313,10 +309,34 @@ public class ModifyAppointmentController implements Initializable {
         if(errorDetected)
             return false;
 
+        // Conversions to needed data types done once all validation passed
+        LocalDate startDate = LocalDate.parse(dateString);
+        LocalDate endDate = LocalDate.parse(dateString);
+        LocalTime start = LocalTime.parse(startString);
+        LocalTime end = LocalTime.parse(endString);
+
+
+        // check if times are in order
+        if(start.isAfter(end))
+        {
+            // checks to see if local hours go over midnight hours, which would mean we should allow this with an additional day added.
+            if(RuntimeObjects.isComplexHours() == false) {
+                ControllerMethods.errorDialogueBox("Your start time cannot be after your end time!");
+                errorDetected = true;
+            }
+            else
+            {
+                endDate = endDate.plusDays(1);
+            }
+        }
+
+        // return the function if any errors were detected.
+        if(errorDetected)
+            return false;
 
         // Create the LocalDateTime objects for the appointment start and end time.
-        LocalDateTime appointmentStart = LocalDateTime.of(date, start);
-        LocalDateTime appointmentEnd = LocalDateTime.of(date, end);
+        LocalDateTime appointmentStart = LocalDateTime.of(startDate, start);
+        LocalDateTime appointmentEnd = LocalDateTime.of(endDate, end);
 
         // gets the customer ID
         String selectCustomerID = "SELECT Customer_ID FROM customers WHERE Customer_Name = \"" + customer + "\"";
@@ -375,7 +395,7 @@ public class ModifyAppointmentController implements Initializable {
 
         // grabs and sets the current user
         currentUserLabel.setText(RuntimeObjects.getCurrentUser().getUsername());
-        
+
         // grab the offset
         int offset = RuntimeObjects.getOffset();
 

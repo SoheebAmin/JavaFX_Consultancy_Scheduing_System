@@ -198,7 +198,7 @@ public class AddAppointmentController implements Initializable {
         // error check, and then add location
         String location = locationText.getText();
         if (location.equals("")) {
-            ControllerMethods.errorDialogueBox("Postal Code Error: Please enter a location");
+            ControllerMethods.errorDialogueBox("Location Code Error: Please enter a location");
             errorDetected = true;
         }
 
