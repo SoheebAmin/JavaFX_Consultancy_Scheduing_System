@@ -65,14 +65,6 @@ public class Main extends Application {
         appointmentTypes.add("Closing Operations");
         RuntimeObjects.setAllAppointmentTypes(appointmentTypes);
 
-        // populates list of days to be selectable for appointments from today onward, up to the specified number of days.
-        ObservableList<LocalDate> generatedAppointmentDateList = DateTimeMethods.listOfFutureDates(60);
-        RuntimeObjects.setAllAppointmentDates(generatedAppointmentDateList);
-
-        // populates the hours to be selectable for appointments, given the specified intervals in minutes
-        ObservableList<LocalTime> generatedAppointmentHoursList = DateTimeMethods.listOfTimes(30);
-        RuntimeObjects.setAllAppointmentHours(generatedAppointmentHoursList);
-
         // Enable for testing French
         //Locale.setDefault(new Locale("fr"));
 
@@ -80,9 +72,25 @@ public class Main extends Application {
         Locale currentLocale = Locale.getDefault();
         RuntimeObjects.setCurrentLocale(currentLocale);
 
+        // Enable to pretend you are in Los Angeles
+        TimeZone.setDefault(TimeZone.getTimeZone("America/Los_Angeles"));
+
         // Get the timezone and store it
-        TimeZone currentTimezone = TimeZone.getDefault();
-        RuntimeObjects.setCurrentTimeZone(currentTimezone);
+        TimeZone timeZoneToStore = TimeZone.getDefault();
+        RuntimeObjects.setCurrentTimeZone(timeZoneToStore);
+
+        //Gets the difference between your local time and EST time for office hours.
+        int offset = DateTimeMethods.offsetFromEST();
+
+        // populates list of days to be selectable for appointments from today onward, up to the specified number of days
+        ObservableList<LocalDate> generatedAppointmentDateList = DateTimeMethods.listOfFutureDates(90);
+        RuntimeObjects.setAllAppointmentDates(generatedAppointmentDateList);
+
+        // populates the hours to be selectable for appointments, given the specified intervals in minutes
+        ObservableList<LocalTime> generatedAppointmentHoursList = DateTimeMethods.listOfTimes(30);
+        RuntimeObjects.setAllAppointmentHours(generatedAppointmentHoursList);
+
+
 
         // launches JavaFX App
         launch(args);
