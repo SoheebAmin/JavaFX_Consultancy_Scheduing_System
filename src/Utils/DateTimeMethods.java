@@ -1,5 +1,6 @@
 package Utils;
 
+import Model.RuntimeObjects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -39,6 +40,14 @@ public class DateTimeMethods {
             listOfTimes.add(time);
             time = time.plusMinutes(meetingInterval);
             i++;
+        }
+        LocalTime start = listOfTimes.get(0);
+        LocalTime end = listOfTimes.get(intervalsDuringOfficeHours-1);
+
+        // If we run past midnight in the range, we set a static boolean true to use for later adjustments in appointment adding/modifying validation.
+        if(start.isAfter(end))
+        {
+            RuntimeObjects.setComplexHours(true);
         }
 
         return listOfTimes;

@@ -33,6 +33,9 @@ public class RuntimeObjects {
     // holds the Time zone of the user
     private static TimeZone currentTimeZone;
 
+    // holds a boolean for if we have EST hours run past midnight into the new day for local hours
+    private static boolean complexHours;
+
     // holds the offset from EST
     private static int offset;
 
@@ -154,5 +157,13 @@ public class RuntimeObjects {
 
     public static void setCurrentLocale(Locale currentLocale) {
         RuntimeObjects.currentLocale = currentLocale;
+    }
+
+    public static boolean isComplexHours() {
+        return complexHours;
+    }
+
+    public static void setComplexHours(boolean complexHours) {
+        RuntimeObjects.complexHours = complexHours;
     }
 }
