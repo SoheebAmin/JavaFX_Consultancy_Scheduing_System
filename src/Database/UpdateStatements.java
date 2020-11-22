@@ -1,14 +1,11 @@
-package Databse;
+package Database;
 
 
 import Utils.DBQuery;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class UpdateStatements {
 

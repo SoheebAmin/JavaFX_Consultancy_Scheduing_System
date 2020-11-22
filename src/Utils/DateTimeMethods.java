@@ -1,6 +1,6 @@
 package Utils;
 
-import Databse.SelectStatements;
+import Database.SelectStatements;
 import Model.Appointment;
 import Model.RuntimeObjects;
 import Model.User;
@@ -8,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.*;
-import java.util.TimeZone;
 
 public class DateTimeMethods {
 
@@ -126,17 +125,31 @@ public class DateTimeMethods {
         return false;
     }
 
+    /** This method grabs all appointments that has the users ID and compares against the current time to see if one is in fifteen minutes. */
     public static String upComingAppointmentInfo(User user) {
 
+        // get Id and query DB for appointment start times with this user ID.
         int userId = user.getId();
-        String selectStatement = "SELECT Start FROM appointments WHERE User_ID =" + userId +";";
-        ObservableList<LocalDateTime> upcomingAppointment = SelectStatements.getLocalDateTimeList(DBConnection.getConn(), selectStatement, "Start");
+        String selectStartTime = "SELECT Start FROM appointments WHERE User_ID =" + userId + ";";
+        ObservableList<LocalDateTime> systemAppointments = SelectStatements.getLocalDateTimeList(DBConnection.getConn(), selectStartTime, "Start");
 
-        for(LocalDateTime appointment : upcomingAppointment)
+        // grab the IDs of these appointments in a list that will have the same indexing/
+        String selectAppointId = "SELECT Appointment_ID FROM appointments WHERE User_ID = " +userId + ";";
+        int appointmentId = SelectStatements.getAnInt(DBConnection.getConn(), selectAppointId, "Appointment_ID");
+
+        // loop through each start time and compare against current time to see if one has less than fifteen minute difference.
+        LocalDateTime currentTime = LocalDateTime.now();
+        for(LocalDateTime appointmentStart : systemAppointments)
         {
-            System.out.println(appointment);
+            Duration duration = Duration.between(currentTime, appointmentStart);
+            long minuteDifference = duration.toMinutes();
+            System.out.println(minuteDifference);
+            if(0 < minuteDifference && minuteDifference < 30)
+            {
+                String appointmentMessage = "You have an appointment at " + appointmentStart + " with ID: " + "1";
+                return appointmentMessage;
+            }
         }
-
         return "";
     }
 

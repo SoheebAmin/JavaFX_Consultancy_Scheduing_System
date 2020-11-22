@@ -4,7 +4,7 @@ import Model.Customer;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
-import Databse.DeleteStatements;
+import Database.DeleteStatements;
 import Utils.DateTimeMethods;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

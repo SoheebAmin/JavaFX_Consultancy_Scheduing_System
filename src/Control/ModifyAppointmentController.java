@@ -1,8 +1,8 @@
 package Control;
 
-import Databse.DeleteStatements;
-import Databse.InsertStatements;
-import Databse.SelectStatements;
+import Database.DeleteStatements;
+import Database.InsertStatements;
+import Database.SelectStatements;
 import Model.Appointment;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;

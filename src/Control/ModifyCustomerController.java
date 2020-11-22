@@ -1,27 +1,22 @@
 package Control;
 
-import Databse.DeleteStatements;
-import Databse.UpdateStatements;
+import Database.UpdateStatements;
 import Model.Customer;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
-import Databse.InsertStatements;
-import Databse.SelectStatements;
+import Database.SelectStatements;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.Connection;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 /** The Controller to add customer objects to the customers list stored in the ObservableLists class */

@@ -1,11 +1,10 @@
 package Control;
 
-import Databse.SelectStatements;
 import Model.Appointment;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
-import Databse.DeleteStatements;
+import Database.DeleteStatements;
 import Utils.DateTimeMethods;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

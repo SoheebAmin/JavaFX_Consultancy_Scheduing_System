@@ -1,4 +1,4 @@
-package Databse;
+package Database;
 
 import Model.Appointment;
 import Model.Customer;

@@ -1,7 +1,7 @@
 package Control;
 
-import Databse.InsertStatements;
-import Databse.SelectStatements;
+import Database.InsertStatements;
+import Database.SelectStatements;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;

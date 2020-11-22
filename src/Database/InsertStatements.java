@@ -1,7 +1,6 @@
-package Databse;
+package Database;
 
 import Utils.DBQuery;
-import jdk.jfr.Description;
 
 import java.sql.*;
 import java.time.LocalDateTime;
