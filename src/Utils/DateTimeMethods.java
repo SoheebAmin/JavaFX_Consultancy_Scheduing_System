@@ -40,6 +40,7 @@ public class DateTimeMethods {
             time = time.plusMinutes(meetingInterval);
             i++;
         }
+
         return listOfTimes;
     }
 

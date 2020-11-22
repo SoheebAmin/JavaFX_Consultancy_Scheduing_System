@@ -33,8 +33,12 @@ public class RuntimeObjects {
     // holds the Time zone of the user
     private static TimeZone currentTimeZone;
 
+    // holds the offset from EST
+    private static int offset;
+
     // Holds the current language
     private static Locale currentLocale;
+
 
     // add, delete, and update customers and appointments.
 
@@ -134,6 +138,14 @@ public class RuntimeObjects {
 
     public static void setCurrentTimeZone(TimeZone currentTimeZone) {
         RuntimeObjects.currentTimeZone = currentTimeZone;
+    }
+
+    public static int getOffset() {
+        return offset;
+    }
+
+    public static void setOffset(int offset) {
+        RuntimeObjects.offset = offset;
     }
 
     public static Locale getCurrentLocale() {

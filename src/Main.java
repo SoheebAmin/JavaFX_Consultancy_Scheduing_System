@@ -79,8 +79,9 @@ public class Main extends Application {
         TimeZone timeZoneToStore = TimeZone.getDefault();
         RuntimeObjects.setCurrentTimeZone(timeZoneToStore);
 
-        //Gets the difference between your local time and EST time for office hours.
+        //Gets the difference between your local time and EST time for office hours, and stores it.
         int offset = DateTimeMethods.offsetFromEST();
+        RuntimeObjects.setOffset(offset);
 
         // populates list of days to be selectable for appointments from today onward, up to the specified number of days
         ObservableList<LocalDate> generatedAppointmentDateList = DateTimeMethods.listOfFutureDates(90);

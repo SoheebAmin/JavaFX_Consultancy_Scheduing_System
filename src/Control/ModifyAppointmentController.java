@@ -42,6 +42,12 @@ public class ModifyAppointmentController implements Initializable {
     // To display current user
     @FXML private Label currentUserLabel;
 
+    // To display offset in message
+    @FXML private Label offsetMessageLabel;
+
+    // ID of current customer being modified
+    private static int currentAppointment;
+
     // Temporary variables to save combo box selection
     private static String selectedCustomer = "";
     private static String selectedType = "";
@@ -49,10 +55,6 @@ public class ModifyAppointmentController implements Initializable {
     private static String selectedDate = "";
     private static String selectedStart = "";
     private static String selectedEnd = "";
-
-    // ID of current customer being modified
-    private static int currentAppointment;
-
 
     /** This method allows the Customer Dashboard to send the data of the selected customer to the created controller object. */
     public void setAppointmentInfo(Appointment appointment) {

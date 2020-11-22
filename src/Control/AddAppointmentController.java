@@ -5,6 +5,7 @@ import Databse.SelectStatements;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
+import javafx.application.HostServices;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,6 +39,9 @@ public class AddAppointmentController implements Initializable {
 
     // To display current user
     @FXML private Label currentUserLabel;
+
+    // To display offset in message
+    @FXML private Label offsetMessageLabel;
 
     // Temporary variables to save combo box selection
     private static String selectedCustomer = "";
@@ -312,6 +316,25 @@ public class AddAppointmentController implements Initializable {
 
         // grabs and sets the current user
         currentUserLabel.setText(RuntimeObjects.getCurrentUser().getUsername());
+
+        // grab the offset
+        int offset = RuntimeObjects.getOffset();
+
+        if(offset > 0)
+        {
+            String message = "Office hours are in EST, which your timezone is ahead of by " + offset + " hours.";
+            offsetMessageLabel.setText(message);
+
+        }
+        if(offset < 0)
+        {
+            String message = "Office hours are in EST, which your timezone is behind by " + Math.abs(offset) + " hours.";
+            offsetMessageLabel.setText(message);
+        }
+       if(offset == 0)
+        {
+            offsetMessageLabel.setText("Office hours are in EST, which is the same as your timezone.");
+        }
 
 
     }
