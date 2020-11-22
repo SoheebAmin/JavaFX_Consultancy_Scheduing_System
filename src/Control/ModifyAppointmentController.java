@@ -18,7 +18,6 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -159,8 +158,7 @@ public class ModifyAppointmentController implements Initializable {
         try {
             ModifyAppointmentController.selectedCustomer = customerCB.getSelectionModel().getSelectedItem();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
@@ -170,8 +168,7 @@ public class ModifyAppointmentController implements Initializable {
         try {
             ModifyAppointmentController.selectedType = typeCB.getSelectionModel().getSelectedItem();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
@@ -181,8 +178,7 @@ public class ModifyAppointmentController implements Initializable {
         try {
             ModifyAppointmentController.selectedContact = contactCB.getSelectionModel().getSelectedItem();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
@@ -192,8 +188,7 @@ public class ModifyAppointmentController implements Initializable {
         try {
             ModifyAppointmentController.selectedDate = dateCB.getSelectionModel().getSelectedItem().toString();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
@@ -203,8 +198,7 @@ public class ModifyAppointmentController implements Initializable {
         try {
             ModifyAppointmentController.selectedStart = startCB.getSelectionModel().getSelectedItem().toString();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
@@ -214,13 +208,12 @@ public class ModifyAppointmentController implements Initializable {
         try {
             ModifyAppointmentController.selectedEnd = endCB.getSelectionModel().getSelectedItem().toString();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
     /** After validating the entries, this methods adds a new record into the database and refreshes it. */
-    public boolean saveButtonClicked(ActionEvent event) throws IOException, SQLException {
+    public boolean saveButtonClicked(ActionEvent event) throws IOException {
 
         boolean errorDetected = false; // boolean to mark if we will abort after all error messages are shown.
 
@@ -228,15 +221,15 @@ public class ModifyAppointmentController implements Initializable {
         int id = ModifyAppointmentController.currentAppointment;
 
         // error check and then add title
-        String title = "";
-        title = titleText.getText();
+
+        String title = titleText.getText();
         if (title.equals("")) {
             ControllerMethods.errorDialogueBox("Title Error: Please enter a title");
             errorDetected = true;
         }
 
         // error check, and then add description
-        String description = "";
+        String description;
         description = descriptionText.getText();
         if (description.equals("")) {
             ControllerMethods.errorDialogueBox("Description Error: Please enter a description");
@@ -251,7 +244,7 @@ public class ModifyAppointmentController implements Initializable {
         }
 
         // check if customer is empty. If not, add the customer
-        String customer = "";
+        String customer;
         customer = ModifyAppointmentController.selectedCustomer;
         if(customer.equals(""))
         {
@@ -260,7 +253,7 @@ public class ModifyAppointmentController implements Initializable {
         }
 
         // check if appointment type is empty. If not, add the type
-        String type = "";
+        String type;
         type = ModifyAppointmentController.selectedType;
         if(type.equals(""))
         {
@@ -269,7 +262,7 @@ public class ModifyAppointmentController implements Initializable {
         }
 
         // check if contact is empty. If not, add contact
-        String contact = "";
+        String contact;
         contact = ModifyAppointmentController.selectedContact;
         if(contact.equals(""))
         {
@@ -278,7 +271,7 @@ public class ModifyAppointmentController implements Initializable {
         }
 
         // check if date is empty. If not, convert to local date and add the date
-        String dateString = "";
+        String dateString;
         dateString = ModifyAppointmentController.selectedDate;
         if(dateString.equals(""))
         {
@@ -288,7 +281,7 @@ public class ModifyAppointmentController implements Initializable {
 
 
         // check if start time is empty. If not, convert to local time and add start time
-        String startString = "";
+        String startString;
         startString = ModifyAppointmentController.selectedStart;
         if(startString.equals(""))
         {
@@ -297,7 +290,7 @@ public class ModifyAppointmentController implements Initializable {
         }
 
         // check if end time is empty. If not, convert to local time and add end time
-        String endString = "";
+        String endString;
         endString = ModifyAppointmentController.selectedEnd;
         if(endString.equals(""))
         {
@@ -320,7 +313,7 @@ public class ModifyAppointmentController implements Initializable {
         if(start.isAfter(end))
         {
             // checks to see if local hours go over midnight hours, which would mean we should allow this with an additional day added.
-            if(RuntimeObjects.isComplexHours() == false) {
+            if(!RuntimeObjects.isComplexHours()) {
                 ControllerMethods.errorDialogueBox("Your start time cannot be after your end time!");
                 errorDetected = true;
             }

@@ -5,7 +5,6 @@ import Databse.SelectStatements;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
-import javafx.application.HostServices;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,12 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import jdk.jfr.Description;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -110,8 +107,7 @@ public class AddAppointmentController implements Initializable {
         try {
             AddAppointmentController.selectedCustomer = customerCB.getSelectionModel().getSelectedItem();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
@@ -121,8 +117,7 @@ public class AddAppointmentController implements Initializable {
         try {
             AddAppointmentController.selectedType = typeCB.getSelectionModel().getSelectedItem();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
@@ -132,8 +127,7 @@ public class AddAppointmentController implements Initializable {
         try {
             AddAppointmentController.selectedContact = contactCB.getSelectionModel().getSelectedItem();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
@@ -143,8 +137,7 @@ public class AddAppointmentController implements Initializable {
         try {
             AddAppointmentController.selectedDate = dateCB.getSelectionModel().getSelectedItem().toString();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
@@ -154,8 +147,7 @@ public class AddAppointmentController implements Initializable {
         try {
             AddAppointmentController.selectedStart = startCB.getSelectionModel().getSelectedItem().toString();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
@@ -165,13 +157,12 @@ public class AddAppointmentController implements Initializable {
         try {
             AddAppointmentController.selectedEnd = endCB.getSelectionModel().getSelectedItem().toString();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
     /** After validating the entries, this methods adds a new record into the database and refreshes it. */
-    public boolean saveButtonClicked(ActionEvent event) throws IOException, SQLException {
+    public boolean saveButtonClicked(ActionEvent event) throws IOException {
 
 
         boolean errorDetected = false; // boolean to mark if we will abort after all error messages are shown.
@@ -180,7 +171,7 @@ public class AddAppointmentController implements Initializable {
         int id = SelectStatements.getAnInt(DBConnection.getConn(), "SELECT max(Appointment_ID)+1 AS Appointment_ID FROM appointments;", "Appointment_ID");
 
         // error check and then add title
-        String title = "";
+        String title;
         title = titleText.getText();
         if (title.equals("")) {
             ControllerMethods.errorDialogueBox("Title Error: Please enter a title");
@@ -188,7 +179,7 @@ public class AddAppointmentController implements Initializable {
         }
 
         // error check, and then add description
-        String description = "";
+        String description;
         description = descriptionText.getText();
         if (description.equals("")) {
             ControllerMethods.errorDialogueBox("Description Error: Please enter a description");
@@ -203,7 +194,7 @@ public class AddAppointmentController implements Initializable {
         }
 
         // check if customer is empty. If not, add the customer
-        String customer = "";
+        String customer;
         customer = AddAppointmentController.selectedCustomer;
         if(customer.equals(""))
         {
@@ -212,7 +203,7 @@ public class AddAppointmentController implements Initializable {
         }
 
         // check if appointment type is empty. If not, add the type
-        String type = "";
+        String type;
         type = AddAppointmentController.selectedType;
         if(type.equals(""))
         {
@@ -221,7 +212,7 @@ public class AddAppointmentController implements Initializable {
         }
 
         // check if contact is empty. If not, add contact
-        String contact = "";
+        String contact;
         contact = AddAppointmentController.selectedContact;
         if(contact.equals(""))
         {
@@ -230,7 +221,7 @@ public class AddAppointmentController implements Initializable {
         }
 
         // check if date is empty. If not, convert to local date and add the date
-        String dateString = "";
+        String dateString;
         dateString = AddAppointmentController.selectedDate;
         if(dateString.equals(""))
         {
@@ -240,7 +231,7 @@ public class AddAppointmentController implements Initializable {
 
 
         // check if start time is empty. If not, convert to local time and add start time
-        String startString = "";
+        String startString;
         startString = AddAppointmentController.selectedStart;
         if(startString.equals(""))
         {
@@ -249,7 +240,7 @@ public class AddAppointmentController implements Initializable {
         }
 
         // check if end time is empty. If not, convert to local time and add end time
-        String endString = "";
+        String endString;
         endString = AddAppointmentController.selectedEnd;
         if(endString.equals(""))
         {
@@ -272,7 +263,7 @@ public class AddAppointmentController implements Initializable {
         if(start.isAfter(end))
         {
             // checks to see if local hours go over midnight hours, which would mean we should allow this with an additional day added.
-            if(RuntimeObjects.isComplexHours() == false) {
+            if(!RuntimeObjects.isComplexHours()) {
             ControllerMethods.errorDialogueBox("Your start time cannot be after your end time!");
             errorDetected = true;
             }
@@ -303,7 +294,7 @@ public class AddAppointmentController implements Initializable {
                 RuntimeObjects.getCurrentUser().getUsername(), customerID, RuntimeObjects.getCurrentUser().getId(), contactID);
 
         // clear the current customers observable list, and fetch them again from the database.
-        RuntimeObjects.clearAllAppointments();;
+        RuntimeObjects.clearAllAppointments();
         Connection conn = DBConnection.getConn();
         SelectStatements.populateAppointmentsTable(conn);
 
