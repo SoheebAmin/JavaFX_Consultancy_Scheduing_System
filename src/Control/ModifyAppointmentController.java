@@ -7,6 +7,7 @@ import Model.Appointment;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
+import Utils.DateTimeMethods;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -308,6 +309,12 @@ public class ModifyAppointmentController implements Initializable {
         LocalTime start = LocalTime.parse(startString);
         LocalTime end = LocalTime.parse(endString);
 
+        // checks if times are the same.
+        if(start.equals(end))
+        {
+            ControllerMethods.errorDialogueBox("Your start and end times cannot be the same.");
+            errorDetected = true;
+        }
 
         // check if times are in order
         if(start.isAfter(end))
@@ -334,6 +341,19 @@ public class ModifyAppointmentController implements Initializable {
         // gets the customer ID
         String selectCustomerID = "SELECT Customer_ID FROM customers WHERE Customer_Name = \"" + customer + "\"";
         int customerID = SelectStatements.getAnInt(DBConnection.getConn(), selectCustomerID, "Customer_ID");
+
+        // Check to see if an appointment already exists that overlaps at all with the start or end time.
+        boolean hasAnOverlap = DateTimeMethods.isOverlapping(customerID, appointmentStart, appointmentEnd);
+
+        if(hasAnOverlap)
+        {
+            ControllerMethods.errorDialogueBox("The customer has an overlapping appointment as this time");
+            errorDetected = true;
+        }
+
+        // return the function if any errors were detected.
+        if(errorDetected)
+            return false;
 
         // gets the Contact ID
         String selectContactID = "SELECT Contact_ID FROM contacts WHERE Contact_Name = \"" + contact + "\"";

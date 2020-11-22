@@ -29,5 +29,12 @@ public class ControllerMethods {
         window.show();
     }
 
+    public static void infoDialogueBox(String infoMessage) {
+        Alert alert = new Alert((Alert.AlertType.INFORMATION));
+        alert.setTitle("Alert");
+        alert.setContentText(infoMessage);
+        alert.showAndWait();
+    }
+
 
 }

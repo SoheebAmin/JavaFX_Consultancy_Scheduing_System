@@ -133,6 +133,11 @@ public class CustomerDashboardController implements Initializable {
         divisionCol.setCellValueFactory(new PropertyValueFactory<>("division"));
         countryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
 
+        // Displays message about upcoming appointments
+        if(1 == 1)
+        {
+            ControllerMethods.infoDialogueBox("You have no upcoming appointments.");
+        }
     }
 
 }

@@ -109,6 +109,7 @@ public class AppointmentDashboardController implements Initializable {
         }
     }
 
+    /** This method is triggered when "all" radio button is selected. It shows all appointments.*/
     public void allRadioButtonSelected(){
         appointmentTableView.setItems(RuntimeObjects.getAllAppointments());
     }
@@ -161,10 +162,6 @@ public class AppointmentDashboardController implements Initializable {
         ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
     }
 
-    /** This method is triggered when "all" radio button is selected. It shows all appointments.*/
-
-
-
 
     /** Method to set initial conditions of the controller. */
     @Override
@@ -186,9 +183,5 @@ public class AppointmentDashboardController implements Initializable {
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         contactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-
     }
-
-
-
 }

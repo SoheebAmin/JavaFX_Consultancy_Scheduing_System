@@ -1,5 +1,6 @@
 package Utils;
 
+import Model.Appointment;
 import Model.RuntimeObjects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -74,5 +75,26 @@ public class DateTimeMethods {
         int offset = (int)(duration.toHours());
 
         return offset;
+    }
+
+    /** Checks if two LocalDateTime ranges have anything overlapping. */
+    public static boolean isOverlapping(int AId, LocalDateTime start, LocalDateTime end) {
+
+        // get all appointments
+        ObservableList<Appointment> allAppointments = RuntimeObjects.getAllAppointments();
+
+        // loop through, and for matching customer, check times against appointment times (seconds add/sub to allow consecutive appointments)
+        for(Appointment a :allAppointments) {
+            if(a.getCustomerId() == AId) {
+                LocalDateTime startToCheck = a.getStartDateTime().plusSeconds(1);
+                LocalDateTime endToCheck = a.getEndDateTime().minusSeconds(1);
+
+                if(!start.isAfter(endToCheck) && !startToCheck.isAfter(end)) //(logic modified from top answer in Stackoverflow question 17106670)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
