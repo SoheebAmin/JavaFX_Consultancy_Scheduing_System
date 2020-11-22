@@ -215,9 +215,9 @@ public class SelectStatements {
         }
     }
 
-    public static ObservableList<Integer> getComboBoxIntList(Connection conn, String SQLStatement, String column) {
+    public static ObservableList<LocalDateTime> getLocalDateTimeList(Connection conn, String SQLStatement, String column) {
         // list to populate
-        ObservableList<Integer> CBItems = FXCollections.observableArrayList();
+        ObservableList<LocalDateTime> LocalDateTimeList = FXCollections.observableArrayList();
 
         // Prepared select statement for countries
         String selectStatement = SQLStatement;
@@ -229,7 +229,7 @@ public class SelectStatements {
             PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
 
             // variable to populate
-            int comboItem;
+            LocalDateTime LDTItem;
 
             // execute command to get desired data for the combo boxes
             preparedStatement.execute(selectStatement);
@@ -238,11 +238,11 @@ public class SelectStatements {
 
             while(resultSet.next()) // a boolean function that remains true until we scroll through each record
             {
-                comboItem = resultSet.getInt(column);
-                CBItems.add(comboItem);
+                LDTItem = resultSet.getTimestamp(column).toLocalDateTime();
+                LocalDateTimeList.add(LDTItem);
             }
             // return true if the SQL statement executed successfully.
-            return CBItems;
+            return LocalDateTimeList;
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());

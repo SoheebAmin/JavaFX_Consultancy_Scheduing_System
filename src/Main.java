@@ -43,7 +43,7 @@ public class Main extends Application {
         // Test customer
         //Customer testCustomer = new Customer(12, "Ted", "Ted Street", 12345, "212-212-2122", "US","New York");
 
-        // Test Appointment
+        // Test Appointment'
         //Appointment testAppointment = new Appointment(15, "Test", "Test Land", "Cool", "Okay", null, null, 31, 32, 33);
 
 
@@ -55,7 +55,7 @@ public class Main extends Application {
         RuntimeObjects.setCurrentLocale(currentLocale);
 
         // Enable to pretend you are in Los Angeles
-        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
+        TimeZone.setDefault(TimeZone.getTimeZone("America/Los_Angeles"));
 
         // Get the timezone and store it
         TimeZone timeZoneToStore = TimeZone.getDefault();

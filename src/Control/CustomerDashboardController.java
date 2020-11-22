@@ -5,6 +5,7 @@ import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
 import Databse.DeleteStatements;
+import Utils.DateTimeMethods;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -133,10 +134,16 @@ public class CustomerDashboardController implements Initializable {
         divisionCol.setCellValueFactory(new PropertyValueFactory<>("division"));
         countryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
 
-        // Displays message about upcoming appointments
-        if(1 == 1)
+        // Displays message about upcoming appointments for the current user
+        String upcomingAppointmentInfo = DateTimeMethods.upComingAppointmentInfo(RuntimeObjects.getCurrentUser());
+
+        if(upcomingAppointmentInfo == "")
         {
             ControllerMethods.infoDialogueBox("You have no upcoming appointments.");
+        }
+        else
+        {
+            ControllerMethods.infoDialogueBox(upcomingAppointmentInfo);
         }
     }
 

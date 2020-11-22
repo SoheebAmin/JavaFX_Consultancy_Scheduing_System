@@ -1,7 +1,9 @@
 package Utils;
 
+import Databse.SelectStatements;
 import Model.Appointment;
 import Model.RuntimeObjects;
+import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -12,6 +14,7 @@ public class DateTimeMethods {
 
     private static final int MINUTES_OF_OFFICE_HOURS_IN_DAY = 840;
 
+    /** This method gets the list of dates from today until the input number of days ahead, and returns as a list of LocalDates. */
     public static ObservableList<LocalDate> listOfFutureDates(int days){
         ObservableList<LocalDate> listOfDays = FXCollections.observableArrayList();
         LocalDate date = LocalDate.now();
@@ -97,4 +100,44 @@ public class DateTimeMethods {
         }
         return false;
     }
+
+    /** Same method as above, however, must allow same exact appointment time if modifying an appointment. */
+    public static boolean isOverlappingForModify(int customerId, LocalDateTime start, LocalDateTime end) {
+
+        // get all appointments
+        ObservableList<Appointment> allAppointments = RuntimeObjects.getAllAppointments();
+
+        // loop through, and for matching customer, check times against appointment times (seconds add/sub to allow consecutive appointments)
+        for(Appointment a :allAppointments) {
+            if(a.getCustomerId() == customerId) {
+                LocalDateTime startToCheck = a.getStartDateTime().plusSeconds(1);
+                LocalDateTime endToCheck = a.getEndDateTime().minusSeconds(1);
+
+                // if start times exactly the same, we are modifying this appointment, so we do not count this as an overlap.
+                if (start.equals(startToCheck.minusSeconds(1))) // put back the second we took away.
+                    continue;
+
+                if(!start.isAfter(endToCheck) && !startToCheck.isAfter(end)) //(logic modified from top answer in Stackoverflow question 17106670)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static String upComingAppointmentInfo(User user) {
+
+        int userId = user.getId();
+        String selectStatement = "SELECT Start FROM appointments WHERE User_ID =" + userId +";";
+        ObservableList<LocalDateTime> upcomingAppointment = SelectStatements.getLocalDateTimeList(DBConnection.getConn(), selectStatement, "Start");
+
+        for(LocalDateTime appointment : upcomingAppointment)
+        {
+            System.out.println(appointment);
+        }
+
+        return "";
+    }
+
 }
