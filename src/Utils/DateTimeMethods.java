@@ -135,10 +135,11 @@ public class DateTimeMethods {
 
         // grab the IDs of these appointments in a list that will have the same indexing/
         String selectAppointId = "SELECT Appointment_ID FROM appointments WHERE User_ID = " +userId + ";";
-        int appointmentId = SelectStatements.getAnInt(DBConnection.getConn(), selectAppointId, "Appointment_ID");
+        ObservableList<Integer> intList = SelectStatements.getIntList(DBConnection.getConn(), selectAppointId, "Appointment_ID");
 
         // loop through each start time and compare against current time to see if one has less than fifteen minute difference.
         LocalDateTime currentTime = LocalDateTime.now();
+        int i = 0;
         for(LocalDateTime appointmentStart : systemAppointments)
         {
             Duration duration = Duration.between(currentTime, appointmentStart);
@@ -146,9 +147,10 @@ public class DateTimeMethods {
             System.out.println(minuteDifference);
             if(0 < minuteDifference && minuteDifference < 30)
             {
-                String appointmentMessage = "You have an appointment at " + appointmentStart + " with ID: " + "1";
+                String appointmentMessage = "You have an appointment at " + appointmentStart + " with ID: " + intList.get(i);
                 return appointmentMessage;
             }
+            i++;
         }
         return "";
     }

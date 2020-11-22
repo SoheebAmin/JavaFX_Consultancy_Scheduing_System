@@ -215,6 +215,34 @@ public class SelectStatements {
         }
     }
 
+    public static ObservableList<Integer> getIntList(Connection conn, String SQLStatement, String column) {
+        // list to populate
+        ObservableList<Integer> intList = FXCollections.observableArrayList();
+        // Prepared select statement for countries
+        String selectStatement = SQLStatement;
+        try {
+            // Create the prepared Statement Object
+            DBQuery.setPreparedStatement(conn, selectStatement);
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+            // variable to populate
+            int intToGrab;
+            // execute command to get desired data for the combo boxes
+            preparedStatement.execute(selectStatement);
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while(resultSet.next()) // a boolean function that remains true until we scroll through each record
+            {
+                intToGrab = resultSet.getInt(column);
+                intList.add(intToGrab);
+            }
+            // return true if the SQL statement executed successfully.
+            return intList;
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     public static ObservableList<LocalDateTime> getLocalDateTimeList(Connection conn, String SQLStatement, String column) {
         // list to populate
         ObservableList<LocalDateTime> LocalDateTimeList = FXCollections.observableArrayList();
