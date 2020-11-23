@@ -37,12 +37,6 @@ public class Main extends Application {
         // Starts DB connection
         Connection conn = DBConnection.startConnection();
 
-        // Test customer
-        //Customer testCustomer = new Customer(12, "Ted", "Ted Street", 12345, "212-212-2122", "US","New York");
-
-        // Test Appointment'
-        //Appointment testAppointment = new Appointment(15, "Test", "Test Land", "Cool", "Okay", null, null, 31, 32, 33);
-
 
         // Enable for testing French
         //Locale.setDefault(new Locale("fr"));
