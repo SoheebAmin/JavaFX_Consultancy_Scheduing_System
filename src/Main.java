@@ -74,15 +74,6 @@ public class Main extends Application {
         // populate the contact names from the database into a an observable list
         SelectStatements.populateContacts(conn);
 
-        // Appointment types are defined here (as they do not exist in the database)
-        ObservableList<String> appointmentTypes = FXCollections.observableArrayList();
-        appointmentTypes.add("Meet and Greet");
-        appointmentTypes.add("Planning Session");
-        appointmentTypes.add("In-Depth Session");
-        appointmentTypes.add("Closing Operations");
-        RuntimeObjects.setAllAppointmentTypes(appointmentTypes);
-
-
         // launches JavaFX App
         launch(args);
 

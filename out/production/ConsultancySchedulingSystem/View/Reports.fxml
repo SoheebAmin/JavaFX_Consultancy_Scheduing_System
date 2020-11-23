@@ -40,7 +40,7 @@
          </columns>
       </TableView>
       <Label layoutX="664.0" layoutY="392.0" text="Timezone" />
-      <ComboBox layoutX="725.0" layoutY="388.0" prefWidth="150.0" />
+      <ComboBox fx:id="zoneIdCB" layoutX="725.0" layoutY="388.0" onHidden="#zoneCBSet" onShowing="#zoneCBSelected" prefWidth="150.0" />
       <ComboBox fx:id="typeCB" layoutX="128.0" layoutY="75.0" onHidden="#typeCBSet" onShowing="#typeCBSelected" prefWidth="150.0" />
       <ComboBox fx:id="monthCB" layoutX="399.0" layoutY="75.0" onHidden="#monthCBSet" onShowing="#monthCBSelected" prefWidth="150.0" />
       <Label layoutX="86.0" layoutY="79.0" text="Type" />

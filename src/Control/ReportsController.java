@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
 
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class ReportsController {
 
@@ -22,12 +23,14 @@ public class ReportsController {
     @FXML private ComboBox<String> typeCB;
     @FXML private ComboBox<Integer> monthCB;
     @FXML private ComboBox<String> contactCB;
+    @FXML private ComboBox<ZoneId> zoneIdCB;
 
 
     // Temporary variables to save combo box selection
-    private static String selectedType = "";
+    private static String selectedType;
     private static int selectedMonth;
-    private static String selectedContact = "";
+    private static String selectedContact;
+    private static ZoneId selectedZoneId;
 
     // Variables for the Customer Table tableview and columns for report 2.
     @FXML private TableView<Appointment> appointmentTableView2;
@@ -81,6 +84,16 @@ public class ReportsController {
         contactCB.setItems(contactCBItems);
     }
 
+    /** This method populates the time zones combo box. */
+    public void zoneCBSelected() {
+        // grab contacts from runtime class where it is stored
+        ObservableList<ZoneId> zoneCBItems = RuntimeObjects.getAllUSZoneIds();
+
+        // sets the list in the combo box
+        zoneIdCB.setItems(zoneCBItems);
+    }
+
+
     /** This method sets which type is chosen, and then shows the total appointments by that type. */
     public void typeCBSet() {
         // try-catch deals with scenario in which nothing is selected.
@@ -116,6 +129,16 @@ public class ReportsController {
         catch (NullPointerException ignored) {
         }
     }
+    /** This method sets which zoneID is chosen. */
+    public void zoneCBSet() {
+        // try-catch deals with scenario in which nothing is selected.
+        try {
+            ReportsController.selectedZoneId = zoneIdCB.getSelectionModel().getSelectedItem();
+        }
+        catch (NullPointerException ignored) {
+        }
+    }
+
 
 
 

@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -18,13 +19,30 @@ public class RuntimeObjects {
     private static ObservableList<String> allContacts = FXCollections.observableArrayList();
 
     // holds the list of appointment types utilized by the program
-    private static ObservableList<String> allAppointmentTypes = FXCollections.observableArrayList();
+    private static ObservableList<String> allAppointmentTypes = FXCollections.observableArrayList(
+            "Meet and Greet", "Planning Session", "In-Depth Session", "Closing Operations");
 
     // holds the list of days appointments will be allowed until.
     private static ObservableList<LocalDate> allAppointmentDates = FXCollections.observableArrayList();
 
     // holds the list of hours allowed for appointments
     private static ObservableList<LocalTime> allAppointmentHours = FXCollections.observableArrayList();
+
+    // list of all US Time Zone IDs
+    private static ObservableList<ZoneId> allUSZoneIds = FXCollections.observableArrayList(
+            ZoneId.of("US/Alaska"),
+            ZoneId.of("US/Aleutian"),
+            ZoneId.of("US/Arizona"),
+            ZoneId.of("US/Central"),
+            ZoneId.of("US/East-Indiana"),
+            ZoneId.of("US/Eastern"),
+            ZoneId.of("US/Hawaii"),
+            ZoneId.of("US/Indiana-Starke"),
+            ZoneId.of("US/Michigan"),
+            ZoneId.of("US/Mountain"),
+            ZoneId.of("US/Pacific"),
+            ZoneId.of("US/Pacific-New"),
+            ZoneId.of("US/Samoa"));
 
     // holds the list of all user objects and a variable for the current user
     private static ObservableList<User> allUsers = FXCollections.observableArrayList();
@@ -165,5 +183,9 @@ public class RuntimeObjects {
 
     public static void setComplexHours(boolean complexHours) {
         RuntimeObjects.complexHours = complexHours;
+    }
+
+    public static ObservableList<ZoneId> getAllUSZoneIds() {
+        return allUSZoneIds;
     }
 }
