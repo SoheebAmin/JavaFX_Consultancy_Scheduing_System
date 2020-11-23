@@ -34,6 +34,9 @@ public class CustomerDashboardController implements Initializable {
     @FXML private TableColumn<Customer, String> divisionCol;
     @FXML private TableColumn<Customer, String> countryCol;
 
+    // check if recent appoint message has been displayed, to set it to be displayed again.
+    private static boolean appointmentMessageHasBeenDisplayed;
+
 
     /** This method allows the user to add a customer */
     public void addButtonClicked(ActionEvent event) throws IOException {
@@ -142,13 +145,18 @@ public class CustomerDashboardController implements Initializable {
         // Displays message about upcoming appointments for the current user
         String upcomingAppointmentInfo = DateTimeMethods.upComingAppointmentInfo(RuntimeObjects.getCurrentUser(), 15);
 
-        if(upcomingAppointmentInfo == "")
+        if(CustomerDashboardController.appointmentMessageHasBeenDisplayed == false)
         {
-            ControllerMethods.infoDialogueBox("You have no upcoming appointments.");
-        }
-        else
-        {
-            ControllerMethods.infoDialogueBox(upcomingAppointmentInfo);
+            if(upcomingAppointmentInfo == "")
+            {
+                ControllerMethods.infoDialogueBox("You have no upcoming appointments.");
+            }
+            else
+            {
+                ControllerMethods.infoDialogueBox(upcomingAppointmentInfo);
+            }
+        // saves the fact this message has been displayed.
+        CustomerDashboardController.appointmentMessageHasBeenDisplayed = true;
         }
     }
 

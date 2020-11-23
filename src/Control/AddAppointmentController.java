@@ -314,7 +314,7 @@ public class AddAppointmentController implements Initializable {
         InsertStatements.insertAppointment(DBConnection.getConn(), id, title, description, location, type, appointmentStart, appointmentEnd,
                 RuntimeObjects.getCurrentUser().getUsername(), customerID, RuntimeObjects.getCurrentUser().getId(), contactID);
 
-        // clear the current customers observable list, and fetch them again from the database.
+        // clear the current appointments observable list, and fetch them again from the database.
         RuntimeObjects.clearAllAppointments();
         Connection conn = DBConnection.getConn();
         SelectStatements.populateAppointmentsTable(conn);

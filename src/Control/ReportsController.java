@@ -3,19 +3,29 @@ package Control;
 import Database.SelectStatements;
 import Model.Appointment;
 import Model.RuntimeObjects;
+import Utils.ControllerMethods;
 import Utils.DBConnection;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.ZoneId;
+import java.util.ResourceBundle;
+import java.util.TimeZone;
 
-public class ReportsController {
+public class ReportsController implements Initializable {
 
     // Variables for labels to display totals
     @FXML private Label totalByType;
@@ -134,12 +144,53 @@ public class ReportsController {
         // try-catch deals with scenario in which nothing is selected.
         try {
             ReportsController.selectedZoneId = zoneIdCB.getSelectionModel().getSelectedItem();
+
+            // sets the current zone ID for the program to the one the user selected. This is restored upon exit.
+            TimeZone.setDefault(TimeZone.getTimeZone(selectedZoneId));
+
+            // clear the current appointments observable list, and fetch them again from the database.
+            RuntimeObjects.clearAllAppointments();
+            Connection conn = DBConnection.getConn();
+            SelectStatements.populateAppointmentsTable(conn);
         }
         catch (NullPointerException ignored) {
         }
     }
 
+    /** This method exits the program via the Exit button */
+    public void exitButtonClicked(ActionEvent event) throws IOException {
 
+        // Restores the default time zone stored at the start of the program.
+        TimeZone.setDefault(RuntimeObjects.getCurrentTimeZone());
+        RuntimeObjects.clearAllAppointments();
+        Connection conn = DBConnection.getConn();
+        SelectStatements.populateAppointmentsTable(conn);
 
+        ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
+    }
 
+    /** Resets all the temporary variables that hold selected combo box values. */
+    public void clearAllTempVars() {
+        ReportsController.selectedType = "";
+        ReportsController.selectedContact = "";
+        ReportsController.selectedMonth = LocalDateTime.now().getMonthValue();
+        ReportsController.selectedZoneId = null;
+    }
+
+    /** Method to set initial conditions of the controller. */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // to populate the customer table
+        appointmentTableView3.setItems(RuntimeObjects.getAllAppointments());
+
+        idCol3.setCellValueFactory(new PropertyValueFactory<>("id"));
+        titleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
+        locationCol3.setCellValueFactory(new PropertyValueFactory<>("location"));
+        descriptionCol3.setCellValueFactory(new PropertyValueFactory<>("description"));
+        typeCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startTimeCol3.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
+        endTimeCol3.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
+        customerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        contactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+    }
 }
