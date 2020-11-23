@@ -5,6 +5,8 @@ import Model.Appointment;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
+import Utils.DateTimeMethods;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneId;
@@ -130,11 +133,29 @@ public class ReportsController implements Initializable {
         }
     }
 
-    /** This method sets which contact is chosen. */
+    /** This method sets which contact is chosen. and shows all appointments with them. */
     public void contactCBSet() {
         // try-catch deals with scenario in which nothing is selected.
         try {
             ReportsController.selectedContact = contactCB.getSelectionModel().getSelectedItem();
+
+            // get the corresponding contact ID for the selected contact.
+            String selectContact = "SELECT Contact_ID FROM contacts WHERE Contact_Name = \"" + ReportsController.selectedContact + "\"";
+            int selectedContactID = SelectStatements.getAnInt(DBConnection.getConn(), selectContact, "Contact_ID");
+
+            // grabs all appointments on record
+            ObservableList<Appointment> allAppointments = RuntimeObjects.getAllAppointments();
+
+            // a list to hold all appointments with this contact
+            ObservableList<Appointment> matchingAppointments = FXCollections.observableArrayList();
+
+            // loops through all appointments, and checks which one have this contact.
+            for (Appointment a : allAppointments) {
+                int contactID = a.getContactId();
+                if(selectedContactID == contactID)
+                    matchingAppointments.add(a);
+            }
+            appointmentTableView2.setItems(matchingAppointments);
         }
         catch (NullPointerException ignored) {
         }
@@ -180,7 +201,20 @@ public class ReportsController implements Initializable {
     /** Method to set initial conditions of the controller. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // to populate the customer table
+
+        // to populate the customer table for report 2, once contact is chosen.
+
+        idCol2.setCellValueFactory(new PropertyValueFactory<>("id"));
+        titleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        locationCol2.setCellValueFactory(new PropertyValueFactory<>("location"));
+        descriptionCol2.setCellValueFactory(new PropertyValueFactory<>("description"));
+        typeCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startTimeCol2.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
+        endTimeCol2.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
+        customerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+
+
+        // to populate the customer table for report 3
         appointmentTableView3.setItems(RuntimeObjects.getAllAppointments());
 
         idCol3.setCellValueFactory(new PropertyValueFactory<>("id"));
