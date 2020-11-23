@@ -14,8 +14,6 @@
       <Label layoutX="701.0" layoutY="33.0" text="Month" />
       <TableView fx:id="appointmentTableView3" layoutX="18.0" layoutY="478.0" prefHeight="146.0" prefWidth="886.0">
          <columns>
-            <TableColumn fx:id="startTimeCol3" minWidth="0.0" prefWidth="108.0" text="Start Time" />
-            <TableColumn fx:id="endTimeCol3" minWidth="0.0" prefWidth="113.5999755859375" text="End Time" />
             <TableColumn fx:id="idCol3" prefWidth="32.80002021789551" text="A. ID" />
             <TableColumn fx:id="titleCol3" prefWidth="148.79998016357422" text="Title" />
             <TableColumn fx:id="descriptionCol3" prefWidth="100.79998779296875" text="Description" />
@@ -24,6 +22,8 @@
             <TableColumn fx:id="customerIdCol3" minWidth="0.0" prefWidth="56.000030517578125" text="Cus. ID" />
             <TableColumn fx:id="contactIdCol3" minWidth="0.0" prefWidth="64.0" text="Con. ID" />
             <TableColumn fx:id="userIdCol3" minWidth="0.0" prefWidth="54.4000244140625" text="User ID" />
+            <TableColumn fx:id="startTimeCol3" minWidth="0.0" prefWidth="108.0" text="Start Time" />
+            <TableColumn fx:id="endTimeCol3" minWidth="0.0" prefWidth="113.5999755859375" text="End Time" />
          </columns>
       </TableView>
       <ComboBox layoutX="524.0" layoutY="29.0" prefWidth="150.0" />
@@ -33,28 +33,28 @@
       <ComboBox layoutX="729.0" layoutY="234.0" prefWidth="150.0" />
       <TableView fx:id="appointmentTableView1" layoutX="16.0" layoutY="65.0" prefHeight="155.0" prefWidth="886.0">
          <columns>
+            <TableColumn fx:id="idCol1" prefWidth="32.80002021789551" text="A. ID" />
+            <TableColumn fx:id="titleCol1" prefWidth="148.79998016357422" text="Title" />
+            <TableColumn fx:id="descriptionCol1" prefWidth="100.79998779296875" text="Description" />
+            <TableColumn fx:id="locationCol1" prefWidth="93.60003662109375" text="Location" />
             <TableColumn fx:id="typeCol1" minWidth="0.0" prefWidth="123.99993896484375" text="Type" />
+            <TableColumn fx:id="customerIdCol1" minWidth="0.0" prefWidth="56.000030517578125" text="Cus. ID" />
+            <TableColumn fx:id="contactIdCol1" minWidth="0.0" prefWidth="64.0" text="Con. ID" />
+            <TableColumn fx:id="userIdCol1" minWidth="0.0" prefWidth="54.4000244140625" text="User ID" />
             <TableColumn fx:id="startTimeCol1" minWidth="0.0" prefWidth="108.0" text="Start Time" />
             <TableColumn fx:id="endTimeCol1" minWidth="0.0" prefWidth="113.5999755859375" text="End Time" />
-            <TableColumn fx:id="idCol1" prefWidth="32.80002021789551" text="A. ID" />
-            <TableColumn fx:id="titleCol1" prefWidth="119.20001220703125" text="Title" />
-            <TableColumn fx:id="descriptionCol1" prefWidth="101.60003662109375" text="Description" />
-            <TableColumn fx:id="locationCol1" prefWidth="107.19989013671875" text="Location" />
-            <TableColumn fx:id="customerIdCol1" minWidth="0.0" prefWidth="53.5999755859375" text="Cus. ID" />
-            <TableColumn fx:id="contactIdCol1" minWidth="0.0" prefWidth="76.800048828125" text="Con. ID" />
-            <TableColumn fx:id="userIdCol1" minWidth="0.0" prefWidth="63.2000732421875" text="User ID" />
          </columns>
       </TableView>
       <Label layoutX="16.0" layoutY="446.0" text="Report 3: See Start/End times with any US Timezone" />
       <TableView fx:id="appointmentTableView2" layoutX="16.0" layoutY="268.0" prefHeight="155.0" prefWidth="886.0">
          <columns>
-            <TableColumn fx:id="contactIdCol2" minWidth="0.0" prefWidth="64.0" text="Con. ID" />
             <TableColumn fx:id="idCol2" prefWidth="32.80002021789551" text="A. ID" />
             <TableColumn fx:id="titleCol2" prefWidth="148.79998016357422" text="Title" />
             <TableColumn fx:id="descriptionCol2" prefWidth="100.79998779296875" text="Description" />
             <TableColumn fx:id="locationCol2" prefWidth="93.60003662109375" text="Location" />
             <TableColumn fx:id="typeCol2" minWidth="0.0" prefWidth="123.99993896484375" text="Type" />
             <TableColumn fx:id="customerIdCol2" minWidth="0.0" prefWidth="56.000030517578125" text="Cus. ID" />
+            <TableColumn fx:id="contactIdCol2" minWidth="0.0" prefWidth="64.0" text="Con. ID" />
             <TableColumn fx:id="userIdCol2" minWidth="0.0" prefWidth="54.4000244140625" text="User ID" />
             <TableColumn fx:id="startTimeCol2" minWidth="0.0" prefWidth="108.0" text="Start Time" />
             <TableColumn fx:id="endTimeCol2" minWidth="0.0" prefWidth="113.5999755859375" text="End Time" />

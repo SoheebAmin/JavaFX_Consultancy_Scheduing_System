@@ -113,6 +113,11 @@ public class CustomerDashboardController implements Initializable {
         ControllerMethods.changeScene(event, "../View/AppointmentDashboard.fxml");
     }
 
+    /** This method allows the user to modify a customer */
+    public void reportsButtonClicked(ActionEvent event) throws IOException {
+        ControllerMethods.changeScene(event, "../View/Reports.fxml");
+    }
+
     /** This method exits the program via the Exit button */
     public void logoutButtonClicked(ActionEvent event) throws IOException {
         ControllerMethods.changeScene(event, "../View/Login.fxml");
@@ -135,7 +140,7 @@ public class CustomerDashboardController implements Initializable {
         countryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
 
         // Displays message about upcoming appointments for the current user
-        String upcomingAppointmentInfo = DateTimeMethods.upComingAppointmentInfo(RuntimeObjects.getCurrentUser());
+        String upcomingAppointmentInfo = DateTimeMethods.upComingAppointmentInfo(RuntimeObjects.getCurrentUser(), 15);
 
         if(upcomingAppointmentInfo == "")
         {

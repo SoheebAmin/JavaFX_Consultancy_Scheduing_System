@@ -19,7 +19,7 @@
         </columns>
       </TableView>
       <Button layoutX="813.0" layoutY="356.0" mnemonicParsing="false" onAction="#logoutButtonClicked" text="Log Out" />
-      <Button layoutX="650.0" layoutY="23.0" mnemonicParsing="false" text="Reports" />
+      <Button layoutX="650.0" layoutY="23.0" mnemonicParsing="false" onAction="#reportsButtonClicked" text="Reports" />
       <Button layoutX="39.0" layoutY="343.0" mnemonicParsing="false" onAction="#addButtonClicked" text="Add" />
       <Button layoutX="89.0" layoutY="343.0" mnemonicParsing="false" onAction="#modifyButtonClicked" text="Modify" />
       <Button layoutX="178.0" layoutY="343.0" mnemonicParsing="false" onAction="#deleteButtonClicked" text="Delete" />

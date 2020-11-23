@@ -126,7 +126,7 @@ public class DateTimeMethods {
     }
 
     /** This method grabs all appointments that has the users ID and compares against the current time to see if one is in fifteen minutes. */
-    public static String upComingAppointmentInfo(User user) {
+    public static String upComingAppointmentInfo(User user, int minutesToCheckAhead) {
 
         // get Id and query DB for appointment start times with this user ID.
         int userId = user.getId();
@@ -144,8 +144,7 @@ public class DateTimeMethods {
         {
             Duration duration = Duration.between(currentTime, appointmentStart);
             long minuteDifference = duration.toMinutes();
-            System.out.println(minuteDifference);
-            if(0 < minuteDifference && minuteDifference < 30)
+            if(0 < minuteDifference && minuteDifference < minutesToCheckAhead)
             {
                 String appointmentMessage = "You have an appointment at " + appointmentStart + " with ID: " + intList.get(i);
                 return appointmentMessage;
