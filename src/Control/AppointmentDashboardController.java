@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/** This is the controller class for the Appointments Dashboard.*/
 public class AppointmentDashboardController implements Initializable {
 
     // Variables for the Customer Table tableview and columns.
@@ -75,6 +76,7 @@ public class AppointmentDashboardController implements Initializable {
         window.show();
     }
 
+    /** Method to delete a selected appointment.*/
     public void deleteButtonClicked() {
         // grabs selected appointment
         Appointment selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();

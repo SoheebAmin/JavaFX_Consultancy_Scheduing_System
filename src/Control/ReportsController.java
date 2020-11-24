@@ -26,6 +26,7 @@ import java.time.ZoneId;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
+/** This is the controller class for the reports scene. */
 public class ReportsController implements Initializable {
 
     // Variables for labels to display totals
@@ -35,7 +36,6 @@ public class ReportsController implements Initializable {
     @FXML private ComboBox<Integer> monthCB;
     @FXML private ComboBox<String> contactCB;
     @FXML private ComboBox<ZoneId> zoneIdCB;
-
 
     // Temporary variables to save combo box selection
     private static String selectedType;
@@ -118,7 +118,8 @@ public class ReportsController implements Initializable {
         }
     }
 
-    /** This method sets which month is chosen, and then shows the total appointments by that type.. */
+    /** This method sets which month is chosen, and then shows the total appointments by that type.
+     LAMBDA EXPRESSION: This method contains a lambda expression which allows us to grab any integers from the database with the help of a select method in the DB package.*/
     public void monthCBSet() {
         // try-catch deals with scenario in which nothing is selected.
         try {
@@ -127,8 +128,6 @@ public class ReportsController implements Initializable {
             String selectStatement = "SELECT Count(*) AS Appointments FROM appointments WHERE Month(Start) = " + ReportsController.selectedMonth + ";";
 
             //int totalOfSelectedMonth = SelectStatements.getAnInt(DBConnection.getConn(), selectStatement, "Appointments");
-
-            /** LAMBDA EXPRESSION: This is a lambda expression which allows us to grab any integers from the database with the help of a select method in the DB package.*/
             GrabIntFromDB intGrabber = (a, b, c) -> SelectStatements.getAnInt(a, b, c);
             int totalOfSelectedMonth = intGrabber.getAnInt(DBConnection.getConn(), selectStatement, "Appointments");
             totalByMonth.setText("Total Appointments: " + totalOfSelectedMonth);
@@ -164,8 +163,9 @@ public class ReportsController implements Initializable {
         catch (NullPointerException ignored) {
         }
     }
-    /** This method sets which zoneID is chosen. */
+    /** This method sets which zoneID is chosen. LAMBDA EXPRESSION: This is a lambda expression which allows us to repopulate the appointment table to reflect the timezone changes.*/
     public void zoneCBSet() {
+
         // try-catch deals with scenario in which nothing is selected.
         try {
             ReportsController.selectedZoneId = zoneIdCB.getSelectionModel().getSelectedItem();
@@ -174,8 +174,6 @@ public class ReportsController implements Initializable {
             TimeZone.setDefault(TimeZone.getTimeZone(selectedZoneId));
 
             // clear the current appointments observable list, and fetch them again from the database.
-
-            /** LAMBDA EXPRESSION: This is a lambda expression which allows us to repopulate the appointment table to reflect the timezone changes.*/
             RepopulateAppointments repopulator = c -> {
                 RuntimeObjects.clearAllAppointments();
                 SelectStatements.populateAppointmentsTable(c);};
@@ -198,20 +196,11 @@ public class ReportsController implements Initializable {
         ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
     }
 
-    /** Resets all the temporary variables that hold selected combo box values. */
-    public void clearAllTempVars() {
-        ReportsController.selectedType = "";
-        ReportsController.selectedContact = "";
-        ReportsController.selectedMonth = LocalDateTime.now().getMonthValue();
-        ReportsController.selectedZoneId = null;
-    }
-
     /** Method to set initial conditions of the controller. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         // to populate the customer table for report 2, once contact is chosen.
-
         idCol2.setCellValueFactory(new PropertyValueFactory<>("id"));
         titleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
         locationCol2.setCellValueFactory(new PropertyValueFactory<>("location"));

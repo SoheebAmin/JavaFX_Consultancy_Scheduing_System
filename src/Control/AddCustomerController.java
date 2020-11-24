@@ -1,11 +1,10 @@
 package Control;
 
+import Database.InsertStatements;
+import Database.SelectStatements;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
-import Database.InsertStatements;
-import Database.SelectStatements;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,24 +15,18 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /** The Controller to add customer objects to the customers list stored in the ObservableLists class */
 public class AddCustomerController implements Initializable {
 
     // Variables for the fields to be filled in.
-    @FXML private TextField idText;
     @FXML private TextField nameText;
     @FXML private TextField addressText;
     @FXML private TextField postalText;
     @FXML private TextField phoneText;
-    @FXML private ComboBox countryCB;
-    @FXML private ComboBox divisionCB;
-
-    // Observable lists for the combo boxes
-    private static ObservableList<String> countryCBItems = FXCollections.observableArrayList();
-    private static ObservableList<String> divisionCBItems = FXCollections.observableArrayList();
+    @FXML private ComboBox<String> countryCB;
+    @FXML private ComboBox<String> divisionCB;
 
     // Temporary variables to save combo box selection
     private static String selectedCountry = "";
@@ -43,7 +36,8 @@ public class AddCustomerController implements Initializable {
     /** This method populates the country combo box. */
     public void countryCBSelected() {
         // calls methods to generate list of countries from the DB with an SQL select
-        countryCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), "SELECT Country FROM countries;", "Country");
+        // Observable lists for the combo boxes
+        ObservableList<String> countryCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), "SELECT Country FROM countries;", "Country");
 
         // sets the list in the combo box
         countryCB.setItems(countryCBItems);
@@ -53,7 +47,7 @@ public class AddCustomerController implements Initializable {
     public void divisionCBSelected() {
 
         // checks to see if a country has been selected already.
-        if(AddCustomerController.selectedCountry == "")
+        if(AddCustomerController.selectedCountry.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select country before you can select a division!");
         }
@@ -65,7 +59,7 @@ public class AddCustomerController implements Initializable {
                 "AND Country = \"" + AddCustomerController.selectedCountry + "\";";
 
         // calls method to generate list of items for combo box pulled from the DB with an SQL select
-        divisionCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), SQLStatement, "Division");
+        ObservableList<String> divisionCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), SQLStatement, "Division");
 
         // sets the list in the combo box
         divisionCB.setItems(divisionCBItems);
@@ -76,11 +70,10 @@ public class AddCustomerController implements Initializable {
     public void countryCBSet() {
         // try-catch deals with scenario in which nothing is selected.
         try {
-            AddCustomerController.selectedCountry = countryCB.getSelectionModel().getSelectedItem().toString();
+            AddCustomerController.selectedCountry = countryCB.getSelectionModel().getSelectedItem();
         }
-        catch (NullPointerException e)
+        catch (NullPointerException ignored)
         {
-            return;
         }
     }
 
@@ -88,16 +81,15 @@ public class AddCustomerController implements Initializable {
     public void divisionCBSet() {
         // try-catch deals with scenario in which nothing is selected.
         try {
-            AddCustomerController.selectedDivision = divisionCB.getSelectionModel().getSelectedItem().toString();
+            AddCustomerController.selectedDivision = divisionCB.getSelectionModel().getSelectedItem();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
 
     /** After validating the entries, this methods adds a new record into the database and refreshes it. */
-    public boolean saveButtonClicked(ActionEvent event) throws IOException, SQLException {
+    public boolean saveButtonClicked(ActionEvent event) throws IOException {
 
         boolean errorDetected = false; // boolean to mark if we will abort after
 
@@ -149,7 +141,7 @@ public class AddCustomerController implements Initializable {
             errorDetected = true;
         }
 
-        if(errorDetected == true)
+        if(errorDetected)
             return false;
 
         //use selected division to grab division ID

@@ -45,7 +45,7 @@ public class Main extends Application {
         RuntimeObjects.setCurrentLocale(currentLocale);
 
         // Enable to pretend you are in Los Angeles
-        TimeZone.setDefault(TimeZone.getTimeZone("America/Los_Angeles"));
+        //TimeZone.setDefault(TimeZone.getTimeZone("America/Los_Angeles"));
 
         // Get the timezone and store it
         TimeZone timeZoneToStore = TimeZone.getDefault();

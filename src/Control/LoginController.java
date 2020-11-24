@@ -20,8 +20,10 @@ import java.util.ResourceBundle;
 import java.util.TimeZone;
 import java.io.*;
 
+/** This is the controller class for the Login Scene.*/
 public class LoginController implements Initializable {
 
+    // fields for the various buttons and labels
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private Label usernameTextLabel;
@@ -58,10 +60,9 @@ public class LoginController implements Initializable {
         }
         catch(FileNotFoundException e)
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
-
 
     /** This method that checks the validity of the login attempt */
     public void loginButtonClicked(ActionEvent event) throws IOException {
@@ -80,10 +81,9 @@ public class LoginController implements Initializable {
             }
             return;
         }
+
         // loop through the users to check if user name in database
-
         User detectedUser = null;
-
         ObservableList<User> userObjects = RuntimeObjects.getAllUsers();
         for (User u : userObjects) {
             String userNameInDB = u.getUsername();

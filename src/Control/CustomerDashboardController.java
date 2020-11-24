@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/** This is the controller for the Customer Dashboard.*/
 public class CustomerDashboardController implements Initializable {
 
     // Variables for the Customer Table tableview and columns.
@@ -72,6 +73,7 @@ public class CustomerDashboardController implements Initializable {
         window.show();
     }
 
+    /** Method to delete a selected customer.*/
     public void deleteButtonClicked() {
         // grabs selected customer
         Customer selectedCustomer = customersTableView.getSelectionModel().getSelectedItem();
@@ -85,7 +87,6 @@ public class CustomerDashboardController implements Initializable {
             alert.showAndWait();
             return;
         }
-
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete this customer and their appointments?");
 
@@ -145,9 +146,9 @@ public class CustomerDashboardController implements Initializable {
         // Displays message about upcoming appointments for the current user
         String upcomingAppointmentInfo = DateTimeMethods.upComingAppointmentInfo(RuntimeObjects.getCurrentUser(), 15);
 
-        if(CustomerDashboardController.appointmentMessageHasBeenDisplayed == false)
+        if(!CustomerDashboardController.appointmentMessageHasBeenDisplayed)
         {
-            if(upcomingAppointmentInfo == "")
+            if(upcomingAppointmentInfo.equals(""))
             {
                 ControllerMethods.infoDialogueBox("You have no upcoming appointments.");
             }

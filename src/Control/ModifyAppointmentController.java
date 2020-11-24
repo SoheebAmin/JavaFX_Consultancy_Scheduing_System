@@ -102,9 +102,6 @@ public class ModifyAppointmentController implements Initializable {
         selectedEnd = end.toString();
     }
 
-
-
-
     /** This method populates the customer ID combo box. */
     public void customerCBSelected() {
         // calls methods to generate list of customers from the DB with an SQL select

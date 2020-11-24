@@ -1,12 +1,11 @@
 package Control;
 
+import Database.SelectStatements;
 import Database.UpdateStatements;
 import Model.Customer;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
-import Database.SelectStatements;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,10 +29,6 @@ public class ModifyCustomerController implements Initializable {
     @FXML private TextField phoneText;
     @FXML private ComboBox<String> countryCB;
     @FXML private ComboBox<String> divisionCB;
-
-    // Observable lists for the combo boxes
-    private static ObservableList<String> countryCBItems = FXCollections.observableArrayList();
-    private static ObservableList<String> divisionCBItems = FXCollections.observableArrayList();
 
 
     // Temporary variables to save combo box selection
@@ -67,7 +62,8 @@ public class ModifyCustomerController implements Initializable {
     /** This method populates the country combo box. */
     public void countryCBSelected() {
         // calls methods to generate list of countries from the DB with an SQL select
-        countryCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), "SELECT Country FROM countries;", "Country");
+        // Observable lists for the combo boxes
+        ObservableList<String> countryCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), "SELECT Country FROM countries;", "Country");
 
         // sets the list in the combo box
         countryCB.setItems(countryCBItems);
@@ -75,7 +71,7 @@ public class ModifyCustomerController implements Initializable {
 
     public void divisionCBSelected() {
         // checks to see if a country has been selected already.
-        if(ModifyCustomerController.selectedCountry == "")
+        if(ModifyCustomerController.selectedCountry.equals(""))
         {
             ControllerMethods.errorDialogueBox("You must select country before you can select a division!");
         }
@@ -87,7 +83,7 @@ public class ModifyCustomerController implements Initializable {
                 "AND Country = \"" + ModifyCustomerController.selectedCountry + "\";";
 
         // calls method to generate list of items for combo box pulled from the DB with an SQL select
-        divisionCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), SQLStatement, "Division");
+        ObservableList<String> divisionCBItems = SelectStatements.getComboBoxStringList(DBConnection.getConn(), SQLStatement, "Division");
 
         // sets the list in the combo box
         divisionCB.setItems(divisionCBItems);
@@ -97,11 +93,10 @@ public class ModifyCustomerController implements Initializable {
     public void countryCBSet() {
         // try-catch deals with scenario in which nothing is selected.
         try {
-            ModifyCustomerController.selectedCountry = countryCB.getSelectionModel().getSelectedItem().toString();
+            ModifyCustomerController.selectedCountry = countryCB.getSelectionModel().getSelectedItem();
         }
-        catch (NullPointerException e)
+        catch (NullPointerException ignored)
         {
-            return;
         }
     }
 
@@ -109,10 +104,9 @@ public class ModifyCustomerController implements Initializable {
     public void divisionCBSet() {
         // try-catch deals with scenario in which nothing is selected.
         try {
-            ModifyCustomerController.selectedDivision = divisionCB.getSelectionModel().getSelectedItem().toString();
+            ModifyCustomerController.selectedDivision = divisionCB.getSelectionModel().getSelectedItem();
         }
-        catch (NullPointerException e) {
-            return;
+        catch (NullPointerException ignored) {
         }
     }
 
@@ -168,14 +162,12 @@ public class ModifyCustomerController implements Initializable {
             errorDetected = true;
         }
 
-        if(errorDetected == true)
+        if(errorDetected)
             return false;
 
         //use selected division to grab division ID
-
         String insertStatement = "SELECT Division_ID FROM first_level_divisions WHERE Division = \"" + division + "\"";
         int division_id = SelectStatements.getAnInt(DBConnection.getConn(), insertStatement, "Division_ID");
-
 
         //Calls the insert statement to add the new customer to the database.
         UpdateStatements.modifyCustomer(DBConnection.getConn(), id, name, address, postal, phone, RuntimeObjects.getCurrentUser().getUsername(), division_id);
@@ -201,8 +193,6 @@ public class ModifyCustomerController implements Initializable {
         ModifyCustomerController.selectedDivision = "";
 
         ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
-
-
     }
 
     /** Method to set initial conditions of the controller. */
