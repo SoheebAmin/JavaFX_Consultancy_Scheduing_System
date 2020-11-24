@@ -37,7 +37,6 @@ public class Main extends Application {
         // Starts DB connection
         Connection conn = DBConnection.startConnection();
 
-
         // Enable for testing French
         //Locale.setDefault(new Locale("fr"));
 

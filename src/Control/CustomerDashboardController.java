@@ -1,5 +1,7 @@
 package Control;
 
+import Database.SelectStatements;
+import LambdaInterfaces.RepopulateAppointments;
 import Model.Customer;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
@@ -96,9 +98,16 @@ public class CustomerDashboardController implements Initializable {
 
             int customerId = selectedCustomer.getId();
 
-            // delete any appointments for that customer
+            // delete any appointments for that customer, and refreshes it.
             String deleteAppointmentStatement = "DELETE FROM appointments WHERE Customer_ID = " + customerId +";";
             DeleteStatements.delete(DBConnection.getConn(), deleteAppointmentStatement);
+
+            // clear the current appointments observable list, and fetch them again from the database.
+            RepopulateAppointments repopulator = c -> {
+                RuntimeObjects.clearAllAppointments();
+                SelectStatements.populateAppointmentsTable(c);};
+
+            repopulator.repopulateDB(DBConnection.getConn());
 
             // prepares the SQL Delete statement
             String deleteCustomerStatement = "DELETE FROM customers WHERE Customer_ID =" + customerId + ";";

@@ -1,2 +1,2 @@
-/** The control package contains all the controllers for all scenes in the JavaFX application. */
+/** The view package contains all the scenes built with scene builder for the JavaFX application. */
 package View;
