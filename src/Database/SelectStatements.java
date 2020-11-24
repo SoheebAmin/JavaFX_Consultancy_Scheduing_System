@@ -283,13 +283,8 @@ public class SelectStatements {
             preparedStatement.execute(SQLStatement);
 
             ResultSet resultSet = preparedStatement.getResultSet();
-            while(resultSet.next()) // kept as a while loop
-            {
-                intVar = resultSet.getInt(column);
-                return intVar;
-            }
-            // return -1 if failed
-            return -1;
+            resultSet.next();
+            intVar = resultSet.getInt(column);return intVar;
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -315,13 +310,9 @@ public class SelectStatements {
             preparedStatement.execute(SQLStatement);
 
             ResultSet resultSet = preparedStatement.getResultSet();
-            while(resultSet.next()) // a boolean function that remains true until we scroll through each record
-            {
-                localDateTimeVar = resultSet.getTimestamp(column).toLocalDateTime();
-                return localDateTimeVar;
-            }
-            // return null if failed
-            return null;
+            resultSet.next();
+            localDateTimeVar = resultSet.getTimestamp(column).toLocalDateTime();
+            return localDateTimeVar;
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -347,13 +338,9 @@ public class SelectStatements {
             preparedStatement.execute(SQLStatement);
 
             ResultSet resultSet = preparedStatement.getResultSet();
-            while(resultSet.next()) // a boolean function that remains true until we scroll through each record
-            {
-                stringVar = resultSet.getString(column);
-                return stringVar;
-            }
-            // return null if failed
-            return "";
+            resultSet.next();
+            stringVar = resultSet.getString(column);
+            return stringVar;
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
