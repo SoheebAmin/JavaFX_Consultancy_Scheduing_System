@@ -18,12 +18,12 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="194.0" prefWidth="420.0" GridPane.rowIndex="1">
+      <AnchorPane prefHeight="200.0" prefWidth="420.0" GridPane.rowIndex="1">
          <children>
             <Label fx:id="usernameTextLabel" layoutX="78.0" layoutY="35.0" text="Username            " />
             <Label fx:id="passwordTextLabel" layoutX="80.0" layoutY="83.0" text="Password              " />
-            <Button fx:id="loginButton" layoutX="328.0" layoutY="149.0" mnemonicParsing="false" onAction="#loginButtonClicked" text="Log In" />
-            <Button fx:id="exitButton" layoutX="270.0" layoutY="149.0" mnemonicParsing="false" onAction="#exitButtonClicked" text="Exit" />
+            <Button fx:id="loginButton" layoutX="341.0" layoutY="149.0" mnemonicParsing="false" onAction="#loginButtonClicked" text="Log In" />
+            <Button fx:id="exitButton" layoutX="281.0" layoutY="149.0" mnemonicParsing="false" onAction="#exitButtonClicked" text="Exit" />
             <TextField fx:id="usernameField" layoutX="173.0" layoutY="31.0" />
             <Label fx:id="countryTextLabel" layoutX="28.0" layoutY="125.0" text="Location:" />
             <Label fx:id="timezoneTextLabel" layoutX="23.0" layoutY="153.0" text="Timezone:" />

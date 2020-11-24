@@ -27,7 +27,7 @@ public class Main extends Application {
         //Parent root = FXMLLoader.load(getClass().getResource("View/CustomerDashboard.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));
         primaryStage.setTitle("Appointment Application");
-        primaryStage.setScene(new Scene(root, 900, 400));
+        primaryStage.setScene(new Scene(root, 420, 290));
         primaryStage.show();
     }
 

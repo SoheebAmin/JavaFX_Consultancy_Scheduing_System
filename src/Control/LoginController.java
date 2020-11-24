@@ -52,15 +52,20 @@ public class LoginController implements Initializable {
         {
             toWrite = "User " + usernameAttempted + " unsuccessfully attempted to logged in at " + loginAttemptTime;
         }
-        // File to write to
+        // Write to file
         try {
-            PrintWriter logFile = new PrintWriter("login_activity.txt");
+            // This set up to get PrintWriter to append via FileWriter is from the top answer in Stackoverflow question 9961292.
+            PrintWriter logFile = new PrintWriter(new FileWriter("login_activity.txt", true));
+
             logFile.println(toWrite);
+            System.out.println("log file appended");
             logFile.close();
         }
         catch(FileNotFoundException e)
         {
             System.out.println(e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
