@@ -38,7 +38,7 @@ public class InsertStatements {
                 // Confirm number of rows affected
                 int rows = preparedStatement.getUpdateCount();
                 if (rows > 0)
-                    System.out.println(rows + " row(s) added");
+                    System.out.println(rows + " row(s) changed");
                 else
                     System.out.println("Nothing changed");
             }
@@ -47,7 +47,7 @@ public class InsertStatements {
             }
         }
         catch(SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -88,7 +88,7 @@ public class InsertStatements {
                 // Confirm number of rows affected
                 int rows = preparedStatement.getUpdateCount();
                 if (rows > 0)
-                    System.out.println(rows + " row(s) added");
+                    System.out.println(rows + " row(s) changed");
                 else
                     System.out.println("Nothing changed");
             }
@@ -97,7 +97,7 @@ public class InsertStatements {
             }
         }
         catch(SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -138,7 +138,7 @@ public class InsertStatements {
                 // Confirm number of rows affected
                 int rows = preparedStatement.getUpdateCount();
                 if (rows > 0)
-                    System.out.println(rows + " row(s) added");
+                    System.out.println(rows + " row(s) changed");
                 else
                     System.out.println("Nothing changed");
             }
@@ -147,7 +147,7 @@ public class InsertStatements {
             }
         }
         catch(SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 }

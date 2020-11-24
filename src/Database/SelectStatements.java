@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 public class SelectStatements {
 
-    public static ObservableList<Customer> populateCustomersTable(Connection conn){
+    public static void populateCustomersTable(Connection conn){
 
          // Prepared select statement for customers table
          String selectStatement = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division, Country FROM customers AS Cs, first_level_divisions AS F, countries Ct\n" +
@@ -51,15 +51,13 @@ public class SelectStatements {
                  RuntimeObjects.addCustomer(customer);
              }
              // return true if the SQL statement executed successfully.
-             return RuntimeObjects.getAllCustomers();
-        }
+         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
-            return null;
         }
     }
 
-    public static ObservableList<Appointment> populateAppointmentsTable(Connection conn){
+    public static void populateAppointmentsTable(Connection conn){
 
        // Prepared select statement for appointments table
         String selectStatement = "SELECT * FROM appointments;";
@@ -99,15 +97,13 @@ public class SelectStatements {
                 RuntimeObjects.addAppointment(appointment);
             }
             // return true if the SQL statement executed successfully.
-            return RuntimeObjects.getAllAppointments();
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
-            return null;
         }
     }
 
-    public static boolean populateContacts(Connection conn){
+    public static void populateContacts(Connection conn){
 
         // Prepared select statement for appointments table
         String selectStatement = "SELECT * FROM contacts;";
@@ -134,15 +130,13 @@ public class SelectStatements {
                 RuntimeObjects.addContact(Contact_Name);
             }
             // return true if the SQL statement executed successfully.
-            return true;
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
         }
     }
 
-    public static ObservableList<User> populateUsers(Connection conn) {
+    public static void populateUsers(Connection conn) {
         // Prepared select statement for appointments table
         String selectStatement = "SELECT * FROM users";
 
@@ -172,11 +166,9 @@ public class SelectStatements {
                 RuntimeObjects.addUser(user);
             }
             // return true if the SQL statement executed successfully.
-            return RuntimeObjects.getAllUsers();
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
-            return null;
         }
     }
 
@@ -184,12 +176,9 @@ public class SelectStatements {
         // list to populate
         ObservableList<String> CBItems = FXCollections.observableArrayList();
 
-        // Prepared select statement for countries
-        String selectStatement = SQLStatement;
-
         try {
             // Create the prepared Statement Object
-            DBQuery.setPreparedStatement(conn, selectStatement);
+            DBQuery.setPreparedStatement(conn, SQLStatement);
 
             PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
 
@@ -197,13 +186,13 @@ public class SelectStatements {
             String comboItem;
 
             // execute command to get desired data for the combo boxes
-            preparedStatement.execute(selectStatement);
+            preparedStatement.execute(SQLStatement);
 
             ResultSet resultSet = preparedStatement.getResultSet();
 
             while(resultSet.next()) // a boolean function that remains true until we scroll through each record
             {
-                comboItem = resultSet.getString(column).toString();
+                comboItem = resultSet.getString(column);
                 CBItems.add(comboItem);
             }
             // return true if the SQL statement executed successfully.
@@ -219,15 +208,14 @@ public class SelectStatements {
         // list to populate
         ObservableList<Integer> intList = FXCollections.observableArrayList();
         // Prepared select statement for countries
-        String selectStatement = SQLStatement;
         try {
             // Create the prepared Statement Object
-            DBQuery.setPreparedStatement(conn, selectStatement);
+            DBQuery.setPreparedStatement(conn, SQLStatement);
             PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
             // variable to populate
             int intToGrab;
             // execute command to get desired data for the combo boxes
-            preparedStatement.execute(selectStatement);
+            preparedStatement.execute(SQLStatement);
             ResultSet resultSet = preparedStatement.getResultSet();
             while(resultSet.next()) // a boolean function that remains true until we scroll through each record
             {
@@ -248,11 +236,10 @@ public class SelectStatements {
         ObservableList<LocalDateTime> LocalDateTimeList = FXCollections.observableArrayList();
 
         // Prepared select statement for countries
-        String selectStatement = SQLStatement;
 
         try {
             // Create the prepared Statement Object
-            DBQuery.setPreparedStatement(conn, selectStatement);
+            DBQuery.setPreparedStatement(conn, SQLStatement);
 
             PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
 
@@ -260,7 +247,7 @@ public class SelectStatements {
             LocalDateTime LDTItem;
 
             // execute command to get desired data for the combo boxes
-            preparedStatement.execute(selectStatement);
+            preparedStatement.execute(SQLStatement);
 
             ResultSet resultSet = preparedStatement.getResultSet();
 
@@ -282,11 +269,10 @@ public class SelectStatements {
     public static int getAnInt(Connection conn, String SQLStatement, String column) {
 
         // Prepared select statement to grab the int
-        String selectStatement = SQLStatement;
 
         try {
             // Create the prepared Statement Object
-            DBQuery.setPreparedStatement(conn, selectStatement);
+            DBQuery.setPreparedStatement(conn, SQLStatement);
 
             PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
 
@@ -294,10 +280,10 @@ public class SelectStatements {
             int intVar;
 
             // execute command to get desired data for the combo boxes
-            preparedStatement.execute(selectStatement);
+            preparedStatement.execute(SQLStatement);
 
             ResultSet resultSet = preparedStatement.getResultSet();
-            while(resultSet.next()) // a boolean function that remains true until we scroll through each record
+            while(resultSet.next()) // kept as a while loop
             {
                 intVar = resultSet.getInt(column);
                 return intVar;
@@ -315,11 +301,10 @@ public class SelectStatements {
     public static LocalDateTime getALocalDateTime(Connection conn, String SQLStatement, String column) {
 
         // Prepared select statement to grab the int
-        String selectStatement = SQLStatement;
 
         try {
             // Create the prepared Statement Object
-            DBQuery.setPreparedStatement(conn, selectStatement);
+            DBQuery.setPreparedStatement(conn, SQLStatement);
 
             PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
 
@@ -327,7 +312,7 @@ public class SelectStatements {
             LocalDateTime localDateTimeVar;
 
             // execute command to get desired data for the combo boxes
-            preparedStatement.execute(selectStatement);
+            preparedStatement.execute(SQLStatement);
 
             ResultSet resultSet = preparedStatement.getResultSet();
             while(resultSet.next()) // a boolean function that remains true until we scroll through each record
@@ -348,11 +333,10 @@ public class SelectStatements {
     public static String getAString(Connection conn, String SQLStatement, String column) {
 
         // Prepared select statement to grab the int
-        String selectStatement = SQLStatement;
 
         try {
             // Create the prepared Statement Object
-            DBQuery.setPreparedStatement(conn, selectStatement);
+            DBQuery.setPreparedStatement(conn, SQLStatement);
 
             PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
 
@@ -360,7 +344,7 @@ public class SelectStatements {
             String stringVar;
 
             // execute command to get desired data for the combo boxes
-            preparedStatement.execute(selectStatement);
+            preparedStatement.execute(SQLStatement);
 
             ResultSet resultSet = preparedStatement.getResultSet();
             while(resultSet.next()) // a boolean function that remains true until we scroll through each record

@@ -47,9 +47,7 @@ public class UpdateStatements {
             }
         }
         catch(SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
-
-
 }
