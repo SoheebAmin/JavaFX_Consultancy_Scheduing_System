@@ -20,7 +20,7 @@ public class RuntimeObjects {
 
     // holds the list of appointment types utilized by the program
     private static ObservableList<String> allAppointmentTypes = FXCollections.observableArrayList(
-            "Meet and Greet", "Planning Session", "In-Depth Session", "Closing Operations");
+            "Meet and Greet", "Planning Session", "De-Briefing", "In-Depth Session", "Closing Operations");
 
     // holds the list of days appointments will be allowed until.
     private static ObservableList<LocalDate> allAppointmentDates = FXCollections.observableArrayList();

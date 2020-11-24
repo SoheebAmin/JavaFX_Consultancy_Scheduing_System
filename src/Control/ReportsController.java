@@ -1,18 +1,18 @@
 package Control;
 
 import Database.SelectStatements;
+import LambdaInterfaces.GrabIntFromDB;
+import LambdaInterfaces.RepopulateAppointments;
 import Model.Appointment;
 import Model.RuntimeObjects;
 import Utils.ControllerMethods;
 import Utils.DBConnection;
-import Utils.DateTimeMethods;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -21,9 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.ZoneId;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
@@ -125,8 +123,14 @@ public class ReportsController implements Initializable {
         // try-catch deals with scenario in which nothing is selected.
         try {
             ReportsController.selectedMonth = monthCB.getSelectionModel().getSelectedItem();
+
             String selectStatement = "SELECT Count(*) AS Appointments FROM appointments WHERE Month(Start) = " + ReportsController.selectedMonth + ";";
-            int totalOfSelectedMonth = SelectStatements.getAnInt(DBConnection.getConn(), selectStatement, "Appointments");
+
+            //int totalOfSelectedMonth = SelectStatements.getAnInt(DBConnection.getConn(), selectStatement, "Appointments");
+
+            /** LAMBDA EXPRESSION: This is a lambda expression which allows us to grab any integers from the database with the help of a select method in the DB package.*/
+            GrabIntFromDB intGrabber = (a, b, c) -> SelectStatements.getAnInt(a, b, c);
+            int totalOfSelectedMonth = intGrabber.getAnInt(DBConnection.getConn(), selectStatement, "Appointments");
             totalByMonth.setText("Total Appointments: " + totalOfSelectedMonth);
         }
         catch (NullPointerException ignored) {
@@ -170,9 +174,13 @@ public class ReportsController implements Initializable {
             TimeZone.setDefault(TimeZone.getTimeZone(selectedZoneId));
 
             // clear the current appointments observable list, and fetch them again from the database.
-            RuntimeObjects.clearAllAppointments();
-            Connection conn = DBConnection.getConn();
-            SelectStatements.populateAppointmentsTable(conn);
+
+            /** LAMBDA EXPRESSION: This is a lambda expression which allows us to repopulate the appointment table to reflect the timezone changes.*/
+            RepopulateAppointments repopulator = c -> {
+                RuntimeObjects.clearAllAppointments();
+                SelectStatements.populateAppointmentsTable(c);};
+
+            repopulator.repopulateDB(DBConnection.getConn());
         }
         catch (NullPointerException ignored) {
         }

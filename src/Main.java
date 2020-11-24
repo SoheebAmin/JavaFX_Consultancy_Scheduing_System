@@ -3,7 +3,6 @@ import Utils.DBConnection;
 import Database.SelectStatements;
 import Utils.DateTimeMethods;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,11 +28,6 @@ public class Main extends Application {
         primaryStage.setTitle("Appointment Application");
         primaryStage.setScene(new Scene(root, 900, 400));
         primaryStage.show();
-    }
-
-    public static String usingFunction(LambdaTest testObj) {
-        String returnString = testObj.test("This String");
-        return returnString;
     }
 
     /** Starts the DB connection, launches the application, and then closes the DB when the application is closed. */
