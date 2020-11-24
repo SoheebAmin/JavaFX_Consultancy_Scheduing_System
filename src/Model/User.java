@@ -1,6 +1,6 @@
 package Model;
 
-/** This is class for user objects, based on the data required to add a user record to the database. */
+/** User class that defines what an user object is for the program. */
 public class User {
 
     // fields for everything that a user object needs

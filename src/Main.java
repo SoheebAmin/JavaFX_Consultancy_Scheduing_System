@@ -15,6 +15,7 @@ import java.time.LocalTime;
 import java.util.Locale;
 import java.util.TimeZone;
 
+/** This is the main method which calls all methods to set the initial conditions of the application based on the current state of the database.*/
 public class Main extends Application {
 
     public static Connection conn;

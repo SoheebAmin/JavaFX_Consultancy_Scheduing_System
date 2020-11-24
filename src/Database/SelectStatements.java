@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+/** Select statements that are called during the life of the program. */
 public class SelectStatements {
 
     public static void populateCustomersTable(Connection conn){

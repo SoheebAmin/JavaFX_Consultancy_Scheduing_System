@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/** This class holds the boiler plate code for a database query.. */
 public class DBQuery {
 
     // statement reference

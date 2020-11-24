@@ -5,6 +5,7 @@ import Utils.DBQuery;
 import java.sql.*;
 import java.time.LocalDateTime;
 
+/** Insert statements that are called during the life of the program. */
 public class InsertStatements {
 
     /** SQL code to add customer to the database*/

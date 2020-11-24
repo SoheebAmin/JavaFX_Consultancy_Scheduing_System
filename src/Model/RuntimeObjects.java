@@ -8,7 +8,7 @@ import java.time.ZoneId;
 import java.util.Locale;
 import java.util.TimeZone;
 
-/**This class grabs the customers and appointments in the database at program run time, and also is updated as changes are made during the life of the application. */
+/**This class sets, holds, and updates all the data the program needs to dynamically access during the life of the program. */
 public class RuntimeObjects {
 
     // holds the customer and appointment objects for the runtime of the program

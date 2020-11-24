@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/** This class holds creates the connection to the database and passes it whichever controller needs it for its operations. */
 public abstract class DBConnection {
 
     // JDBC URL Parts

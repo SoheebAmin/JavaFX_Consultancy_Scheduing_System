@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 
 import java.time.*;
 
+/** This class holds all the methods related to date and time that are called by controller. */
 public class DateTimeMethods {
 
     private static final int MINUTES_OF_OFFICE_HOURS_IN_DAY = 840;

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/** Update statements that are called during the life of the program. */
 public class UpdateStatements {
 
     /** SQL code to modify a customer to the database*/

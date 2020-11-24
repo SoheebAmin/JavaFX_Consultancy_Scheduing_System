@@ -3,7 +3,7 @@ package Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/** This is class for customer objects, based on the data required to add a customer record to the database. */
+/** Customer class that defines what a customer object is for the program. */
 public class Customer {
 
     // list of appointments to keep track of each customer's appointments.

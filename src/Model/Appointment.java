@@ -2,6 +2,7 @@ package Model;
 
 import java.time.LocalDateTime;
 
+/** Appointment class that defines what an appointment object is for the program. */
 public class Appointment {
 
     // the fields that define the data within every customer object.
