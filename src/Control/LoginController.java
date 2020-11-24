@@ -1,10 +1,8 @@
 package Control;
 
-import Model.Appointment;
 import Model.RuntimeObjects;
 import Model.User;
 import Utils.ControllerMethods;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,9 +14,11 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
+import java.io.*;
 
 public class LoginController implements Initializable {
 
@@ -37,6 +37,30 @@ public class LoginController implements Initializable {
 
     private static boolean frenchDetected = false;
 
+    /**This method will be called by the login attempt if a correct user name was provided. It will write the login attempt to login_activity.txt*/
+    private static void writeToLog(String usernameAttempted, boolean wasSuccessful) {
+
+        LocalDateTime loginAttemptTime = LocalDateTime.now();
+        String toWrite;
+        if(wasSuccessful)
+        {
+            toWrite = "User " + usernameAttempted + " successfully logged in at " + loginAttemptTime;
+        }
+        else
+        {
+            toWrite = "User " + usernameAttempted + " unsuccessfully attempted to logged in at " + loginAttemptTime;
+        }
+        // File to write to
+        try {
+            PrintWriter logFile = new PrintWriter("login_activity.txt");
+            logFile.println(toWrite);
+            logFile.close();
+        }
+        catch(FileNotFoundException e)
+        {
+            e.getMessage();
+        }
+    }
 
 
     /** This method that checks the validity of the login attempt */
@@ -87,11 +111,13 @@ public class LoginController implements Initializable {
         String correctPassword = detectedUser.getPassword();
         if(passwordAttempted.equals(correctPassword))
         {
+            writeToLog(detectedUser.getUsername(), true);
             RuntimeObjects.setCurrentUser(detectedUser);
             ControllerMethods.changeScene(event, "../View/CustomerDashboard.fxml");
         }
         else
         {
+            writeToLog(detectedUser.getUsername(), false);
             if(LoginController.frenchDetected)
             {
                 ControllerMethods.errorDialogueBox("mot de passe incorrect!");
@@ -102,6 +128,7 @@ public class LoginController implements Initializable {
             }
         }
     }
+
 
     /** This method exits the program via the Exit button */
     public void exitButtonClicked(){

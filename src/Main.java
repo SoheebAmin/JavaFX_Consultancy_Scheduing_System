@@ -31,6 +31,11 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    public static String usingFunction(LambdaTest testObj) {
+        String returnString = testObj.test("This String");
+        return returnString;
+    }
+
     /** Starts the DB connection, launches the application, and then closes the DB when the application is closed. */
     public static void main(String[] args) throws SQLException{
 
