@@ -98,8 +98,8 @@ public class RuntimeObjects {
         return allAppointments;
     }
 
-    // the getters and setters for the various lists and objects to be used in the life of the program.
 
+    // the getters and setters for the various lists and objects to be used in the life of the program.
 
     public static User getCurrentUser() {
         return currentUser;

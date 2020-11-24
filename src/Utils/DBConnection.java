@@ -32,10 +32,7 @@ public abstract class DBConnection {
             conn = DriverManager.getConnection(jdbcURL, username, password);
             System.out.println("Connection Successful");
         }
-        catch(ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        catch(SQLException e) {
+        catch(ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
         return conn;

@@ -31,7 +31,7 @@ public class Main extends Application {
     }
 
     /** Starts the DB connection, launches the application, and then closes the DB when the application is closed. */
-    public static void main(String[] args) throws SQLException{
+    public static void main(String[] args) {
 
         // Starts DB connection
         Connection conn = DBConnection.startConnection();

@@ -140,6 +140,7 @@ public class DateTimeMethods {
         // loop through each start time and compare against current time to see if one has less than fifteen minute difference.
         LocalDateTime currentTime = LocalDateTime.now();
         int i = 0;
+
         for(LocalDateTime appointmentStart : systemAppointments)
         {
             Duration duration = Duration.between(currentTime, appointmentStart);
@@ -153,5 +154,4 @@ public class DateTimeMethods {
         }
         return "";
     }
-
 }

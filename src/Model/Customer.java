@@ -41,7 +41,7 @@ public class Customer {
     }
 
     public void setId(int cID) {
-        this.id = id;
+        this.id = cID;
     }
 
     public String getName() {
