@@ -39,35 +39,6 @@ public class LoginController implements Initializable {
 
     private static boolean frenchDetected = false;
 
-    /**This method will be called by the login attempt if a correct user name was provided. It will write the login attempt to login_activity.txt*/
-    private static void writeToLog(String usernameAttempted, boolean wasSuccessful) {
-
-        LocalDateTime loginAttemptTime = LocalDateTime.now();
-        String toWrite;
-        if(wasSuccessful)
-        {
-            toWrite = "User " + usernameAttempted + " successfully logged in at " + loginAttemptTime;
-        }
-        else
-        {
-            toWrite = "User " + usernameAttempted + " unsuccessfully attempted to logged in at " + loginAttemptTime;
-        }
-        // Write to file
-        try {
-            // This set up to get PrintWriter to append via FileWriter is from the top answer in Stackoverflow question 9961292.
-            PrintWriter logFile = new PrintWriter(new FileWriter("login_activity.txt", true));
-
-            logFile.println(toWrite);
-            System.out.println("log file appended");
-            logFile.close();
-        }
-        catch(FileNotFoundException e)
-        {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /** This method that checks the validity of the login attempt */
     public void loginButtonClicked(ActionEvent event) throws IOException {
@@ -131,6 +102,36 @@ public class LoginController implements Initializable {
             {
                 ControllerMethods.errorDialogueBox("Password incorrect!");
             }
+        }
+    }
+
+    /**This method will be called by the login attempt if a correct user name was provided. It will write the login attempt to login_activity.txt*/
+    private static void writeToLog(String usernameAttempted, boolean wasSuccessful) {
+
+        LocalDateTime loginAttemptTime = LocalDateTime.now();
+        String toWrite;
+        if(wasSuccessful)
+        {
+            toWrite = "User " + usernameAttempted + " successfully logged in at " + loginAttemptTime;
+        }
+        else
+        {
+            toWrite = "User " + usernameAttempted + " unsuccessfully attempted to logged in at " + loginAttemptTime;
+        }
+        // Write to file
+        try {
+            // This set up to get PrintWriter to append via FileWriter is from the top answer in Stackoverflow question 9961292.
+            PrintWriter logFile = new PrintWriter(new FileWriter("login_activity.txt", true));
+
+            logFile.println(toWrite);
+            System.out.println("log file appended");
+            logFile.close();
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

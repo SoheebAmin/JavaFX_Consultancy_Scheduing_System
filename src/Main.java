@@ -21,12 +21,16 @@ public class Main extends Application {
     public static Connection conn;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
 
         //Parent root = FXMLLoader.load(getClass().getResource("View/CustomerDashboard.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));
-        primaryStage.setTitle("Appointment Application");
+
+        if (RuntimeObjects.getCurrentLocale().equals(Locale.FRENCH))
+            primaryStage.setTitle("Demande de rendez-vous");
+        else
+            primaryStage.setTitle("Appointment Application");
         primaryStage.setScene(new Scene(root, 420, 290));
         primaryStage.show();
     }

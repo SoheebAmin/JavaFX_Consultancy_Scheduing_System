@@ -340,7 +340,7 @@ public class ModifyAppointmentController implements Initializable {
         int customerID = SelectStatements.getAnInt(DBConnection.getConn(), selectCustomerID, "Customer_ID");
 
         // Check to see if an appointment already exists that overlaps at all with the start or end time.
-        boolean hasAnOverlap = DateTimeMethods.isOverlappingForModify(customerID, appointmentStart, appointmentEnd);
+        boolean hasAnOverlap = DateTimeMethods.isOverlappingForModify(customerID, id, appointmentStart, appointmentEnd);
 
         if(hasAnOverlap)
         {

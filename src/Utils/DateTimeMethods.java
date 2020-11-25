@@ -81,14 +81,14 @@ public class DateTimeMethods {
     }
 
     /** Checks if two LocalDateTime ranges have anything overlapping. */
-    public static boolean isOverlapping(int AId, LocalDateTime start, LocalDateTime end) {
+    public static boolean isOverlapping(int customerId, LocalDateTime start, LocalDateTime end) {
 
         // get all appointments
         ObservableList<Appointment> allAppointments = RuntimeObjects.getAllAppointments();
 
         // loop through, and for matching customer, check times against appointment times (seconds add/sub to allow consecutive appointments)
         for(Appointment a :allAppointments) {
-            if(a.getCustomerId() == AId) {
+            if(a.getCustomerId() == customerId) {
                 LocalDateTime startToCheck = a.getStartDateTime().plusSeconds(1);
                 LocalDateTime endToCheck = a.getEndDateTime().minusSeconds(1);
 
@@ -102,7 +102,7 @@ public class DateTimeMethods {
     }
 
     /** Same method as above, however, must allow same exact appointment time if modifying an appointment. */
-    public static boolean isOverlappingForModify(int customerId, LocalDateTime start, LocalDateTime end) {
+    public static boolean isOverlappingForModify(int customerId, int appointmentID, LocalDateTime start, LocalDateTime end) {
 
         // get all appointments
         ObservableList<Appointment> allAppointments = RuntimeObjects.getAllAppointments();
@@ -113,14 +113,12 @@ public class DateTimeMethods {
                 LocalDateTime startToCheck = a.getStartDateTime().plusSeconds(1);
                 LocalDateTime endToCheck = a.getEndDateTime().minusSeconds(1);
 
-                // if start times exactly the same, we are modifying this appointment, so we do not count this as an overlap.
-                if (start.equals(startToCheck.minusSeconds(1))) // put back the second we took away.
+                // if appointment ID is the same on record, then this is the same appoint, so no overlap check.
+                if (a.getId() == appointmentID)
                     continue;
 
                 if(!start.isAfter(endToCheck) && !startToCheck.isAfter(end)) //(logic modified from top answer in Stackoverflow question 17106670)
-                {
                     return true;
-                }
             }
         }
         return false;
