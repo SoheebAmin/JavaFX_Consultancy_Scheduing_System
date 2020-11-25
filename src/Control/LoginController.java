@@ -40,7 +40,7 @@ public class LoginController implements Initializable {
     private static boolean frenchDetected = false;
 
 
-    /** This method that checks the validity of the login attempt */
+    /** This method that checks the validity of the login attempt. Translations from Google Translate. */
     public void loginButtonClicked(ActionEvent event) throws IOException {
         String usernameAttempted = usernameField.getText();
         String passwordAttempted = passwordField.getText();

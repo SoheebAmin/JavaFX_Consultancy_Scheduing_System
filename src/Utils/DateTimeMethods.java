@@ -113,12 +113,15 @@ public class DateTimeMethods {
                 LocalDateTime startToCheck = a.getStartDateTime().plusSeconds(1);
                 LocalDateTime endToCheck = a.getEndDateTime().minusSeconds(1);
 
-                // if appointment ID is the same on record, then this is the same appoint, so no overlap check.
-                if (a.getId() == appointmentID)
-                    continue;
-
                 if(!start.isAfter(endToCheck) && !startToCheck.isAfter(end)) //(logic modified from top answer in Stackoverflow question 17106670)
+                {
+                    // if appointment ID is the same on record, then this is the same appoint, so no overlap check.
+                    if (a.getId() == appointmentID) {
+                        continue;
+                    }
+                    else // if not, if is a diff appointment and needs to be blocked
                     return true;
+                }
             }
         }
         return false;
