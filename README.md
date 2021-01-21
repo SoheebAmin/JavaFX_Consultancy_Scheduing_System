@@ -34,7 +34,7 @@ The login screen can automatically detect the local language of the machine. If 
 
 ![Customers Dashboard](/screen_shots/Customers_Dashboard.png?raw=true "Customers Dashboard")
 
-A successful login takes the user to the customer dashboard. Here, they can add, modify, and delete customers. There is also a reports page and a dashboard for appointments. All customer data is pulled from the MySQL server, and pushed back upon modification.
+A successful login takes the user to the customer dashboard. Here, they can add, modify, and delete customers. However, customers with existing appointments cannot be deleted before their associated appointments are removed. There is also a reports page and a dashboard for appointments. All customer data is pulled from the MySQL server, and pushed back upon modification.
 
 
 ## Add Customer
@@ -54,7 +54,7 @@ The modify customer scene pulls the data of that customer, and allows fields oth
 
 ![Appointments Dashboard](/screen_shots/Appointments_Dashboard.png?raw=true "Appointments Dashboard")
 
-Text Explainer
+The appointments dashboard is templated from the customer dashboard, and also pulls data from MySQL the same way. It has has the same options of adding, modifying, and deleting. There is an option to display appointments by upcoming for the next week or month. This creates a list object list for that parameter and places the result in the tableview. 
 
 
 ## Add Appointment
