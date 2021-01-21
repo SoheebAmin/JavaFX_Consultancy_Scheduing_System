@@ -6,7 +6,7 @@ This is a client and appointment management application for a hypothetical consu
 
 ## Usage ##
 
-This appointment scheduling application that allows the user (presumably in the role of an employee at this hypothetical company) to manage customer and appointment records, as found in an online mySQL database. 
+This appointment scheduling application that allows the user (presumably in the role of an employee at this hypothetical company) to manage customer and appointment records, as found in an online MySQL database. 
 
 ## Customers and Appointments ##
 
@@ -18,14 +18,14 @@ It also displays the appointments in the tableviews as LocalDateTimes in the def
 ## Office Hours ##
 
 The office hours of this company are in EST. So, the user will only see EST office hours when scheduling an appointment. 
-The application can handle if the converted hours cross over midnight and require the end time to next day in the users local time. 
+The application can handle if the converted hours cross over midnight and require the end time to next day in the user's local time. 
 They still only have to worry about selecting in the EST equivalent.
 
 ## Login Screen
 
 ![Login](/screen_shots/login.png?raw=true "Login")
 
-The Login screen validates the input crendentials from the MySQL server's users table. This includes validating both the username and the password. It also then appends the login attempt, whether successful or not, to a login_activity.txt file. 
+The Login screen validates the input credentials from the MySQL server's users table. This includes validating both the username and the password. It also then appends the login attempt, whether successful or not, to a login_activity.txt file. 
 
 The login screen can automatically detect the local language of the machine. If it is French, then the screen, along with its error messages, are displayed in French.
 
@@ -54,7 +54,7 @@ The modify customer scene pulls the data of that customer, and allows fields oth
 
 ![Appointments Dashboard](/screen_shots/Appointments_Dashboard.png?raw=true "Appointments Dashboard")
 
-The appointments dashboard is templated from the customer dashboard, and also pulls data from MySQL the same way. It has has the same options of adding, modifying, and deleting. There is an option to display appointments by upcoming for the next week or month. This creates a list object list for that parameter and places the result in the tableview. 
+The appointments dashboard is templated from the customer dashboard, and also pulls data from MySQL the same way. It has the same options of adding, modifying, and deleting. There is an option to display appointments by upcoming for the next week or month. This creates a list object list for that parameter and places the result in the tableview. 
 
 
 ## Add Appointment
@@ -63,7 +63,7 @@ The appointments dashboard is templated from the customer dashboard, and also pu
 
 The user is displayed a top. The ID is auto-generated. The customer list consists of current customer objects in the program's run-time class. Most fields are straightforward, but the time offered is based on the "office hours" of Eastern Time Zone. This list of hours is generated when calculating the difference between the user's timezone and EST. 
 
-Upon verifying all the fields, including if the startime and endtime are in order, and that there are no overlapping appointments, the appointment can be made.
+Upon verifying all the fields, including if the star time and end time are in order, and that there are no overlapping appointments, the appointment can be made.
 
 ## Modify Appointment
 
@@ -76,9 +76,9 @@ As with modifying a customer, it pulls the relevant data from the SQL server and
 
 ![Reports](/screen_shots/Reports.png?raw=true "Reports")
 
-The reports scene displays three different reports for total appointments by type or month, schedules by contact, and appointments by timezones.
+The reports scene displays three different reports for total appointments by type or month, schedules by contact, and appointments by time zones.
 The first report allows the user to select the category of month or type of appointment, and have a label display the total appointments by that filter.
 Note that month will only show the actual months in the system for the combo box selection items.
 The second report allows the user to select a contact in the system and see their schedule of appointments.
-The third report allows the user to see the start and end times of the appointments in any US timezone of their choosing.
+The third report allows the user to see the start and end times of the appointments in any US time zone of their choosing.
 
