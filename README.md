@@ -9,4 +9,4 @@ The following are some of the scenes in the application, along with their explan
 
 ## Appointments Dashboard
 
-![Appointments Dashboard](/screen_shots/Appointments_Dashboard.pngraw=true "Appointments Dashboard")
+![Appointments Dashboard](/screen_shots/Appointments_Dashboard.png?raw=true "Appointments Dashboard")
