@@ -61,14 +61,15 @@ The appointments dashboard is templated from the customer dashboard, and also pu
 
 ![Add Appointment](/screen_shots/Add_Appointment.png?raw=true "Add Appointment")
 
-Text Explainer
+The user is displayed a top. The ID is auto-generated. The customer list consists of current customer objects in the program's run-time class. Most fields are straightforward, but the time offered is based on the "office hours" of Eastern Time Zone. This list of hours is generated when calculating the difference between the user's timezone and EST. 
 
+Upon verifying all the fields, including if the startime and endtime are in order, and that there are no overlapping appointments, the appointment can be made.
 
 ## Modify Appointment
 
 ![Modify Appointment](/screen_shots/modify_appointment.png?raw=true "Modify Appointment")
 
-Text Explainer
+As with modifying a customer, it pulls the relevant data from the SQL server and allows modifications so as long as all validation conditions are met.
 
 
 ## Reports Page
