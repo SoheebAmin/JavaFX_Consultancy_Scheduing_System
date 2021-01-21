@@ -7,7 +7,7 @@ This is a client and appointment management application for a hypothetical consu
 The following are some of the scenes in the application, along with their explanations:
 
 
-## Login SCreen
+## Login Screen
 
 ![Login](/screen_shots/login.png?raw=true "Login")
 
