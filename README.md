@@ -43,6 +43,13 @@ Text Explainer
 Text Explainer
 
 
+## Add Appointment
+
+![Add Appointment](/screen_shots/Add_Appointment.png?raw=true "Add Appointment")
+
+Text Explainer
+
+
 ## Modify Appointment
 
 ![Modify Appointment](/screen_shots/modify_appointment.png?raw=true "Modify Appointment")
