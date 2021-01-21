@@ -4,8 +4,6 @@ Note: Refer to the generated Javadocs for detailed explanations for each class a
 
 This is a client and appointment management application for a hypothetical consultancy firm. It stores its data on a remote MySQL server which is accessed via Java’s JDBC Driver. The application itself is built with Java 11.2 with JavaFX 11.0.2 and scene builder.
 
-The following are some of the scenes in the application, along with their explanations:
-
 ## Usage ##
 
 This appointment scheduling application that allows the user (presumably in the role of an employee at this hypothetical company) to manage customer and appointment records, as found in an online mySQL database. 
@@ -43,13 +41,13 @@ A successful login takes the user to the customer dashboard. Here, they can add,
 
 ![Add Customer](/screen_shots/Add_Customers.png?raw=true "Add Customer")
 
-The add customer scene auto-generated a customer ID, and allows the user to input the rest of the data (each with its own validation conditions which are checked upon an attempt to save). The selected country will determine which first level divisions become available. Upon saving and data validation, the new customer is added to the MySQL customer table,  
+The add customer scene auto-generated a customer ID, and allows the user to input the rest of the data (each with its own validation conditions which are checked upon an attempt to save). The selected country will determine which first level divisions become available. Upon saving and data validation, the new customer is added to the MySQL customer table, along with the local run-time objects class.  
 
 ## Modify Customer
 
 ![Modify Customer](/screen_shots/modify_customer.png?raw=true "Modify Customer")
 
-Text Explainer
+The modify customer scene pulls the data of that customer, and allows fields other than the ID to be edited. Upon saving and validation, a function is called to modify the customer on the MySQL server, using prepared statements, and the local objects are then synced with the server.
 
 
 ## Appointments Dashboard
